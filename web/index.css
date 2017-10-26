@@ -1,0 +1,58 @@
+.head-bg-cover{
+	background-repeat: no-repeat;
+	height: 610px;
+    padding-bottom: 0;
+    background-image: linear-gradient(0deg,rgba(0,0,0,0),transparent),url(img/img-slide2.jpg);
+    background-position: 0 0,50% 50%;
+    background-size: auto,cover;
+}
+.navbar-edit{
+	min-height: 50px !important;
+	margin-bottom: 0px;
+}
+.brand-edit{
+	padding: 0px;
+}
+.margin-3px{
+	margin-left: 0px;
+	margin-right: 10px;
+}
+
+/*Radiobutton Who Selector */
+.who-selector-register{
+	list-style-type: none;
+	margin: 25px 0 0 0;
+	padding: 0;
+}
+.who-selector-register li{
+	float: left;
+	margin: 0 5px 0 0;
+	width: 100px;
+	height: 40px;
+	position: relative;
+}
+.who-selector-register label, .who-selector-register input{
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+.who-selector-register input[type="radio"]{
+	opacity: 0.011;
+	z-index: 100;
+}
+
+.who-selector-register input[type="radio"]:checked + label {
+	background: #03a9f4;
+}
+.who-selector-register lable{
+	padding: 5px;
+	border: 1px solid #333333;
+	cursor: pointer;
+	z-index: 90;
+}
+.who-selector-register lable:hover{
+	background: #DDD;
+}
