@@ -16,7 +16,7 @@ import javax.sql.DataSource;
  *
  * @author Asus
  */
-public class Init {
+public class Init implements ServletContextListener {
     private Connection conn;
 
     @Override
