@@ -41,5 +41,8 @@ public class Init implements ServletContextListener {
     private DataSource getDb_cws() throws NamingException {
         Context c = new InitialContext();
         return (DataSource) c.lookup("java:comp/env/db_cws");
+    }
+
+    
 }
-}
+
