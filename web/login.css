@@ -1,0 +1,63 @@
+
+.head-bg-cover{
+	background-repeat: no-repeat;
+	min-height: 720px;
+    padding-bottom: 0px;
+    background-image: linear-gradient(0deg,rgba(0,0,0,0),transparent),url(img/img-slide2.jpg);
+    background-position: 0 0,50% 50%;
+    background-size: auto,cover;
+    position: relative;
+    opacity: .8;
+    
+}
+.navbar-edit{
+	min-height: 50px !important;
+	margin-bottom: 0px;
+}
+.brand-edit{
+	padding: 0px;
+}
+.margin-3px{
+	margin-left: 0px;
+	margin-right: 10px;
+}
+.align-center {
+	margin-top: 35px;
+	padding: 180px;
+	position: absolute;
+	opacity: 0.8;
+	width: 80%;
+	background-color: white;
+	margin-left: 10%;
+	margin-right: 10%;
+	border-radius: 10px;
+
+}
+.head-name{
+	font-family: "Prompt";
+	font-size: 70px !important;
+
+}
+.search-input{
+	border-radius: 5px;
+	border-style: groove;
+	vertical-align: bottom;
+}
+.button-search{
+	font-size:20px;
+	font-family: "Prompt"; 
+	padding: 10px;
+	margin-top: 0px;
+	background-color: black; 
+}
+.menu-bar{
+	display: inline-block;
+    font-family: "Prompt";
+    line-height: 2;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #fff;
+    position: relative;
+}
