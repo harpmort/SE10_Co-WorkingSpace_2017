@@ -89,3 +89,10 @@
 .who-selector-register lable:hover{
 	background: #DDD;
 }
+.card-margin {
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+.margin-top {
+	margin-top: 50px;
+}
