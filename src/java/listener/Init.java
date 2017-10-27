@@ -17,13 +17,14 @@ import javax.sql.DataSource;
  * @author Asus
  */
 public class Init implements ServletContextListener {
-    private Connection conn;
+    private Connection connection;
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         try {
-            conn = getDb_cws().getConnection();
-            sce.getServletContext().setAttribute("connection", conn);
+            connection = getDb_cws().getConnection();
+            System.out.println("connnn: "+connection);
+            sce.getServletContext().setAttribute("connection", connection);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -32,7 +33,7 @@ public class Init implements ServletContextListener {
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
         try {
-            conn.close();
+            connection.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -42,6 +43,8 @@ public class Init implements ServletContextListener {
         Context c = new InitialContext();
         return (DataSource) c.lookup("java:comp/env/db_cws");
     }
+
+    
 
     
 }

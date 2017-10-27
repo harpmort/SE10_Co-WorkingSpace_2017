@@ -5,6 +5,7 @@
  */
 package controller;
 
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -44,36 +45,42 @@ public class LoginServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String user = request.getParameter("user");
+            String username = request.getParameter("username");
             String password = request.getParameter("password");
+            System.out.println(request.getParameter("username")+" "+request.getParameter("password"));
             int check = 0;
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
             HttpSession session = request.getSession();
+            System.out.println("ctx:"+ctx);
+            System.out.println("con:"+conn);
+            System.out.println("ses:"+session);
             try {
+                System.out.println("gg");
                 Statement stmt = conn.createStatement();
-                String sql = "SELECT * from member where username='" + user + "'";
+                System.out.println("stmt : "+stmt);
+                String sql = "SELECT * from member where username='" + username + "'";
                 ResultSet rs = stmt.executeQuery(sql);
                 if (rs.next()) {
                     if (password.equals(rs.getString("password"))) {
                         Member member = new Member(conn);
-                        member.importData(user,password);
+                        member.importData(username, password);
                         session.setAttribute("member", member);
                         check = 1;
                         session.setAttribute("check", check);
-                        RequestDispatcher pg = request.getRequestDispatcher("index.html");
+                        RequestDispatcher pg = request.getRequestDispatcher("landing.jsp");
                         pg.forward(request, response);
                     }  else {
                         check = 2;
                         request.setAttribute("check", check);
-                        RequestDispatcher pg = request.getRequestDispatcher("landing.jsp");
+                        RequestDispatcher pg = request.getRequestDispatcher("index.jsp");
                         pg.forward(request, response);
                     }
 
                 }  else {
                     check = 3;
                     request.setAttribute("check", check);
-                    RequestDispatcher pg = request.getRequestDispatcher("landing.jsp");
+                    RequestDispatcher pg = request.getRequestDispatcher("index.jsp");
                     pg.forward(request, response);
                 }
 

@@ -9,11 +9,13 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
 /**
  *
  * @author Asus
  */
 public class Member {
+
     private int idmember;
     private String firstname;
     private String lastname;
@@ -22,13 +24,13 @@ public class Member {
     private String email;
     private String phone;
     private int type;
-    
+
     Connection conn;
-    
+
     public Member(Connection connection) {
         conn = connection;
     }
-    
+
     public void importData(String username, String password) {
         try {
             Statement stmt = conn.createStatement();
@@ -36,17 +38,35 @@ public class Member {
             ResultSet rs = stmt.executeQuery(sql);
             if (rs.next()) {
                 if (password.equals(rs.getString("password"))) {
-                    firstname = (rs.getString("firstname"));
-                    lastname = (rs.getString("lastname"));
-                    email = (rs.getString("email"));
-                    phone = (rs.getString("phone"));
-                    type = (rs.getInt("type"));
+                    this.username = rs.getString("username");
+                    this.password = rs.getString("password");
+                    firstname = rs.getString("firstname");
+                    lastname = rs.getString("lastname");
+                    email = rs.getString("email");
+                    phone = rs.getString("phone");
+                    type = rs.getInt("type");
                 }
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
 
+    }
+
+    public void register(String firstname, String lastname, String username, String password, String email, String phone, int type) {
+        try {
+            Statement stmt = conn.createStatement();
+            if (type == 2) {
+                String sql = "INSERT INTO `db_coworkingspace`.`member` (`firstname`, `lastname`, `username`, `password`, `email`, `phone`, `idtype_member`) "
+                        + "VALUES ('" + firstname + "', '" + lastname + "', '" + username + "', '" + password + "', '" + email + "', '" + phone + "', '" + type + "');";
+                ResultSet rs = stmt.executeQuery(sql);
+            } else {
+
+            }
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
     public int getIdmember() {
@@ -112,8 +132,5 @@ public class Member {
     public void setType(int type) {
         this.type = type;
     }
-    
-    
-    
-    
+
 }
