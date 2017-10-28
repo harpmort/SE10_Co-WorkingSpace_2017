@@ -59,8 +59,11 @@ public class Member {
             if (type == 2) {
                 String sql = "INSERT INTO `db_coworkingspace`.`member` (`firstname`, `lastname`, `username`, `password`, `email`, `phone`, `idtype_member`) "
                         + "VALUES ('" + firstname + "', '" + lastname + "', '" + username + "', '" + password + "', '" + email + "', '" + phone + "', '" + type + "');";
-                ResultSet rs = stmt.executeQuery(sql);
+                stmt.executeUpdate(sql);
             } else {
+                String sql = "INSERT INTO `db_coworkingspace`.`list_supply` (`firstname`, `lastname`, `username`, `password`, `email`, `phone`) "
+                        + "VALUES ('" + firstname + "', '" + lastname + "', '" + username + "', '" + password + "', '" + email + "', '" + phone + "');";
+                stmt.executeUpdate(sql);
 
             }
             

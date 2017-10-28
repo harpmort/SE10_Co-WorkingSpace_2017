@@ -2,6 +2,7 @@
 <html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="index.css">
@@ -101,7 +102,7 @@
                     </div>
                     <div class="modal-body">
                         <p> Please enter your information in to the fill.
-                        <form action="/RegisterServlet" method="post">
+                        <form action="RegisterServlet" method="post">
                             <div class="form-group">
                                 <label for="firstname">First name</label>
                                 <input type="text" class="form-control" id="firstname" name="firstname">
@@ -128,9 +129,9 @@
                             </div>
                             <p>Who are you?</p>
                             <ul class="who-selector-register">
-                                <li><input type="radio" id="rental" name="who-selector" value="rental">
+                                <li><input type="radio" id="rental" name="who-selector" value="2">
                                     <label for="rental">Rental</label></li>
-                                <li><input type="radio" id="lessor" name="who-selector" value="lessor">
+                                <li><input type="radio" id="lessor" name="who-selector" value="1">
                                     <label for="lessor">Lessor</label></li>
                             </ul><br>
                             <button type="Sign Up!" class="btn btn-default btn-edit">Submit</button>

@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
 --
 -- Host: localhost    Database: db_coworkingspace
 -- ------------------------------------------------------
--- Server version	5.7.20-log
+-- Server version	5.7.17-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -76,6 +76,34 @@ LOCK TABLES `co_working_space` WRITE;
 /*!40000 ALTER TABLE `co_working_space` DISABLE KEYS */;
 INSERT INTO `co_working_space` VALUES (0001,'muayland','LKB 32 Bangkok',1,2,'1',200,'wifi. parking, air conditioner'),(0002,'boyland','suan siam Bangkok',2,1,'4',500,'wifi. parking, air conditioner, board');
 /*!40000 ALTER TABLE `co_working_space` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `list_supply`
+--
+
+DROP TABLE IF EXISTS `list_supply`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `list_supply` (
+  `idls` int(11) NOT NULL AUTO_INCREMENT,
+  `firstname` varchar(100) DEFAULT NULL,
+  `lastname` varchar(100) DEFAULT NULL,
+  `username` varchar(100) DEFAULT NULL,
+  `password` varchar(100) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `phone` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`idls`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `list_supply`
+--
+
+LOCK TABLES `list_supply` WRITE;
+/*!40000 ALTER TABLE `list_supply` DISABLE KEYS */;
+/*!40000 ALTER TABLE `list_supply` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -221,4 +249,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-10-26 17:56:31
+-- Dump completed on 2017-10-27 22:36:08

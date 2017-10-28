@@ -23,7 +23,6 @@ public class Init implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
         try {
             connection = getDb_cws().getConnection();
-            System.out.println("connnn: "+connection);
             sce.getServletContext().setAttribute("connection", connection);
         } catch (Exception e) {
             e.printStackTrace();

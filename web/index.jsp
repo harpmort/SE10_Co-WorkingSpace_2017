@@ -35,7 +35,7 @@
                     <ul class="nav navbar-nav navbar-right">
                         <button type="button" class="btn btn-default navbar-btn"  data-toggle="modal" data-target="#registerModal">Sign up</button>
                         <button type="button" class="btn btn-default navbar-btn margin-3px" data-toggle="modal" data-target="#loginModal">Login</button>
-                        
+
                     </ul>
                 </div>
             </div>
@@ -62,7 +62,6 @@
          <div class="col-md-8">
          </div>
          <div class="col-md-2"></div> -->
-
         <!-- Login Modal -->
         <div id="loginModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
@@ -106,7 +105,7 @@
                     </div>
                     <div class="modal-body">
                         <p> Please enter your information in to the fill.
-                        <form action="/RegisterServlet" method="post">
+                        <form action="RegisterServlet" method="post">
                             <div class="form-group">
                                 <label for="firstname">First name</label>
                                 <input type="text" class="form-control" id="firstname" name="firstname">
@@ -133,9 +132,9 @@
                             </div>
                             <p>Who are you?</p>
                             <ul class="who-selector-register">
-                                <li><input type="radio" id="rental" name="who-selector" value="rental">
+                                <li><input type="radio" id="rental" name="who-selector" value="2">
                                     <label for="rental">Rental</label></li>
-                                <li><input type="radio" id="lessor" name="who-selector" value="lessor">
+                                <li><input type="radio" id="lessor" name="who-selector" value="1">
                                     <label for="lessor">Lessor</label></li>
                             </ul><br>
                             <button type="Sign Up!" class="btn btn-default">Submit</button>
@@ -148,6 +147,7 @@
 
             </div>
         </div>
+        <% int check = (int) request.getAttribute("check"); %>
         <div id="loginerrorModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
                 <!-- Login Modal content-->
@@ -158,10 +158,9 @@
                     </div>
                     <div class="modal-body">
                         <form action="LoginServlet" method="post">
-                            <% int check = (int) request.getAttribute("check"); %>
                             <% if (check == 2) {%>
                             <h3 style="text-align: center;color: red;">กรอกรหัสผ่านผิด</h3>
-                            <%} else {%>
+                            <%} else if (check == 3) {%>
                             <h3 style="text-align: center;color: red;">ไม่พบชื่อผู้ใช้นี้</h3><%}%>
                             <div class="form-group">
                                 <label for="username">Username</label>
@@ -183,10 +182,39 @@
                 </div>
             </div>
         </div>
+        <div id="regiserrorModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Login Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Register</h4>
+                    </div>
+                    <div class="modal-body">
+                        <% if (check == 4) {%>
+                        สมัครสามาชิกเรียบร้อย
+                        <%} else if (check == 5) {%>
+                        รอการยืนยันจากadmin<%}%>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <% if (check == 2 || check == 3){ %>
         <script type="text/javascript">
             $(document).ready(function () {
                 $('#loginerrorModal').modal('show');
             });
         </script>
+        <%} else if (check == 4 || check == 5) {%>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#regiserrorModal').modal('show');
+            });
+        </script>
+        <%}%>
     </body>
 </html>

@@ -5,7 +5,6 @@
  */
 package controller;
 
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -22,13 +21,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Member;
 
-
 /**
  *
  * @author Asus
  */
-@WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "RegisterServlet", urlPatterns = {"/RegisterServlet"})
+public class RegisterServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -47,39 +45,25 @@ public class LoginServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             String username = request.getParameter("username");
             String password = request.getParameter("password");
-            int check = 0;
-            int type_authen = 1 ;
+            String firstname = request.getParameter("firstname");
+            String lastname = request.getParameter("lastname");
+            String email = request.getParameter("email");
+            String phone = request.getParameter("phone");
+            int type = Integer.parseInt(request.getParameter("who-selector"));
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
             HttpSession session = request.getSession();
-            try {
-                Statement stmt = conn.createStatement();
-                String sql = "SELECT * from member where username='" + username + "'";
-                ResultSet rs = stmt.executeQuery(sql);
-                if (rs.next()) {
-                    if (password.equals(rs.getString("password"))) {
-                        Member member = new Member(conn);
-                        member.importData(username, password);
-                        session.setAttribute("member", member);
-                        RequestDispatcher pg = request.getRequestDispatcher("landing.jsp");
-                        pg.forward(request, response);
-                    }  else {
-                        check = 2;
-                        request.setAttribute("check", check);
-                        RequestDispatcher pg = request.getRequestDispatcher("index.jsp");
-                        pg.forward(request, response);
-                    }
+            int check = 0;
+            if(type == 2){
+                check = 4;
+            }else if(type == 1)
+                check = 5;
+            Member member = new Member(conn);
+            member.register(firstname, lastname, username, password, email, phone, type);
+            request.setAttribute("check", check);
+            RequestDispatcher pg = request.getRequestDispatcher("index.jsp");
+            pg.forward(request, response);
 
-                }  else {
-                    check = 3;
-                    request.setAttribute("check", check);
-                    RequestDispatcher pg = request.getRequestDispatcher("index.jsp");
-                    pg.forward(request, response);
-                }
-
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
         }
     }
 
