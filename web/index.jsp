@@ -147,7 +147,10 @@
 
             </div>
         </div>
-        <% int check = (int) request.getAttribute("check"); %>
+        <% int check = 0;
+            if (request.getAttribute("check") != null) {
+                check = (int) request.getAttribute("check");
+            } %>
         <div id="loginerrorModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
                 <!-- Login Modal content-->
@@ -203,7 +206,7 @@
                 </div>
             </div>
         </div>
-        <% if (check == 2 || check == 3){ %>
+        <% if (check == 2 || check == 3) { %>
         <script type="text/javascript">
             $(document).ready(function () {
                 $('#loginerrorModal').modal('show');
