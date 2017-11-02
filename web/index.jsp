@@ -70,8 +70,16 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title">Login</h4>
+                        <h4 class="modal-title step-1" data-step="1">Step 1</h4>
+                        <h4 class="modal-title step-2" data-step="2">Step 2</h4>
                     </div>
                     <div class="modal-body">
+                        <div class="modal-body step step-1">
+                            This is step 1.
+                        </div>
+                        <div class="modal-body step step-2">
+                            This is the final step
+                        </div>
                         <form action="LoginServlet" method="post">
                             <div class="form-group">
                                 <label for="username">Username</label>
@@ -89,6 +97,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary step step-1" data-step="1" onclick="sendEvent('#demo-modal-1', 2)">Continue</button>
                     </div>
                 </div>
             </div>
@@ -162,9 +171,9 @@
                     <div class="modal-body">
                         <form action="LoginServlet" method="post">
                             <% if (check == 2) {%>
-                            <h3 style="text-align: center;color: red;">กรอกรหัสผ่านผิด</h3>
+                            <h3 style="text-align: center;color: red;">Incorrect your password. Please try again</h3>
                             <%} else if (check == 3) {%>
-                            <h3 style="text-align: center;color: red;">ไม่พบชื่อผู้ใช้นี้</h3><%}%>
+                            <h3 style="text-align: center;color: red;">Username not found. Please try again.</h3><%}%>
                             <div class="form-group">
                                 <label for="username">Username</label>
                                 <input type="text" class="form-control" id="username" name="username">
@@ -219,5 +228,11 @@
             });
         </script>
         <%}%>
+        <script src="js/multi-step-modal.js"></script>
+        <script>
+        sendEvent = function(sel, step) {
+        $(sel).trigger('next.m.' + step);
+        }
+</script>
     </body>
 </html>
