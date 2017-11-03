@@ -70,16 +70,8 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title">Login</h4>
-                        <h4 class="modal-title step-1" data-step="1">Step 1</h4>
-                        <h4 class="modal-title step-2" data-step="2">Step 2</h4>
                     </div>
                     <div class="modal-body">
-                        <div class="modal-body step step-1">
-                            This is step 1.
-                        </div>
-                        <div class="modal-body step step-2">
-                            This is the final step
-                        </div>
                         <form action="LoginServlet" method="post">
                             <% if (check == 2) {%>
                             <h3 style="text-align: center;color: red;">กรอกรหัสผ่านผิด</h3>
@@ -114,11 +106,13 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Sign up</h4>
+                        <h4 class="modal-title register-modal-step1">Sign up : Step 1</h4>
+                        <h4 class="modal-title register-modal-step2">Sign up : Step 2</h4>
                     </div>
                     <div class="modal-body">
-                        <p> Please enter your information in to the fill.
                         <form action="RegisterServlet" method="post">
+                            <div class=" register-modal-step1">
+                        <p>Please enter your information in to the fill.</p>
                             <div class="form-group">
                                 <label for="firstname">First name</label>
                                 <input type="text" class="form-control" id="firstname" name="firstname">
@@ -150,11 +144,24 @@
                                 <li><input type="radio" id="lessor" name="who-selector" value="1">
                                     <label for="lessor">Lessor</label></li>
                             </ul><br>
+                            <button type="button" class="btn btn-default" id="button-register-nextstep">Next</button>
+                        </div>
+                        <div class="register-modal-step2">
+                            <p>Just few step up! Upload file to identity yours.</p>
+                            <p>ID Cards image file</p>
+                            <p>Image file size should be smaller than 1 MB</p>
+                            <input type="file" name="idcardfile"/>
+                            <p>Profile image</p>
+                            <input type="file" name="profilefile"/>
+                            
+                    
                             <button type="Sign Up!" class="btn btn-default">Submit</button>
+                        </div>
                         </form>
+                    </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" id="button-register-close">Close</button>
                     </div>
                 </div>
 
@@ -173,8 +180,7 @@
                     <div class="modal-body">
                         <% if (check == 4) {%>
                         สมัครสามาชิกเรียบร้อย
-                        <%} else if (check == 5) {%>
-                        รอการยืนยันจากadmin<%}%>
+                        <%}%>
 
                     </div>
                     <div class="modal-footer">
@@ -189,18 +195,35 @@
                 $('#loginModal').modal('show');
             });
         </script>
-        <%} else if (check == 4 || check == 5) {%>
+        <%} else if (check == 4) {%>
         <script type="text/javascript">
             $(document).ready(function () {
                 $('#regiserrorModal').modal('show');
             });
         </script>
         <%}%>
-        <script src="js/multi-step-modal.js"></script>
-        <script>
-        sendEvent = function(sel, step) {
-        $(sel).trigger('next.m.' + step);
-        }
-</script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $(".register-modal-step2").hide();
+            });
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $("#button-register-nextstep").click(function(){
+                    $(".register-modal-step1").hide();
+                    $(".register-modal-step2").show();
+                });
+            });
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $("#button-register-close").click(function(){
+                    $(".register-modal-step1").delay(1000).show(0);
+                    $(".register-modal-step2").delay(1000).hide(0);
+                });
+            });
+        </script>
+        
+
     </body>
 </html>
