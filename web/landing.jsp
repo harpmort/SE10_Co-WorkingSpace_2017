@@ -52,8 +52,8 @@
                 <center><p class="head-name">CO-WORKING SPACE</p>
                     <div class="row">
                         <div class="col-md-12">
-                            <h2><input class="search-input" type="text" name="search" value="" placeholder="ค้นหา ..."/>
-                                <a href="result.html">
+                            <h2><input class="search-input" type="text" name="search" value="" placeholder=" searching . . ."/>
+                                <a href="search.jsp">
                                     <img alt="search" src="img/search1.png" style="width: 40px">
                                 </a></h2>
                         </div>

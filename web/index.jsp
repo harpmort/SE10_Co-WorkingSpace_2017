@@ -21,7 +21,7 @@
         <nav class="navbar navbar-default navbar-edit navbar-static-top">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand brand-edit" href="index.html">
+                    <a class="navbar-brand brand-edit" href="index.jsp">
                         <img alt="Brand" src="img/brand.png" style="width: 78px">
                     </a>
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mynavbar">
@@ -47,8 +47,8 @@
                 <center><p class="head-name">CO-WORKING SPACE</p>
                     <div class="row">
                         <div class="col-md-12">
-                            <h2><input class="search-input" type="text" name="search" value="" placeholder="ค้นหา ..." />
-                                <a href="result.html">
+                            <h2><input class="search-input" type="text" name="search" value="" placeholder=" searching..." />
+                                <a href="search.jsp">
                                     <img alt="search" src="img/search1.png" style="width: 40px">
                                 </a></h2>
 
@@ -58,10 +58,10 @@
                 </center>
             </div>
         </div>
-        <!--  <div class="col-md-2"></div>
-         <div class="col-md-8">
-         </div>
-         <div class="col-md-2"></div> -->
+        <% int check = 0;
+            if (request.getAttribute("check") != null) {
+                check = (int) request.getAttribute("check");
+            } %>
         <!-- Login Modal -->
         <div id="loginModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
@@ -73,6 +73,10 @@
                     </div>
                     <div class="modal-body">
                         <form action="LoginServlet" method="post">
+                            <% if (check == 2) {%>
+                            <h3 style="text-align: center;color: red;">กรอกรหัสผ่านผิด</h3>
+                            <%} else if (check == 3) {%>
+                            <h3 style="text-align: center;color: red;">ไม่พบชื่อผู้ใช้นี้</h3><%}%>
                             <div class="form-group">
                                 <label for="username">Username</label>
                                 <input type="text" class="form-control" id="username" name="username">
@@ -147,44 +151,8 @@
 
             </div>
         </div>
-        <% int check = 0;
-            if (request.getAttribute("check") != null) {
-                check = (int) request.getAttribute("check");
-            } %>
-        <div id="loginerrorModal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-                <!-- Login Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Login</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form action="LoginServlet" method="post">
-                            <% if (check == 2) {%>
-                            <h3 style="text-align: center;color: red;">กรอกรหัสผ่านผิด</h3>
-                            <%} else if (check == 3) {%>
-                            <h3 style="text-align: center;color: red;">ไม่พบชื่อผู้ใช้นี้</h3><%}%>
-                            <div class="form-group">
-                                <label for="username">Username</label>
-                                <input type="text" class="form-control" id="username" name="username">
-                            </div>
-                            <div class="form-group">
-                                <label for="password">Password</label>
-                                <input type="password" class="form-control" id="password" name="password">
-                            </div>
-                            <div class="checkbox">
-                                <label><input type="checkbox" name="remember"> Remember me</label>
-                            </div>
-                            <center><button type="Login" class="btn btn-default">Submit</button></center>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+
         <div id="regiserrorModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
                 <!-- Login Modal content-->
@@ -209,7 +177,7 @@
         <% if (check == 2 || check == 3) { %>
         <script type="text/javascript">
             $(document).ready(function () {
-                $('#loginerrorModal').modal('show');
+                $('#loginModal').modal('show');
             });
         </script>
         <%} else if (check == 4 || check == 5) {%>

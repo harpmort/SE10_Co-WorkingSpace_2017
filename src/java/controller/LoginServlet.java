@@ -48,7 +48,6 @@ public class LoginServlet extends HttpServlet {
             String username = request.getParameter("username");
             String password = request.getParameter("password");
             int check = 0;
-            int type_authen = 1 ;
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
             HttpSession session = request.getSession();
@@ -60,6 +59,8 @@ public class LoginServlet extends HttpServlet {
                     if (password.equals(rs.getString("password"))) {
                         Member member = new Member(conn);
                         member.importData(username, password);
+                        check = 1;
+                        session.setAttribute("check", check);
                         session.setAttribute("member", member);
                         RequestDispatcher pg = request.getRequestDispatcher("landing.jsp");
                         pg.forward(request, response);
