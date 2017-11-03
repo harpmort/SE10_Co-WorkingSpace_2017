@@ -53,11 +53,7 @@ public class RegisterServlet extends HttpServlet {
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
             HttpSession session = request.getSession();
-            int check = 0;
-            if(type == 2){
-                check = 4;
-            }else if(type == 1)
-                check = 5;
+            int check = 4;
             Member member = new Member(conn);
             member.register(firstname, lastname, username, password, email, phone, type);
             request.setAttribute("check", check);
