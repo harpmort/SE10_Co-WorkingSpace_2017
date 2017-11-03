@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: db_coworkingspace
 -- ------------------------------------------------------
--- Server version	5.7.17-log
+-- Server version	5.7.20-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,31 +16,37 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `admin`
+-- Table structure for table `booking`
 --
 
-DROP TABLE IF EXISTS `admin`;
+DROP TABLE IF EXISTS `booking`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `admin` (
-  `idadmin` int(4) unsigned zerofill NOT NULL AUTO_INCREMENT,
-  `firstname` varchar(100) DEFAULT NULL,
-  `lastname` varchar(100) DEFAULT NULL,
-  `username` varchar(45) DEFAULT NULL,
-  `password` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`idadmin`),
-  UNIQUE KEY `idadmin_UNIQUE` (`idadmin`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+CREATE TABLE `booking` (
+  `idbooking` int(6) unsigned zerofill NOT NULL AUTO_INCREMENT,
+  `date` date DEFAULT NULL,
+  `begin_time` varchar(45) DEFAULT NULL,
+  `end_time` varchar(45) DEFAULT NULL,
+  `desk_booking` int(11) DEFAULT NULL,
+  `fk_idmember` int(4) unsigned zerofill DEFAULT NULL,
+  `fk_idspace` int(4) unsigned zerofill DEFAULT NULL,
+  PRIMARY KEY (`idbooking`),
+  UNIQUE KEY `id_booking_UNIQUE` (`idbooking`),
+  KEY `fk_idmember_idx` (`fk_idmember`),
+  KEY `booking_ibfk_1` (`fk_idspace`),
+  CONSTRAINT `booking_ibfk_1` FOREIGN KEY (`fk_idspace`) REFERENCES `co_working_space` (`idspace`),
+  CONSTRAINT `fk_idmember` FOREIGN KEY (`fk_idmember`) REFERENCES `member` (`idmember`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `admin`
+-- Dumping data for table `booking`
 --
 
-LOCK TABLES `admin` WRITE;
-/*!40000 ALTER TABLE `admin` DISABLE KEYS */;
-INSERT INTO `admin` VALUES (0001,'Ratima','Chinbuasuwan','ratimaa','ratimaa'),(0002,'Vipuwat','Kampalanon','harpmort','harpmort');
-/*!40000 ALTER TABLE `admin` ENABLE KEYS */;
+LOCK TABLES `booking` WRITE;
+/*!40000 ALTER TABLE `booking` DISABLE KEYS */;
+INSERT INTO `booking` VALUES (000001,'2017-11-03','09.00','10.00',1,0001,0001),(000002,'2017-11-07','16.00','17.00',4,0003,0002),(000003,'2017-11-07','14.00','15.00',1,0002,0001);
+/*!40000 ALTER TABLE `booking` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -56,9 +62,16 @@ CREATE TABLE `co_working_space` (
   `location` varchar(200) DEFAULT NULL,
   `idtype_room` int(11) DEFAULT NULL,
   `idtype_desk` int(11) DEFAULT NULL,
-  `amount_desk` varchar(45) DEFAULT NULL,
-  `price` int(11) DEFAULT NULL,
+  `total_desk` varchar(45) DEFAULT NULL,
+  `amount_desk` int(11) DEFAULT NULL,
   `description` varchar(200) DEFAULT NULL,
+  `size_room` varchar(45) DEFAULT NULL,
+  `open_time` int(11) DEFAULT NULL,
+  `close_time` varchar(45) DEFAULT NULL,
+  `amount_people` varchar(45) DEFAULT NULL,
+  `price` int(11) DEFAULT NULL,
+  `rating` int(11) GENERATED ALWAYS AS (0) VIRTUAL,
+  `num_of_review` int(11) GENERATED ALWAYS AS (0) VIRTUAL,
   PRIMARY KEY (`idspace`),
   UNIQUE KEY `idspace_UNIQUE` (`idspace`),
   KEY `idtype_room_idx` (`idtype_room`),
@@ -74,36 +87,41 @@ CREATE TABLE `co_working_space` (
 
 LOCK TABLES `co_working_space` WRITE;
 /*!40000 ALTER TABLE `co_working_space` DISABLE KEYS */;
-INSERT INTO `co_working_space` VALUES (0001,'muayland','LKB 32 Bangkok',1,2,'1',200,'wifi. parking, air conditioner'),(0002,'boyland','suan siam Bangkok',2,1,'4',500,'wifi. parking, air conditioner, board');
+INSERT INTO `co_working_space` (`idspace`, `name`, `location`, `idtype_room`, `idtype_desk`, `total_desk`, `amount_desk`, `description`, `size_room`, `open_time`, `close_time`, `amount_people`, `price`) VALUES (0001,'muayland','LKB 32 Bangkok',1,2,'10',10,'wifi. parking, air conditioner','40',NULL,'09.00-18.00','1',200),(0002,'boyland','suan siam Bangkok',2,1,'4',4,'wifi. parking, air conditioner, board','20',NULL,'09.00-18.00','8',500);
 /*!40000 ALTER TABLE `co_working_space` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `list_supply`
+-- Table structure for table `history`
 --
 
-DROP TABLE IF EXISTS `list_supply`;
+DROP TABLE IF EXISTS `history`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `list_supply` (
-  `idls` int(11) NOT NULL AUTO_INCREMENT,
-  `firstname` varchar(100) DEFAULT NULL,
-  `lastname` varchar(100) DEFAULT NULL,
-  `username` varchar(100) DEFAULT NULL,
-  `password` varchar(100) DEFAULT NULL,
-  `email` varchar(100) DEFAULT NULL,
-  `phone` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`idls`)
+CREATE TABLE `history` (
+  `idhistory` int(7) unsigned zerofill NOT NULL,
+  `date` date DEFAULT NULL,
+  `begin_time` varchar(45) DEFAULT NULL,
+  `end_time` varchar(45) DEFAULT NULL,
+  `desk_booking` int(11) DEFAULT NULL,
+  `fk_idmember` int(4) unsigned zerofill DEFAULT NULL,
+  `fk_idspace` int(4) unsigned zerofill DEFAULT NULL,
+  PRIMARY KEY (`idhistory`),
+  UNIQUE KEY `idhistory_UNIQUE` (`idhistory`),
+  KEY `history_ibfk_1` (`fk_idspace`),
+  KEY `history_ibfk_2` (`fk_idmember`),
+  CONSTRAINT `history_ibfk_1` FOREIGN KEY (`fk_idspace`) REFERENCES `co_working_space` (`idspace`),
+  CONSTRAINT `history_ibfk_2` FOREIGN KEY (`fk_idmember`) REFERENCES `member` (`idmember`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `list_supply`
+-- Dumping data for table `history`
 --
 
-LOCK TABLES `list_supply` WRITE;
-/*!40000 ALTER TABLE `list_supply` DISABLE KEYS */;
-/*!40000 ALTER TABLE `list_supply` ENABLE KEYS */;
+LOCK TABLES `history` WRITE;
+/*!40000 ALTER TABLE `history` DISABLE KEYS */;
+/*!40000 ALTER TABLE `history` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -249,4 +267,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-10-27 22:36:08
+-- Dump completed on 2017-11-03 17:00:35
