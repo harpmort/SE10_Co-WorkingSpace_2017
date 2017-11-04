@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  *
@@ -24,11 +26,26 @@ public class Member {
     private String email;
     private String phone;
     private int type;
+    
+    List<Member> lbooking_user;
+    private String idbooking;
+    private String location_name;
+    private String date;
+    private String begin_time;
+    private String end_time;
+    private String desk_booking;
 
     Connection conn;
 
+    public Member() {
+    }
     public Member(Connection connection) {
         conn = connection;
+        lbooking_user = new LinkedList<Member>();
+    }
+    
+    public List<Member> getLbooking_user() {
+        return lbooking_user;
     }
 
     public void importData(String username, String password) {
@@ -44,7 +61,7 @@ public class Member {
                     lastname = rs.getString("lastname");
                     email = rs.getString("email");
                     phone = rs.getString("phone");
-                    type = rs.getInt("type");
+                    type = rs.getInt("idtype_member");
                 }
             }
         } catch (SQLException ex) {
@@ -65,6 +82,34 @@ public class Member {
                         + "VALUES ('" + firstname + "', '" + lastname + "', '" + username + "', '" + password + "', '" + email + "', '" + phone + "');";
                 stmt.executeUpdate(sql);
 
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void viewListbooking(String username) {
+        try {
+            Statement stmt = conn.createStatement();
+            String sql = "SELECT b.idbooking,c.name,m.username,b.date,b.begin_time,b.end_time,b.desk_booking\n"
+                    + "FROM booking b\n"
+                    + "join member m \n"
+                    + "on b.fk_idmember = m.idmember\n"
+                    + "join co_working_space c\n"
+                    + "on b.fk_idspace = c.idspace\n"
+                    + "where m.username = '" + username + "';";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()){
+                Member lb = new Member();
+                lb.setIdbooking(rs.getString("b.idbooking"));
+                lb.setLocation_name(rs.getString("c.name"));
+                lb.setUsername(rs.getString("m.username"));
+                lb.setDate(rs.getString("b.date"));
+                lb.setBegin_time(rs.getString("b.begin_time"));
+                lb.setEnd_time(rs.getString("b.end_time"));
+                lb.setDesk_booking(rs.getString("b.desk_booking"));
+                lbooking_user.add(lb);
             }
             
         } catch (SQLException ex) {
@@ -135,5 +180,55 @@ public class Member {
     public void setType(int type) {
         this.type = type;
     }
+
+    public String getIdbooking() {
+        return idbooking;
+    }
+
+    public void setIdbooking(String idbooking) {
+        this.idbooking = idbooking;
+    }
+
+    public String getLocation_name() {
+        return location_name;
+    }
+
+    public void setLocation_name(String location_name) {
+        this.location_name = location_name;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getBegin_time() {
+        return begin_time;
+    }
+
+    public void setBegin_time(String begin_time) {
+        this.begin_time = begin_time;
+    }
+
+    public String getEnd_time() {
+        return end_time;
+    }
+
+    public void setEnd_time(String end_time) {
+        this.end_time = end_time;
+    }
+
+    public String getDesk_booking() {
+        return desk_booking;
+    }
+
+    public void setDesk_booking(String desk_booking) {
+        this.desk_booking = desk_booking;
+    }
+    
+    
 
 }

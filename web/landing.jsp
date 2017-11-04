@@ -34,10 +34,9 @@
                 </div>
                 <div class="collapse navbar-collapse" id="mynavbar">
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="menu-bar"><a href="#">Link</a></li>
-                        <li class="menu-bar"><a href="#">Link</a></li>
-                        <li class="menu-bar"><a href="#">Link</a></li>
-                        <li class="menu-bar"><a href="#">Link</a></li>
+                        <li class="menu-bar"><a href="index.jsp">HOME</a></li>
+                        <li class="menu-bar"><a href="BookingServlet">List Booking</a></li>
+                        <li class="menu-bar"><a href="#">History</a></li>
                             <%model.Member member = (model.Member) session.getAttribute("member");%>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle menu-bar" data-toggle="dropdown"><%= member.getUsername()%><strong class="caret"></strong></a>

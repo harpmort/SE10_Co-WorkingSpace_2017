@@ -33,8 +33,21 @@
                 </div>
                 <div class="collapse navbar-collapse" id="mynavbar">
                     <ul class="nav navbar-nav navbar-right">
-                        <button type="button" class="btn btn-default navbar-btn margin-3px"><a href="LogoutServlet">Logout</a></button>
-
+                        <li class="menu-bar"><a href="index.jsp">HOME</a></li>
+                        <li class="menu-bar"><a href="BookingServlet">List Booking</a></li>
+                        <li class="menu-bar"><a href="#">History</a></li>
+                            <%model.Member member = (model.Member) session.getAttribute("member");%>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle menu-bar" data-toggle="dropdown"><%= member.getUsername()%><strong class="caret"></strong></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="Profile.jsp">View Profile</a>
+                                </li>
+                                <li>
+                                    <a href="LogoutServlet">Logout</a>
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -60,59 +73,35 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>
-                                            ID_Booking
-                                        </th>
-                                        <th>
-                                            ชื่อสถานที่
-                                        </th>
-                                        <th>
-                                            ชื่อผู้จอง
-                                        </th>
-                                        <th>
-                                            วันที่จอง
-                                        </th>
-                                        <th>
-                                            เวลาเริ่ม
-                                        </th>
-                                        <th>
-                                            เวลาจบ
-                                        </th>
-                                        <th>
-                                            จำนวนโต๊ะที่จอง
-                                        </th>
-                                        <th>
-                                            ยกเลิกการจอง
-                                        </th>
+                                        <th>ID_Booking</th>
+                                        <th>ชื่อสถานที่</th>
+                                        <th>ชื่อผู้จอง</th>
+                                        <th>วันที่จอง</th>
+                                        <th>เวลาเริ่ม</th>
+                                        <th>เวลาจบ</th>
+                                        <th>จำนวนโต๊ะที่จอง</th>
+                                        <th>ยกเลิกการจอง</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>
-                                            0125
+                                    <c:forEach var="row" items="${sessionScope.member.lbooking_user}">
+                                        <tr class="success">
+                                            <td>${row.idbooking}</td>
+                                            <td>${row.location_name}</td>
+                                            <td>${row.username}</td>
+                                            <td>${row.date}</td>
+                                            <td>${row.begin_time}</td>
+                                            <td>${row.end_time}</td>
+                                            <td>${row.desk_booking}</td>
+                                    <form action="CancelbookingServlet" method="POST">
+                                        <td class="success">
+                                            <button class="btn btn-sm btn-info" type="submit" name="idbooking" value="${row.idbooking}">
+                                                ยกเลิก
+                                            </button>
                                         </td>
-                                        <td>
-                                            ห้องประชุมโลเล
-                                        </td>
-                                        <td>
-                                            POLOYAH
-                                        </td>
-                                        <td>
-                                            21 พ.ย. 2016
-                                        </td>
-                                        <td>
-                                            09.00
-                                        </td>
-                                        <td>
-                                            18.00
-                                        </td>
-                                        <td>
-                                            5
-                                        </td>
-                                        <td>
-                                            <input type="submit" value="cancel" name="ยกเลิก" />
-                                        </td>
+                                    </form>
                                     </tr>
+                                </c:forEach>
                                 </tbody>
                             </table>
                         </div>
