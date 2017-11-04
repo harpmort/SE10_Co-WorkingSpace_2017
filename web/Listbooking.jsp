@@ -33,7 +33,7 @@
                 </div>
                 <div class="collapse navbar-collapse" id="mynavbar">
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="menu-bar"><a href="index.jsp">HOME</a></li>
+                        <li class="menu-bar"><a href="landing.jsp">HOME</a></li>
                         <li class="menu-bar"><a href="BookingServlet">List Booking</a></li>
                         <li class="menu-bar"><a href="#">History</a></li>
                             <%model.Member member = (model.Member) session.getAttribute("member");%>
@@ -84,7 +84,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <c:forEach var="row" items="${sessionScope.member.lbooking_user}">
+                                    <c:forEach var="row" items="${sessionScope.viewbooking.lbooking_user}">
                                         <tr class="success">
                                             <td>${row.idbooking}</td>
                                             <td>${row.location_name}</td>

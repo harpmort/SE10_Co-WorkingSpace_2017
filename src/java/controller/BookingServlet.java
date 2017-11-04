@@ -45,8 +45,9 @@ public class BookingServlet extends HttpServlet {
             Connection conn = (Connection) ctx.getAttribute("connection");
             HttpSession session = request.getSession();
             Member member = (Member) session.getAttribute("member");
-            System.out.println("user :"+ member.getUsername());
-            member.viewListbooking(member.getUsername());
+            Member viewbooking = new Member(conn);
+            viewbooking.viewListbooking(member.getUsername());
+            session.setAttribute("viewbooking", viewbooking);
             RequestDispatcher pg = request.getRequestDispatcher("Listbooking.jsp");
             pg.forward(request, response);
 
