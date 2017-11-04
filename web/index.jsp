@@ -47,12 +47,11 @@
                 <center><p class="head-name">CO-WORKING SPACE</p>
                     <div class="row">
                         <div class="col-md-12">
-                            <h2><input class="search-input" type="text" name="search" value="" placeholder=" searching..." />
-                                <a href="search.jsp">
-                                    <img alt="search" src="img/search1.png" style="width: 40px">
-                                </a></h2>
-
-
+                            <form action="SearchServlet" method="POST">
+                                <h2><input class="search-input" type="text" name="search" value="" placeholder=" searching..." />
+                                    <input type="submit" value="" name="search" />
+                                </h2>
+                            </form>
                         </div>
                     </div>
                 </center>
@@ -112,53 +111,53 @@
                     <div class="modal-body">
                         <form action="RegisterServlet" method="post">
                             <div class=" register-modal-step1">
-                        <p>Please enter your information in to the fill.</p>
-                            <div class="form-group">
-                                <label for="firstname">First name</label>
-                                <input type="text" class="form-control" id="firstname" name="firstname">
+                                <p>Please enter your information in to the fill.</p>
+                                <div class="form-group">
+                                    <label for="firstname">First name</label>
+                                    <input type="text" class="form-control" id="firstname" name="firstname">
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastname">Last name</label>
+                                    <input type="text" class="form-control" id="lastname" name="lastname">
+                                </div>
+                                <div class="form-group">
+                                    <label for="username">Username</label>
+                                    <input type="text" class="form-control" id="username" name="username">
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">Password</label>
+                                    <input type="password" class="form-control" id="password" name="password">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Phone</label>
+                                    <input type="text" class="form-control" id="phone" name="phone">
+                                </div>
+                                <p>Who are you?</p>
+                                <ul class="who-selector-register">
+                                    <li><input type="radio" id="rental" name="who-selector" value="2">
+                                        <label for="rental">Rental</label></li>
+                                    <li><input type="radio" id="lessor" name="who-selector" value="1">
+                                        <label for="lessor">Lessor</label></li>
+                                </ul><br>
+                                <button type="button" class="btn btn-default" id="button-register-nextstep">Next</button>
                             </div>
-                            <div class="form-group">
-                                <label for="lastname">Last name</label>
-                                <input type="text" class="form-control" id="lastname" name="lastname">
+                            <div class="register-modal-step2">
+                                <p>Just few step up! Upload file to identity yours.</p>
+                                <p>ID Cards image file</p>
+                                <p>Image file size should be smaller than 1 MB</p>
+                                <input type="file" name="idcardfile"/>
+                                <p>Profile image</p>
+                                <input type="file" name="profilefile"/>
+
+
+                                <button type="Sign Up!" class="btn btn-default">Submit</button>
                             </div>
-                            <div class="form-group">
-                                <label for="username">Username</label>
-                                <input type="text" class="form-control" id="username" name="username">
-                            </div>
-                            <div class="form-group">
-                                <label for="password">Password</label>
-                                <input type="password" class="form-control" id="password" name="password">
-                            </div>
-                            <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="email" class="form-control" id="email" name="email">
-                            </div>
-                            <div class="form-group">
-                                <label for="phone">Phone</label>
-                                <input type="text" class="form-control" id="phone" name="phone">
-                            </div>
-                            <p>Who are you?</p>
-                            <ul class="who-selector-register">
-                                <li><input type="radio" id="rental" name="who-selector" value="2">
-                                    <label for="rental">Rental</label></li>
-                                <li><input type="radio" id="lessor" name="who-selector" value="1">
-                                    <label for="lessor">Lessor</label></li>
-                            </ul><br>
-                            <button type="button" class="btn btn-default" id="button-register-nextstep">Next</button>
-                        </div>
-                        <div class="register-modal-step2">
-                            <p>Just few step up! Upload file to identity yours.</p>
-                            <p>ID Cards image file</p>
-                            <p>Image file size should be smaller than 1 MB</p>
-                            <input type="file" name="idcardfile"/>
-                            <p>Profile image</p>
-                            <input type="file" name="profilefile"/>
-                            
-                    
-                            <button type="Sign Up!" class="btn btn-default">Submit</button>
-                        </div>
                         </form>
-                    </form>
+                        </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal" id="button-register-close">Close</button>
@@ -203,27 +202,27 @@
         </script>
         <%}%>
         <script type="text/javascript">
-            $(document).ready(function(){
+            $(document).ready(function () {
                 $(".register-modal-step2").hide();
             });
         </script>
         <script type="text/javascript">
-            $(document).ready(function(){
-                $("#button-register-nextstep").click(function(){
+            $(document).ready(function () {
+                $("#button-register-nextstep").click(function () {
                     $(".register-modal-step1").hide();
                     $(".register-modal-step2").show();
                 });
             });
         </script>
         <script type="text/javascript">
-            $(document).ready(function(){
-                $("#button-register-close").click(function(){
+            $(document).ready(function () {
+                $("#button-register-close").click(function () {
                     $(".register-modal-step1").delay(1000).show(0);
                     $(".register-modal-step2").delay(1000).hide(0);
                 });
             });
         </script>
-        
+
 
     </body>
 </html>

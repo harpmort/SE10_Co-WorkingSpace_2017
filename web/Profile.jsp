@@ -33,7 +33,7 @@
                 </div>
                 <div class="collapse navbar-collapse" id="mynavbar">
                     <ul class="nav navbar-nav navbar-right">
-                        <button type="button" class="btn btn-default navbar-btn margin-3px" data-toggle="modal" data-target="#loginModal">Logout</button>
+                        <button type="button" class="btn btn-default navbar-btn margin-3px"><a href="LogoutServlet">Logout</a></button>
 
                     </ul>
                 </div>

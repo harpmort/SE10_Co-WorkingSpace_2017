@@ -36,7 +36,7 @@
                     <li><a href="#">Link</a></li>
                     <li><a href="#">Link</a></li>
                     <li><a href="#">Link</a></li>
-                    <button type="button" class="btn btn-default navbar-btn margin-3px" data-toggle="modal" data-target="#loginModal">Logout</button>
+                    <button type="button" class="btn btn-default navbar-btn margin-3px"><a href="LogoutServlet">Logout</a></button>
 
                 </ul>
             </div>

@@ -34,13 +34,22 @@
                 </div>
                 <div class="collapse navbar-collapse" id="mynavbar">
                     <ul class="nav navbar-nav navbar-right">
-
                         <li class="menu-bar"><a href="#">Link</a></li>
                         <li class="menu-bar"><a href="#">Link</a></li>
                         <li class="menu-bar"><a href="#">Link</a></li>
                         <li class="menu-bar"><a href="#">Link</a></li>
-                        <%model.Member member = (model.Member) session.getAttribute("member");%>
-                        <li class="menu-bar"><a href="#"><%= member.getUsername()%></a></li>
+                            <%model.Member member = (model.Member) session.getAttribute("member");%>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle menu-bar" data-toggle="dropdown"><%= member.getUsername()%><strong class="caret"></strong></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="Profile.jsp">View Profile</a>
+                                </li>
+                                <li>
+                                    <a href="LogoutServlet">Logout</a>
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -53,6 +62,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <h2><input class="search-input" type="text" name="search" value="" placeholder=" searching . . ."/>
+                                <!--ต้องมีเซิพเลตและส่งค่า check มาด้วย-->
                                 <a href="search.jsp">
                                     <img alt="search" src="img/search1.png" style="width: 40px">
                                 </a></h2>
