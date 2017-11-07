@@ -49,9 +49,12 @@
                     <div class="row">
                         <div class="col-md-12">
                             <form action="SearchServlet" method="POST">
-                                <h2><input class="search-input" type="text" name="search" value="" placeholder=" searching..." />
-                                    <input type="submit" value="" name="search" />
-                                </h2>
+                                
+                                <div class="row input-group search-bar">
+                                           <input name="search" type="text" class="form-control" placeholder="Searching..." />
+                                           <span class="input-group-btn">
+                                               <button class="btn btn-default btn-search" type="submit"> <span class="glyphicon glyphicon-search"></span> </button>
+                                           </span></div>
                             </form>
                         </div>
                     </div>
@@ -114,35 +117,29 @@
                             <div class=" register-modal-step1">
                                 <p>Please enter your information in to the fill.</p>
                                 <p id="errorregister-m"></p>
-                                <div class="form-group" id="form_fname">
+                                <div class="form-group">
                                     <label for="firstname">First name</label>
                                     <input type="text" class="form-control" id="firstname" name="firstname">
-                                    <p class="errorregister-m" id="error_fname"></p>
                                 </div>
-                                <div class="form-group" id="form_lname">
+                                <div class="form-group">
                                     <label for="lastname">Last name</label>
                                     <input type="text" class="form-control" id="lastname" name="lastname">
-                                    <p class="errorregister-m" id="error_lname"></p>
                                 </div>
-                                <div class="form-group" id="form_uanme">
+                                <div class="form-group">
                                     <label for="username">Username</label>
-                                    <input type="text" class="form-control" id="username_r" name="username">
-                                    <p class="errorregister-m" id="error_uname"></p>
+                                    <input type="text" class="form-control" id="username" name="username">
                                 </div>
-                                <div class="form-group" id="form_pword">
+                                <div class="form-group">
                                     <label for="password">Password</label>
-                                    <input type="password" class="form-control" id="password_p" name="password">
-                                    <p class="errorregister-m" id="error_pword"></p>
+                                    <input type="password" class="form-control" id="password" name="password">
                                 </div>
-                                <div class="form-group" id="form_email">
+                                <div class="form-group">
                                     <label for="email">Email</label>
                                     <input type="email" class="form-control" id="email" name="email">
-                                    <p class="errorregister-m" id="error_email"></p>
                                 </div>
-                                <div class="form-group" id="form_phone">
+                                <div class="form-group">
                                     <label for="phone">Phone</label>
                                     <input type="text" class="form-control" id="phone" name="phone">
-                                    <p class="errorregister-m" id="error_phone"></p>
                                 </div>
                                 <div class="form-group">
                                     <label for="profileimg">Profile Image</label>
@@ -172,7 +169,6 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button id="back_bttn" type="button" class="btn btn-default" id="button-register-close">Back</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal" id="button-register-close">Close</button>
                     </div>
                 </div>
@@ -217,7 +213,6 @@
         <script type="text/javascript">
             $(document).ready(function () {
                 $(".register-modal-step2").hide();
-                $("#back_bttn").hide();
             });
         </script>
         <script type="text/javascript">
@@ -225,16 +220,6 @@
                 $("#button-register-nextstep").click(function () {
                     $(".register-modal-step1").hide();
                     $(".register-modal-step2").show();
-                    $("#back_bttn").show();
-                });
-            });
-        </script>
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $("#back_bttn").click(function () {
-                    $(".register-modal-step1").show();
-                    $(".register-modal-step2").hide();
-                    $("#back_bttn").hide();
                 });
             });
         </script>
@@ -243,54 +228,47 @@
                 $("#button-register-close").click(function () {
                     $(".register-modal-step1").delay(1000).show(0);
                     $(".register-modal-step2").delay(1000).hide(0);
-                    $("#back_bttn").delay(1000).hide(0);
                 });
             });
         </script>
         <script type="text/javascript">
-            var errortxt = "<p class=\"errorregister-m\">Required</p>";
+            var errortxt = "Some thing are missing! Please fill a form to complete";
             var firstname = $("#firstname").val;
-            var form_fname = $('#form_fname');
-            var form_lname = $('#form_lname');
-            var form_uname = $('#form_uname');
-            var form_pword = $('#form_pword');
-            var form_email = $('#form_email');
-            var form_phone = $('#form_phone');
             $(document).ready(function(){
                 $("#firstname").blur(function(){
                     if ($(this).val().length === 0){
-                        $("#error_fname").replaceWith(errortxt);
-                        form_fname.addClass('has-error', 'has-feedback');
+                        $("#errorregister-m").replaceWith(errortxt);
+                        $(this).parent().addClass('has-error');
                     }
                 });
                 $("#lastname").blur(function(){
                     if ($(this).val().length === 0){
-                        $("#error_lname").replaceWith(errortxt);
-                        form_lname.addClass('has-error', 'has-feedback');
+                        $("#errorregister-m").replaceWith(errortxt);
+                        $(this).parent().addClass('has-error');
                     }
                 });
-                $("#username_r").blur(function(){
+                $("#username").blur(function(){
                     if ($(this).val().length === 0){
-                        $("#error_uname").replaceWith(errortxt);
-                        form_uname.addClass('has-error', 'has-feedback');
+                        $("#errorregister-m").replaceWith(errortxt);
+                        $(this).parent().addClass('has-error');
                     }
                 });
-                $("#password_r").blur(function(){
+                $("#password").blur(function(){
                     if ($(this).val().length === 0){
-                        $("#error_pword").replaceWith(errortxt);
-                        form_pword.addClass('has-error', 'has-feedback');
+                        $("#errorregister-m").replaceWith(errortxt);
+                        $(this).parent().addClass('has-error');
                     }
                 });
                 $("#email").blur(function(){
                     if ($(this).val().length === 0){
-                        $("#error_email").replaceWith(errortxt);
-                        form_email.addClass('has-error', 'has-feedback');
+                        $("#errorregister-m").replaceWith(errortxt);
+                        $(this).parent().addClass('has-error');
                     }
                 });
                 $("#phone").blur(function(){
                     if ($(this).val().length === 0){
-                        $("#error_phone").replaceWith(errortxt);
-                        form_phone.addClass('has-error', 'has-feedback');
+                        $("#errorregister-m").replaceWith(errortxt);
+                        $(this).parent().addClass('has-error');
                     }
                 });
                 $("#idcardimg").blur(function(){

@@ -5,7 +5,6 @@
  */
 package controller;
 
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -20,8 +19,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.Member;
-
+import model.Lessor;
+import model.Rental;
 
 /**
  *
@@ -57,21 +56,27 @@ public class LoginServlet extends HttpServlet {
                 ResultSet rs = stmt.executeQuery(sql);
                 if (rs.next()) {
                     if (password.equals(rs.getString("password"))) {
-                        Member member = new Member(conn);
-                        member.importData(username, password);
+                        if (rs.getInt("idtype_member") == 2) {
+                            Rental rental = new Rental(conn);
+                            rental.importData(username, password);
+                            session.setAttribute("member", rental);
+                        } else if (rs.getInt("idtype_member") == 1) {
+                            Lessor lessor = new Lessor(conn);
+                            lessor.importData(username, password);
+                            session.setAttribute("member", lessor);
+                        }
                         check = 1;
                         session.setAttribute("check", check);
-                        session.setAttribute("member", member);
                         RequestDispatcher pg = request.getRequestDispatcher("landing.jsp");
                         pg.forward(request, response);
-                    }  else {
+                    } else {
                         check = 2;
                         request.setAttribute("check", check);
                         RequestDispatcher pg = request.getRequestDispatcher("index.jsp");
                         pg.forward(request, response);
                     }
 
-                }  else {
+                } else {
                     check = 3;
                     request.setAttribute("check", check);
                     RequestDispatcher pg = request.getRequestDispatcher("index.jsp");
