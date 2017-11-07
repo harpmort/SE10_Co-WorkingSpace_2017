@@ -49,9 +49,12 @@
                     <div class="row">
                         <div class="col-md-12">
                             <form action="SearchServlet" method="POST">
-                                <h2><input class="search-input" type="text" name="search" value="" placeholder=" searching..." />
-                                    <input type="submit" value="" name="search" />
-                                </h2>
+                                
+                                <div class="row input-group search-bar">
+                                           <input name="search" type="text" class="form-control" placeholder="Searching..." />
+                                           <span class="input-group-btn">
+                                               <button class="btn btn-default btn-search" type="submit"> <span class="glyphicon glyphicon-search"></span> </button>
+                                           </span></div>
                             </form>
                         </div>
                     </div>

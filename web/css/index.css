@@ -38,18 +38,12 @@
 	font-size: 70px !important;
 
 }
-.search-input{
-	border-radius: 5px;
-	border-style: groove;
-	vertical-align: bottom;
+
+.search-bar{
+    margin-top: 15px;
+    width: 400px;
 }
-.button-search{
-	font-size:20px;
-	font-family: "Prompt"; 
-	padding: 10px;
-	margin-top: 0px;
-	background-color: black; 
-}
+
 /*---------------Register Modal Box----------------------*/
 
 /*Radiobutton Who Selector */
@@ -154,3 +148,4 @@
 body {
 	font-family: 'Prompt', sans-serif !important;
 }
+
