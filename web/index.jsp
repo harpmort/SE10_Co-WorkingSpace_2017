@@ -12,7 +12,7 @@
         <meta charset="utf-8">
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="css/index.css">
-        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Prompt:300">
+        <link href="https://fonts.googleapis.com/css?family=Prompt" rel="stylesheet">
         <title>Co-Working-Space</title>
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
@@ -45,7 +45,7 @@
         <div class="head-bg-cover" >
 
             <div class="align-center">
-                <center><p class="head-name">CO-WORKING SPACE</p>
+                <center><p class="head-name">CO-WORKING SPACE้กด้</p>
                     <div class="row">
                         <div class="col-md-12">
                             <form action="SearchServlet" method="POST">

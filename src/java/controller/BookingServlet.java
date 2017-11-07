@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.Member;
+import model.Rental;
 
 
 /**
@@ -44,9 +44,9 @@ public class BookingServlet extends HttpServlet {
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
             HttpSession session = request.getSession();
-            Member member = (Member) session.getAttribute("member");
-            Member viewbooking = new Member(conn);
-            viewbooking.viewListbooking(member.getUsername());
+            Rental rental = (Rental) session.getAttribute("Rental");
+            Rental viewbooking = new Rental(conn);
+            viewbooking.viewListbooking(rental.getUsername());
             session.setAttribute("viewbooking", viewbooking);
             RequestDispatcher pg = request.getRequestDispatcher("Listbooking.jsp");
             pg.forward(request, response);
