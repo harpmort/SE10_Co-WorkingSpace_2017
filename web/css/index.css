@@ -117,3 +117,40 @@
 .w3-card-4,.w3-hover-shadow:hover{
 	box-shadow:0 4px 10px 0 rgba(0,0,0,0.2),0 4px 20px 0 rgba(0,0,0,0.19)
 }
+
+/*-----------------*/
+.zero-gap {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+.book-title {
+	background: #e0e0e0;
+}
+.book-bg {
+	background: lightgreen;
+}
+.book-margin {
+	margin-right: 10%;
+	margin-left: 10%;
+}
+.padding-top {
+	padding-top: 50px;
+}
+.btn-margin {
+	margin: 10px;
+}
+.margin-left{
+	margin-left: 10%;
+}
+.bg-column {
+	background-color: #e0e0e0;
+}
+.title-margin-top {
+	margin-top: 60px;
+}
+.nav-fixed-top {
+	position: fixed;
+}
+body {
+	font-family: 'Prompt', sans-serif !important;
+}
