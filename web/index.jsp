@@ -11,11 +11,12 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="index.css">
+        <link rel="stylesheet" type="text/css" href="css/index.css">
         <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Prompt:300">
         <title>Co-Working-Space</title>
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
+        <script src="https://www.google.com/recaptcha/api.js"></script>
     </head>
     <body>
         <nav class="navbar navbar-default navbar-edit navbar-static-top">
@@ -112,6 +113,7 @@
                         <form action="RegisterServlet" method="post">
                             <div class=" register-modal-step1">
                                 <p>Please enter your information in to the fill.</p>
+                                <p id="errorregister-m"></p>
                                 <div class="form-group">
                                     <label for="firstname">First name</label>
                                     <input type="text" class="form-control" id="firstname" name="firstname">
@@ -136,6 +138,10 @@
                                     <label for="phone">Phone</label>
                                     <input type="text" class="form-control" id="phone" name="phone">
                                 </div>
+                                <div class="form-group">
+                                    <label for="profileimg">Profile Image</label>
+                                    <input type="file" id="profileimg" name="profileimg"/>
+                                </div>
                                 <p>Who are you?</p>
                                 <ul class="who-selector-register">
                                     <li><input type="radio" id="rental" name="who-selector" value="2">
@@ -146,15 +152,15 @@
                                 <button type="button" class="btn btn-default" id="button-register-nextstep">Next</button>
                             </div>
                             <div class="register-modal-step2">
-                                <p>Just few step up! Upload file to identity yours.</p>
-                                <p>ID Cards image file</p>
-                                <p>Image file size should be smaller than 1 MB</p>
-                                <input type="file" name="idcardfile"/>
-                                <p>Profile image</p>
-                                <input type="file" name="profilefile"/>
+                                <p>Upload file to identity yours.</p>
+                                <div class="form-group">
+                                    <label for="idcardimg">ID Card Image</label>
+                                    <p>Image file size should be smaller than 1 MB</p>
+                                    <input type="file" name="idcardfile"/>
+                                </div>
+                                <div class="g-recaptcha" data-sitekey="6LeDNzcUAAAAANv5hg7ttwK6tdLrcXIjcCnTMl4E"></div>
 
-
-                                <button type="Sign Up!" class="btn btn-default">Submit</button>
+                                <button type="submit" class="btn btn-default">Submit</button>
                             </div>
                         </form>
                         </form>
@@ -219,6 +225,54 @@
                 $("#button-register-close").click(function () {
                     $(".register-modal-step1").delay(1000).show(0);
                     $(".register-modal-step2").delay(1000).hide(0);
+                });
+            });
+        </script>
+        <script type="text/javascript">
+            var errortxt = "Some thing are missing! Please fill a form to complete";
+            var firstname = $("#firstname").val;
+            $(document).ready(function(){
+                $("#firstname").blur(function(){
+                    if ($(this).val().length === 0){
+                        $("#errorregister-m").replaceWith(errortxt);
+                        $(this).parent().addClass('has-error');
+                    }
+                });
+                $("#lastname").blur(function(){
+                    if ($(this).val().length === 0){
+                        $("#errorregister-m").replaceWith(errortxt);
+                        $(this).parent().addClass('has-error');
+                    }
+                });
+                $("#username").blur(function(){
+                    if ($(this).val().length === 0){
+                        $("#errorregister-m").replaceWith(errortxt);
+                        $(this).parent().addClass('has-error');
+                    }
+                });
+                $("#password").blur(function(){
+                    if ($(this).val().length === 0){
+                        $("#errorregister-m").replaceWith(errortxt);
+                        $(this).parent().addClass('has-error');
+                    }
+                });
+                $("#email").blur(function(){
+                    if ($(this).val().length === 0){
+                        $("#errorregister-m").replaceWith(errortxt);
+                        $(this).parent().addClass('has-error');
+                    }
+                });
+                $("#phone").blur(function(){
+                    if ($(this).val().length === 0){
+                        $("#errorregister-m").replaceWith(errortxt);
+                        $(this).parent().addClass('has-error');
+                    }
+                });
+                $("#idcardimg").blur(function(){
+                    if ($(this).val().length === 0){
+                        alert("If you not upload your ID Card, your profile status are not verify\n\
+            and it's impact on your credibility.");
+                    }
                 });
             });
         </script>

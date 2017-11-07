@@ -62,6 +62,7 @@ CREATE TABLE `co_working_space` (
   `location` varchar(200) DEFAULT NULL,
   `idtype_room` int(11) DEFAULT NULL,
   `idtype_desk` int(11) DEFAULT NULL,
+  `fk_idmember` int(4) unsigned zerofill DEFAULT NULL,
   `total_desk` varchar(45) DEFAULT NULL,
   `amount_desk` int(11) DEFAULT NULL,
   `description` varchar(200) DEFAULT NULL,
@@ -76,6 +77,8 @@ CREATE TABLE `co_working_space` (
   UNIQUE KEY `idspace_UNIQUE` (`idspace`),
   KEY `idtype_room_idx` (`idtype_room`),
   KEY `idtype_desk_idx` (`idtype_desk`),
+  KEY `fk_idmember_idx` (`fk_idmember`),
+  CONSTRAINT `bkfk_idmember` FOREIGN KEY (`fk_idmember`) REFERENCES `member` (`idmember`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `idtype_desk` FOREIGN KEY (`idtype_desk`) REFERENCES `type_desk` (`idtype_desk`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `idtype_room` FOREIGN KEY (`idtype_room`) REFERENCES `type_room` (`idtype_room`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
@@ -87,7 +90,7 @@ CREATE TABLE `co_working_space` (
 
 LOCK TABLES `co_working_space` WRITE;
 /*!40000 ALTER TABLE `co_working_space` DISABLE KEYS */;
-INSERT INTO `co_working_space` (`idspace`, `name`, `location`, `idtype_room`, `idtype_desk`, `total_desk`, `amount_desk`, `description`, `size_room`, `open_time`, `close_time`, `amount_people`, `price`) VALUES (0001,'muayland','LKB 32 Bangkok',1,2,'10',10,'wifi. parking, air conditioner','40',NULL,'09.00-18.00','1',200),(0002,'boyland','suan siam Bangkok',2,1,'4',4,'wifi. parking, air conditioner, board','20',NULL,'09.00-18.00','8',500);
+INSERT INTO `co_working_space` (`idspace`, `name`, `location`, `idtype_room`, `idtype_desk`, `fk_idmember`, `total_desk`, `amount_desk`, `description`, `size_room`, `open_time`, `close_time`, `amount_people`, `price`) VALUES (0001,'muayland','LKB 32 Bangkok',1,2,0001,'10',10,'wifi. parking, air conditioner','40',9,'18.00','1',200),(0002,'boyland','suan siam Bangkok',2,1,0003,'4',4,'wifi. parking, air conditioner, board','20',9,'18.00','8',500);
 /*!40000 ALTER TABLE `co_working_space` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -267,4 +270,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-11-03 17:00:35
+-- Dump completed on 2017-11-05  3:04:03

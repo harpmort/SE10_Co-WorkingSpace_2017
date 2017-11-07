@@ -50,6 +50,7 @@
 	margin-top: 0px;
 	background-color: black; 
 }
+/*---------------Register Modal Box----------------------*/
 
 /*Radiobutton Who Selector */
 .who-selector-register{
@@ -89,6 +90,15 @@
 .who-selector-register lable:hover{
 	background: #DDD;
 }
+
+/*Register Other*/
+#errorregister-m{
+    color: red;
+}
+
+
+
+/*--------------------Others----------------------*/
 .btn-edit{
 	position: relative;
 	left: 30px;
