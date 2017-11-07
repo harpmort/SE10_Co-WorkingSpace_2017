@@ -102,13 +102,13 @@
 
                 <!-- Register Modal content-->
                 <div class="modal-content">
+                    <form action="RegisterServlet" method="post">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title register-modal-step1">Sign up : Step 1</h4>
                         <h4 class="modal-title register-modal-step2">Sign up : Step 2</h4>
                     </div>
                     <div class="modal-body">
-                        <form action="RegisterServlet" method="post">
                             <div class=" register-modal-step1">
                                 <p>Please enter your information in to the fill.</p>
                                 <p id="errorregister-m"></p>
@@ -122,14 +122,14 @@
                                     <input type="text" class="form-control" id="lastname" name="lastname">
                                     <p class="errorregister-m" id="error_lname"></p>
                                 </div>
-                                <div class="form-group" id="form_uanme">
+                                <div class="form-group" id="form_uname">
                                     <label for="username">Username</label>
                                     <input type="text" class="form-control" id="username_r" name="username">
                                     <p class="errorregister-m" id="error_uname"></p>
                                 </div>
                                 <div class="form-group" id="form_pword">
                                     <label for="password">Password</label>
-                                    <input type="password" class="form-control" id="password_p" name="password">
+                                    <input type="password" class="form-control" id="password_r" name="password">
                                     <p class="errorregister-m" id="error_pword"></p>
                                 </div>
                                 <div class="form-group" id="form_email">
@@ -153,7 +153,6 @@
                                     <li><input type="radio" id="lessor" name="who-selector" value="1">
                                         <label for="lessor">Lessor</label></li>
                                 </ul><br>
-                                <button type="button" class="btn btn-default" id="button-register-nextstep">Next</button>
                             </div>
                             <div class="register-modal-step2">
                                 <p>Upload file to identity yours.</p>
@@ -163,16 +162,15 @@
                                     <input type="file" name="idcardfile"/>
                                 </div>
                                 <div class="g-recaptcha" data-sitekey="6LeDNzcUAAAAANv5hg7ttwK6tdLrcXIjcCnTMl4E"></div>
-
-                                <button type="submit" class="btn btn-default">Submit</button>
                             </div>
-                        </form>
-                        </form>
                     </div>
                     <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" id="submit_bttn">Submit</button>
+                        <button type="button" class="btn btn-primary" id="button-register-nextstep">Next</button>
                         <button id="back_bttn" type="button" class="btn btn-default" id="button-register-close">Back</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal" id="button-register-close">Close</button>
                     </div>
+                    </form>
                 </div>
 
             </div>
@@ -216,6 +214,7 @@
             $(document).ready(function () {
                 $(".register-modal-step2").hide();
                 $("#back_bttn").hide();
+                $("#submit_bttn").hide();
             });
         </script>
         <script type="text/javascript">
@@ -224,6 +223,8 @@
                     $(".register-modal-step1").hide();
                     $(".register-modal-step2").show();
                     $("#back_bttn").show();
+                    $("#button-register-nextstep").hide();
+                    $("#submit_bttn").show();
                 });
             });
         </script>
@@ -233,6 +234,8 @@
                     $(".register-modal-step1").show();
                     $(".register-modal-step2").hide();
                     $("#back_bttn").hide();
+                    $("#button-register-nextstep").show();
+                    $("#submit_bttn").hide();
                 });
             });
         </script>
@@ -242,53 +245,97 @@
                     $(".register-modal-step1").delay(1000).show(0);
                     $(".register-modal-step2").delay(1000).hide(0);
                     $("#back_bttn").delay(1000).hide(0);
+                    $("#button-register-nextstep").delay(1000).show(0);
+                    $("#submit_bttn").delay(1000).hide(0);
                 });
             });
         </script>
         <script type="text/javascript">
-            var errortxt = "<p class=\"errorregister-m\">Required</p>";
-            var firstname = $("#firstname").val;
+            var head_replacetxt = "<p class=\"errorregister-m\" id=\"";
+            var error_end_replacetxt = "\">Required</p>";
+            var unerror_end_replacetxt = "\"></p>";
             var form_fname = $('#form_fname');
             var form_lname = $('#form_lname');
             var form_uname = $('#form_uname');
             var form_pword = $('#form_pword');
             var form_email = $('#form_email');
             var form_phone = $('#form_phone');
+            var fname = $("#firstname");
+            var lname = $("#lastname");
+            var uname = $("#username_r");
+            var pword = $("#password_r");
+            var email = $("#email");
+            var phone = $("#phone");
             $(document).ready(function(){
-                $("#firstname").blur(function(){
+                deactivate_next();
+                fname.blur(function(){
                     if ($(this).val().length === 0){
-                        $("#error_fname").replaceWith(errortxt);
+                        $("#error_fname").replaceWith(head_replacetxt + "error_fname" + error_end_replacetxt);
                         form_fname.addClass('has-error', 'has-feedback');
+                        deactivate_next();
+                    }else{
+                        $("#error_fname").replaceWith(head_replacetxt + "error_fname" + unerror_end_replacetxt);
+                        form_fname.removeClass('has-error', 'has-feedback');
+                        activate_next();
                     }
                 });
-                $("#lastname").blur(function(){
+                lname.blur(function(){
                     if ($(this).val().length === 0){
-                        $("#error_lname").replaceWith(errortxt);
+                        $("#error_lname").replaceWith(head_replacetxt + "error_lname" + error_end_replacetxt);
                         form_lname.addClass('has-error', 'has-feedback');
+                        deactivate_next();
+                    }else{
+                        $("#error_lname").replaceWith(head_replacetxt + "error_lname" + unerror_end_replacetxt);
+                        form_lname.removeClass('has-error', 'has-feedback');
+                        activate_next();
                     }
                 });
-                $("#username_r").blur(function(){
+                uname.blur(function(){
                     if ($(this).val().length === 0){
-                        $("#error_uname").replaceWith(errortxt);
+                        $("#error_uname").replaceWith(head_replacetxt + "error_uname" + error_end_replacetxt);
                         form_uname.addClass('has-error', 'has-feedback');
+                        deactivate_next();
+                    }else{
+                        $("#error_uname").replaceWith(head_replacetxt + "error_uname" + unerror_end_replacetxt);
+                        form_uname.removeClass('has-error', 'has-feedback');
+                        activate_next();
                     }
                 });
-                $("#password_r").blur(function(){
+                pword.blur(function(){
                     if ($(this).val().length === 0){
-                        $("#error_pword").replaceWith(errortxt);
+                        $("#error_pword").replaceWith(head_replacetxt + "error_pword" + error_end_replacetxt);
                         form_pword.addClass('has-error', 'has-feedback');
+                        deactivate_next();
+                    }else if ($(this).val().length < 8){
+                        $("#error_pword").replaceWith(head_replacetxt + "error_pword\">Password will contain with more than 8 character</p>");
+                        form_pword.addClass('has-error', 'has-feedback');
+                        deactivate_next();
+                    }else{
+                        $("#error_pword").replaceWith(head_replacetxt + "error_pword" + unerror_end_replacetxt);
+                        form_pword.removeClass('has-error', 'has-feedback');
+                        activate_next();
                     }
                 });
-                $("#email").blur(function(){
+                email.blur(function(){
                     if ($(this).val().length === 0){
-                        $("#error_email").replaceWith(errortxt);
+                        $("#error_email").replaceWith(head_replacetxt + "error_email" + error_end_replacetxt);
                         form_email.addClass('has-error', 'has-feedback');
+                        deactivate_next();
+                    }else{
+                        $("#error_email").replaceWith(head_replacetxt + "error_email" + unerror_end_replacetxt);
+                        form_email.removeClass('has-error', 'has-feedback');
+                        activate_next();
                     }
                 });
-                $("#phone").blur(function(){
+                phone.blur(function(){
                     if ($(this).val().length === 0){
-                        $("#error_phone").replaceWith(errortxt);
+                        $("#error_phone").replaceWith(head_replacetxt + "error_phone" + error_end_replacetxt);
                         form_phone.addClass('has-error', 'has-feedback');
+                        deactivate_next();
+                    }else{
+                        $("#error_phone").replaceWith(head_replacetxt + "error_phone" + unerror_end_replacetxt);
+                        form_phone.removeClass('has-error', 'has-feedback');
+                        activate_next();
                     }
                 });
                 $("#idcardimg").blur(function(){
@@ -298,6 +345,24 @@
                     }
                 });
             });
+            function activate_next(){
+                $(document).ready(function(){
+                    if (fname.val().length === 0 || lname.val().length === 0 || uname.val().length === 0 
+            || pword.val().length < 8 || email.val().length === 0 || phone.val().length === 0 ){
+                }else{
+                $("#button-register-nextstep").removeClass('disabled');
+                $("#button-register-nextstep").removeAttr("disabled");
+                }
+                });
+            }
+            function deactivate_next(){
+                $(document).ready(function(){
+                    $("#button-register-nextstep").addClass('disabled');
+                    $("#button-register-nextstep").attr("disabled", true);
+                });
+            }
+            
+
         </script>
 
 
