@@ -26,7 +26,7 @@ public class Member {
     private String email;
     private String phone;
     private int type;
-    
+
     List<Member> lbooking_user;
     private String idbooking;
     private String location_name;
@@ -34,18 +34,27 @@ public class Member {
     private String begin_time;
     private String end_time;
     private String desk_booking;
+    
+    List<Member> lhistory_user;
+    private String idhistory;
 
     Connection conn;
 
     public Member() {
     }
+
     public Member(Connection connection) {
         conn = connection;
         lbooking_user = new LinkedList<Member>();
+        lhistory_user = new LinkedList<Member>();
     }
-    
+
     public List<Member> getLbooking_user() {
         return lbooking_user;
+    }
+    
+    public List<Member> getLhistory_user() {
+        return lhistory_user;
     }
 
     public void importData(String username, String password) {
@@ -100,7 +109,7 @@ public class Member {
                     + "on b.fk_idspace = c.idspace\n"
                     + "where m.username = '" + username + "';";
             ResultSet rs = stmt.executeQuery(sql);
-            while (rs.next()){
+            while (rs.next()) {
                 Member lb = new Member();
                 lb.setIdbooking(rs.getString("b.idbooking"));
                 lb.setLocation_name(rs.getString("c.name"));
@@ -111,7 +120,35 @@ public class Member {
                 lb.setDesk_booking(rs.getString("b.desk_booking"));
                 lbooking_user.add(lb);
             }
-            
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void viewListhistory(String username) {
+        try {
+            Statement stmt = conn.createStatement();
+            String sql = "SELECT h.idhistory,c.name,h.date,h.begin_time,h.end_time,h.desk_booking\n"
+                    + "FROM history h\n"
+                    + "join member m \n"
+                    + "on h.fk_idmember = m.idmember\n"
+                    + "join co_working_space c\n"
+                    + "on h.fk_idspace = c.idspace\n"
+                    + "where m.username = '" + username + "';";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                Member lh = new Member();
+                lh.setIdhistory(rs.getString("h.idhistory"));
+                lh.setLocation_name(rs.getString("c.name"));
+                lh.setUsername(rs.getString("m.username"));
+                lh.setDate(rs.getString("h.date"));
+                lh.setBegin_time(rs.getString("h.begin_time"));
+                lh.setEnd_time(rs.getString("h.end_time"));
+                lh.setDesk_booking(rs.getString("h.desk_booking"));
+                lhistory_user.add(lh);
+            }
+
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -227,6 +264,14 @@ public class Member {
 
     public void setDesk_booking(String desk_booking) {
         this.desk_booking = desk_booking;
+    }
+
+    public String getIdhistory() {
+        return idhistory;
+    }
+
+    public void setIdhistory(String idhistory) {
+        this.idhistory = idhistory;
     }
     
     

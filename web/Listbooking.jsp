@@ -35,7 +35,7 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li class="menu-bar"><a href="landing.jsp">HOME</a></li>
                         <li class="menu-bar"><a href="BookingServlet">List Booking</a></li>
-                        <li class="menu-bar"><a href="#">History</a></li>
+                        <li class="menu-bar"><a href="HistoryServlet">History</a></li>
                             <%model.Member member = (model.Member) session.getAttribute("member");%>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle menu-bar" data-toggle="dropdown"><%= member.getUsername()%><strong class="caret"></strong></a>
