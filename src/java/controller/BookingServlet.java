@@ -44,7 +44,7 @@ public class BookingServlet extends HttpServlet {
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
             HttpSession session = request.getSession();
-            Rental rental = (Rental) session.getAttribute("Rental");
+            Rental rental = (Rental) session.getAttribute("member");
             Rental viewbooking = new Rental(conn);
             viewbooking.viewListbooking(rental.getUsername());
             session.setAttribute("viewbooking", viewbooking);
