@@ -163,15 +163,21 @@
                                 </div>
                                 <div class="g-recaptcha" data-sitekey="6LeDNzcUAAAAANv5hg7ttwK6tdLrcXIjcCnTMl4E"></div>
                             </div>
+                        <% if(check == 4){%>
                         <div class="register-modal-complete">
                             <p>You registration has been complete. </p>
                         </div>
+                        <%}%>
+                        <% if(check == 8){%>
                         <div class="register-modal-existed">
                             <p>Your email has been existed, Please use another email. </p>
                         </div>
+                        <%}%>
+                        <% if(check == 16){%>
                         <div class="register-modal-recap">
                             <p>Something wrong, Please register again.</p>
                         </div>
+                        <%}%>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" value="submit" class="btn btn-primary" id="submit_bttn">Submit</button>
@@ -185,46 +191,23 @@
             </div>
         </div>
 
-
-        <div id="regiserrorModal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-                <!-- Login Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Register</h4>
-                    </div>
-                    <div class="modal-body">
-                        <% if (check == 4) {%>
-                        สมัครสามาชิกเรียบร้อย
-                        <%}%>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
         <% if (check == 2 || check == 3) { %>
         <script type="text/javascript">
             $(document).ready(function () {
                 $('#loginModal').modal('show');
             });
         </script>
-        <%} else if (check == 4) {%>
+        <%} else if (check == 4 || check == 8 || check == 16) {%>
         <script type="text/javascript">
             $(document).ready(function () {
-                $('#regiserrorModal').modal('show');
-                alertregister(4);
+                $('#registerModal').modal('show');
+                alertregister();
             });
         </script>
-        <%}%>
+        <%} check = 0;%>
+  
         <script type="text/javascript">
             $(document).ready(function () {
-                $(".register-modal-existed").hide();
-                $(".register-modal-recap").hide();
-                $(".register-modal-complete").hide();
                 $(".register-modal-step2").hide();
                 $("#back_bttn").hide();
                 $("#submit_bttn").hide();
@@ -260,25 +243,19 @@
                     $("#back_bttn").delay(1000).hide(0);
                     $("#button-register-nextstep").delay(1000).show(0);
                     $("#submit_bttn").delay(1000).hide(0);
+                    $(".register-modal-complete").hide();
+                    $(".register-modal-existed").hide();
+                    $(".register-modal-recap").hide();
                 });
             });
         </script>
         <script type="text/javascript">
-            function alertregister(check){
+            function alertregister(){
                 $(".register-modal-step1").hide();
                 $(".register-modal-step2").hide();
                 $("#back_bttn").hide();
                 $("#button-register-nextstep").hide();
                 $("#submit_bttn").hide();
-                if (check === 4){
-                    $(".register-modal-complete").show();
-                }
-                if (check === 8){
-                    $(".register-modal-existed").show();
-                }
-                if (check === 16){
-                    $(".register-modal-recap").show();
-                }
             }
         </script>
         <script type="text/javascript">
