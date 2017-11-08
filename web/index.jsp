@@ -14,6 +14,10 @@
         <script src="https://www.google.com/recaptcha/api.js"></script>
     </head>
     <body>
+        <% int check = 0;
+            if (request.getAttribute("check") != null) {
+                check = (int) request.getAttribute("check");
+            } %>
         <nav class="navbar navbar-default navbar-edit navbar-static-top">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -40,7 +44,7 @@
         <div class="head-bg-cover" >
 
             <div class="align-center">
-                <center><p class="head-name">CO-WORKING SPACE้กด้</p>
+                <center><p class="head-name">CO-WORKING SPACE จองพื้นที่ทำงานร่วมกัน</p>
                     <div class="row">
                         <div class="col-md-12">
                             <form action="SearchServlet" method="POST">
@@ -56,10 +60,6 @@
                 </center>
             </div>
         </div>
-        <% int check = 0;
-            if (request.getAttribute("check") != null) {
-                check = (int) request.getAttribute("check");
-            } %>
         <!-- Login Modal -->
         <div id="loginModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
@@ -102,7 +102,7 @@
 
                 <!-- Register Modal content-->
                 <div class="modal-content">
-                    <form action="RegisterServlet" method="post">
+                    <form action="RegisterServlet" method="POST" id="register_form">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title register-modal-step1">Sign up : Step 1</h4>
@@ -163,9 +163,18 @@
                                 </div>
                                 <div class="g-recaptcha" data-sitekey="6LeDNzcUAAAAANv5hg7ttwK6tdLrcXIjcCnTMl4E"></div>
                             </div>
+                        <div class="register-modal-complete">
+                            <p>You registration has been complete. </p>
+                        </div>
+                        <div class="register-modal-existed">
+                            <p>Your email has been existed, Please use another email. </p>
+                        </div>
+                        <div class="register-modal-recap">
+                            <p>Something wrong, Please register again.</p>
+                        </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" id="submit_bttn">Submit</button>
+                        <button type="submit" value="submit" class="btn btn-primary" id="submit_bttn">Submit</button>
                         <button type="button" class="btn btn-primary" id="button-register-nextstep">Next</button>
                         <button id="back_bttn" type="button" class="btn btn-default" id="button-register-close">Back</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal" id="button-register-close">Close</button>
@@ -207,11 +216,15 @@
         <script type="text/javascript">
             $(document).ready(function () {
                 $('#regiserrorModal').modal('show');
+                alertregister(4);
             });
         </script>
         <%}%>
         <script type="text/javascript">
             $(document).ready(function () {
+                $(".register-modal-existed").hide();
+                $(".register-modal-recap").hide();
+                $(".register-modal-complete").hide();
                 $(".register-modal-step2").hide();
                 $("#back_bttn").hide();
                 $("#submit_bttn").hide();
@@ -251,6 +264,24 @@
             });
         </script>
         <script type="text/javascript">
+            function alertregister(check){
+                $(".register-modal-step1").hide();
+                $(".register-modal-step2").hide();
+                $("#back_bttn").hide();
+                $("#button-register-nextstep").hide();
+                $("#submit_bttn").hide();
+                if (check === 4){
+                    $(".register-modal-complete").show();
+                }
+                if (check === 8){
+                    $(".register-modal-existed").show();
+                }
+                if (check === 16){
+                    $(".register-modal-recap").show();
+                }
+            }
+        </script>
+        <script type="text/javascript">
             var head_replacetxt = "<p class=\"errorregister-m\" id=\"";
             var error_end_replacetxt = "\">Required</p>";
             var unerror_end_replacetxt = "\"></p>";
@@ -266,6 +297,7 @@
             var pword = $("#password_r");
             var email = $("#email");
             var phone = $("#phone");
+            var email_flag = true;
             $(document).ready(function(){
                 deactivate_next();
                 fname.blur(function(){
@@ -322,9 +354,16 @@
                         form_email.addClass('has-error', 'has-feedback');
                         deactivate_next();
                     }else{
-                        $("#error_email").replaceWith(head_replacetxt + "error_email" + unerror_end_replacetxt);
-                        form_email.removeClass('has-error', 'has-feedback');
-                        activate_next();
+                        if (isEmail(email.val())){
+                            $("#error_email").replaceWith(head_replacetxt + "error_email" + unerror_end_replacetxt);
+                            form_email.removeClass('has-error', 'has-feedback');
+                            activate_next();
+                            email_flag = false;
+                        }else{
+                            $("#error_email").replaceWith(head_replacetxt + "error_email\">Email not correct.</p>");
+                            form_email.addClass('has-error', 'has-feedback');
+                            deactivate_next();
+                        }
                     }
                 });
                 phone.blur(function(){
@@ -348,7 +387,7 @@
             function activate_next(){
                 $(document).ready(function(){
                     if (fname.val().length === 0 || lname.val().length === 0 || uname.val().length === 0 
-            || pword.val().length < 8 || email.val().length === 0 || phone.val().length === 0 ){
+            || pword.val().length < 8 || email.val().length === 0 || phone.val().length === 0 || email_flag){
                 }else{
                 $("#button-register-nextstep").removeClass('disabled');
                 $("#button-register-nextstep").removeAttr("disabled");
@@ -361,8 +400,20 @@
                     $("#button-register-nextstep").attr("disabled", true);
                 });
             }
+            function isEmail(email) {
+                var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                return regex.test(email);
+            }
             
 
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $("#submit_bttn").click(function(e){
+                    e.preventDefault();
+                    $("#register_form").submit();
+                });
+            });
         </script>
 
 

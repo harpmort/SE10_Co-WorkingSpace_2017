@@ -49,14 +49,28 @@ public class RegisterServlet extends HttpServlet {
             String lastname = request.getParameter("lastname");
             String email = request.getParameter("email");
             String phone = request.getParameter("phone");
+            int check;
             int type = Integer.parseInt(request.getParameter("who-selector"));
+            String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
+            boolean verify = VerifyRecaptcha.verify(gRecaptchaResponse);
+            boolean isEmailExisted = false;
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
             HttpSession session = request.getSession();
-            int check = 4;
-            Member member = new Member(conn);
-            member.register(firstname, lastname, username, password, email, phone, type);
-            request.setAttribute("check", check);
+            if(verify){
+                if(isEmailExisted){
+                    check = 8;
+                    /*อย่าลืมให้ค่าที่ได้มา(isEmailExisted) ได้จากการเช็คในฐานข้อมูลว่ามีอีเมลล์นี้แล้วหรือไม่*/
+                }else{
+                    check = 4;
+                    Member member = new Member(conn);
+                    member.register(firstname, lastname, username, password, email, phone, type);
+                    request.setAttribute("check", check);
+                }
+                
+            }else{
+                check = 16;
+            }
             RequestDispatcher pg = request.getRequestDispatcher("index.jsp");
             pg.forward(request, response);
 
