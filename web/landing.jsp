@@ -13,6 +13,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="login.css">
+        <link rel="stylesheet" type="text/css" href="css/index.css">
         <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Prompt:300">
         <title>Co-Working-Space</title>
         <script src="js/jquery.min.js"></script>
@@ -60,11 +61,13 @@
                 <center><p class="head-name">CO-WORKING SPACE</p>
                     <div class="row">
                         <div class="col-md-12">
-                            <h2><input class="search-input" type="text" name="search" value="" placeholder=" searching . . ."/>
-                                <!--ต้องมีเซิพเลตและส่งค่า check มาด้วย-->
-                                <a href="search.jsp">
-                                    <img alt="search" src="img/search1.png" style="width: 40px">
-                                </a></h2>
+                            <form action="SearchServlet" method="POST">
+                                <div class="row input-group search-bar">
+                                    <input name="search" type="text" class="form-control" placeholder="Location or Lessor or Type Room or Type Desk.." />
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default btn-search" type="submit"> <span class="glyphicon glyphicon-search"></span> </button>
+                                    </span></div>
+                            </form>
                         </div>
                     </div>
                 </center>

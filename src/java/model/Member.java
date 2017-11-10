@@ -26,7 +26,8 @@ public class Member {
     private String email;
     private String phone;
     private int type;
-
+    private String checkemail;
+    
 
     Connection conn;
 
@@ -59,26 +60,36 @@ public class Member {
 
     }
 
-    public void register(String firstname, String lastname, String username, String password, String email, String phone, int type) {
+    public void register(String firstname, String lastname, String username, String password, String email, String phone, int type, String img, String idcard) {
         try {
-            Statement stmt = conn.createStatement();
-            if (type == 2) {
-                String sql = "INSERT INTO `db_coworkingspace`.`member` (`firstname`, `lastname`, `username`, `password`, `email`, `phone`, `idtype_member`) "
-                        + "VALUES ('" + firstname + "', '" + lastname + "', '" + username + "', '" + password + "', '" + email + "', '" + phone + "', '" + type + "');";
-                stmt.executeUpdate(sql);
-            } else {
-                String sql = "INSERT INTO `db_coworkingspace`.`list_supply` (`firstname`, `lastname`, `username`, `password`, `email`, `phone`) "
-                        + "VALUES ('" + firstname + "', '" + lastname + "', '" + username + "', '" + password + "', '" + email + "', '" + phone + "');";
-                stmt.executeUpdate(sql);
-
+            Statement check_email = conn.createStatement();
+            String sql_ce = "SELECT email from member ";
+            ResultSet ce = check_email.executeQuery(sql_ce);
+            checkemail = "isEmailUnused";;
+            while (ce.next()) {
+                if (email.equals(ce.getString("email"))) {
+                    checkemail = "isEmailExisted";
+                } else {
+                    checkemail = "isEmailUnused";
+                }
             }
 
+            Statement stmt = conn.createStatement();
+            if (img.equals("")) {
+                img = "C:\\Users\\Asus\\Documents\\NetBeansProjects\\CoWorkingSpace\\web\\img\\user.png";
+            }
+            if (idcard.equals("")) {
+                idcard = "Not verified";
+            }
+            if (!checkemail.equals("isEmailExisted")) {
+                String sql = "INSERT INTO `db_coworkingspace`.`member` (`firstname`, `lastname`, `username`, `password`, `email`, `phone`, `idtype_member`, `img_profile`, `idcard`) "
+                        + "VALUES ('" + firstname + "', '" + lastname + "', '" + username + "', '" + password + "', '" + email + "', '" + phone + "', '" + type + "', '" + img + "', '" + idcard + "');";
+                stmt.executeUpdate(sql);
+            }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
-
-    
 
     public int getIdmember() {
         return idmember;
@@ -144,7 +155,13 @@ public class Member {
         this.type = type;
     }
 
-    
+    public String getCheckemail() {
+        return checkemail;
+    }
+
+    public void setCheckemail(String checkemail) {
+        this.checkemail = checkemail;
+    }
     
 
 }

@@ -44,16 +44,15 @@
         <div class="head-bg-cover" >
 
             <div class="align-center">
-                <center><p class="head-name">CO-WORKING SPACE จองพื้นที่ทำงานร่วมกัน</p>
+                <center><p class="head-name">CO-WORKING SPACE</p>
                     <div class="row">
                         <div class="col-md-12">
                             <form action="SearchServlet" method="POST">
-                                
                                 <div class="row input-group search-bar">
-                                           <input name="search" type="text" class="form-control" placeholder="Searching..." />
-                                           <span class="input-group-btn">
-                                               <button class="btn btn-default btn-search" type="submit"> <span class="glyphicon glyphicon-search"></span> </button>
-                                           </span></div>
+                                    <input name="search" type="text" class="form-control" placeholder="Location or Lessor or Type Room or Type Desk.." />
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default btn-search" type="submit"> <span class="glyphicon glyphicon-search"></span> </button>
+                                    </span></div>
                             </form>
                         </div>
                     </div>
@@ -83,15 +82,11 @@
                                 <label for="password">Password</label>
                                 <input type="password" class="form-control" id="password" name="password">
                             </div>
-                            <div class="checkbox">
-                                <label><input type="checkbox" name="remember"> Remember me</label>
-                            </div>
                             <center><button type="Login" class="btn btn-default">Submit</button></center>
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary step step-1" data-step="1" onclick="sendEvent('#demo-modal-1', 2)">Continue</button>
                     </div>
                 </div>
             </div>
@@ -103,12 +98,12 @@
                 <!-- Register Modal content-->
                 <div class="modal-content">
                     <form action="RegisterServlet" method="POST" id="register_form">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title register-modal-step1">Sign up : Step 1</h4>
-                        <h4 class="modal-title register-modal-step2">Sign up : Step 2</h4>
-                    </div>
-                    <div class="modal-body">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title register-modal-step1">Sign up : Step 1</h4>
+                            <h4 class="modal-title register-modal-step2">Sign up : Step 2</h4>
+                        </div>
+                        <div class="modal-body">
                             <div class=" register-modal-step1">
                                 <p>Please enter your information in to the fill.</p>
                                 <p id="errorregister-m"></p>
@@ -163,28 +158,28 @@
                                 </div>
                                 <div class="g-recaptcha" data-sitekey="6LeDNzcUAAAAANv5hg7ttwK6tdLrcXIjcCnTMl4E"></div>
                             </div>
-                        <% if(check == 4){%>
-                        <div class="register-modal-complete">
-                            <p>You registration has been complete. </p>
+                            <% if (check == 4) {%>
+                            <div class="register-modal-complete">
+                                <p>You registration has been complete. </p>
+                            </div>
+                            <%}%>
+                            <% if (check == 8) {%>
+                            <div class="register-modal-existed">
+                                <p>Your email has been existed, Please use another email. </p>
+                            </div>
+                            <%}%>
+                            <% if (check == 16) {%>
+                            <div class="register-modal-recap">
+                                <p>Something wrong, Please register again.</p>
+                            </div>
+                            <%}%>
                         </div>
-                        <%}%>
-                        <% if(check == 8){%>
-                        <div class="register-modal-existed">
-                            <p>Your email has been existed, Please use another email. </p>
+                        <div class="modal-footer">
+                            <button type="submit" value="submit" class="btn btn-primary" id="submit_bttn">Submit</button>
+                            <button type="button" class="btn btn-primary" id="button-register-nextstep">Next</button>
+                            <button id="back_bttn" type="button" class="btn btn-default" id="button-register-close">Back</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal" id="button-register-close">Close</button>
                         </div>
-                        <%}%>
-                        <% if(check == 16){%>
-                        <div class="register-modal-recap">
-                            <p>Something wrong, Please register again.</p>
-                        </div>
-                        <%}%>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" value="submit" class="btn btn-primary" id="submit_bttn">Submit</button>
-                        <button type="button" class="btn btn-primary" id="button-register-nextstep">Next</button>
-                        <button id="back_bttn" type="button" class="btn btn-default" id="button-register-close">Back</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal" id="button-register-close">Close</button>
-                    </div>
                     </form>
                 </div>
 
@@ -204,8 +199,9 @@
                 alertregister();
             });
         </script>
-        <%} check = 0;%>
-  
+        <%}
+            check = 0;%>
+
         <script type="text/javascript">
             $(document).ready(function () {
                 $(".register-modal-step2").hide();
@@ -250,7 +246,7 @@
             });
         </script>
         <script type="text/javascript">
-            function alertregister(){
+            function alertregister() {
                 $(".register-modal-step1").hide();
                 $(".register-modal-step2").hide();
                 $("#back_bttn").hide();
@@ -275,104 +271,104 @@
             var email = $("#email");
             var phone = $("#phone");
             var email_flag = true;
-            $(document).ready(function(){
+            $(document).ready(function () {
                 deactivate_next();
-                fname.blur(function(){
-                    if ($(this).val().length === 0){
+                fname.blur(function () {
+                    if ($(this).val().length === 0) {
                         $("#error_fname").replaceWith(head_replacetxt + "error_fname" + error_end_replacetxt);
                         form_fname.addClass('has-error', 'has-feedback');
                         deactivate_next();
-                    }else{
+                    } else {
                         $("#error_fname").replaceWith(head_replacetxt + "error_fname" + unerror_end_replacetxt);
                         form_fname.removeClass('has-error', 'has-feedback');
                         activate_next();
                     }
                 });
-                lname.blur(function(){
-                    if ($(this).val().length === 0){
+                lname.blur(function () {
+                    if ($(this).val().length === 0) {
                         $("#error_lname").replaceWith(head_replacetxt + "error_lname" + error_end_replacetxt);
                         form_lname.addClass('has-error', 'has-feedback');
                         deactivate_next();
-                    }else{
+                    } else {
                         $("#error_lname").replaceWith(head_replacetxt + "error_lname" + unerror_end_replacetxt);
                         form_lname.removeClass('has-error', 'has-feedback');
                         activate_next();
                     }
                 });
-                uname.blur(function(){
-                    if ($(this).val().length === 0){
+                uname.blur(function () {
+                    if ($(this).val().length === 0) {
                         $("#error_uname").replaceWith(head_replacetxt + "error_uname" + error_end_replacetxt);
                         form_uname.addClass('has-error', 'has-feedback');
                         deactivate_next();
-                    }else{
+                    } else {
                         $("#error_uname").replaceWith(head_replacetxt + "error_uname" + unerror_end_replacetxt);
                         form_uname.removeClass('has-error', 'has-feedback');
                         activate_next();
                     }
                 });
-                pword.blur(function(){
-                    if ($(this).val().length === 0){
+                pword.blur(function () {
+                    if ($(this).val().length === 0) {
                         $("#error_pword").replaceWith(head_replacetxt + "error_pword" + error_end_replacetxt);
                         form_pword.addClass('has-error', 'has-feedback');
                         deactivate_next();
-                    }else if ($(this).val().length < 8){
+                    } else if ($(this).val().length < 8) {
                         $("#error_pword").replaceWith(head_replacetxt + "error_pword\">Password will contain with more than 8 character</p>");
                         form_pword.addClass('has-error', 'has-feedback');
                         deactivate_next();
-                    }else{
+                    } else {
                         $("#error_pword").replaceWith(head_replacetxt + "error_pword" + unerror_end_replacetxt);
                         form_pword.removeClass('has-error', 'has-feedback');
                         activate_next();
                     }
                 });
-                email.blur(function(){
-                    if ($(this).val().length === 0){
+                email.blur(function () {
+                    if ($(this).val().length === 0) {
                         $("#error_email").replaceWith(head_replacetxt + "error_email" + error_end_replacetxt);
                         form_email.addClass('has-error', 'has-feedback');
                         deactivate_next();
-                    }else{
-                        if (isEmail(email.val())){
+                    } else {
+                        if (isEmail(email.val())) {
                             $("#error_email").replaceWith(head_replacetxt + "error_email" + unerror_end_replacetxt);
                             form_email.removeClass('has-error', 'has-feedback');
                             activate_next();
                             email_flag = false;
-                        }else{
+                        } else {
                             $("#error_email").replaceWith(head_replacetxt + "error_email\">Email not correct.</p>");
                             form_email.addClass('has-error', 'has-feedback');
                             deactivate_next();
                         }
                     }
                 });
-                phone.blur(function(){
-                    if ($(this).val().length === 0){
+                phone.blur(function () {
+                    if ($(this).val().length === 0) {
                         $("#error_phone").replaceWith(head_replacetxt + "error_phone" + error_end_replacetxt);
                         form_phone.addClass('has-error', 'has-feedback');
                         deactivate_next();
-                    }else{
+                    } else {
                         $("#error_phone").replaceWith(head_replacetxt + "error_phone" + unerror_end_replacetxt);
                         form_phone.removeClass('has-error', 'has-feedback');
                         activate_next();
                     }
                 });
-                $("#idcardimg").blur(function(){
-                    if ($(this).val().length === 0){
+                $("#idcardimg").blur(function () {
+                    if ($(this).val().length === 0) {
                         alert("If you not upload your ID Card, your profile status are not verify\n\
             and it's impact on your credibility.");
                     }
                 });
             });
-            function activate_next(){
-                $(document).ready(function(){
-                    if (fname.val().length === 0 || lname.val().length === 0 || uname.val().length === 0 
-            || pword.val().length < 8 || email.val().length === 0 || phone.val().length === 0 || email_flag){
-                }else{
-                $("#button-register-nextstep").removeClass('disabled');
-                $("#button-register-nextstep").removeAttr("disabled");
-                }
+            function activate_next() {
+                $(document).ready(function () {
+                    if (fname.val().length === 0 || lname.val().length === 0 || uname.val().length === 0
+                            || pword.val().length < 8 || email.val().length === 0 || phone.val().length === 0 || email_flag) {
+                    } else {
+                        $("#button-register-nextstep").removeClass('disabled');
+                        $("#button-register-nextstep").removeAttr("disabled");
+                    }
                 });
             }
-            function deactivate_next(){
-                $(document).ready(function(){
+            function deactivate_next() {
+                $(document).ready(function () {
                     $("#button-register-nextstep").addClass('disabled');
                     $("#button-register-nextstep").attr("disabled", true);
                 });
@@ -381,12 +377,12 @@
                 var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
                 return regex.test(email);
             }
-            
+
 
         </script>
         <script type="text/javascript">
-            $(document).ready(function(){
-                $("#submit_bttn").click(function(e){
+            $(document).ready(function () {
+                $("#submit_bttn").click(function (e) {
                     e.preventDefault();
                     $("#register_form").submit();
                 });

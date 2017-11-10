@@ -53,7 +53,7 @@
                         <h3>
                             h3. Lorem ipsum dolor sit amet.
                         </h3><br>
-                        <form role="form">
+                        <form action="" method="post" role="form">
                             <div class="form-group">
 
                                 <label for="exampleInputEmail1">
@@ -122,7 +122,7 @@
                                 <label for="exampleInputFile">
                                     อัพรูป
                                 </label>
-                                <input type="file" id="exampleInputFile" />
+                                <input multiple="" type="file" id="exampleInputFile" />
                                 <p class="help-block">
                                     img name
                                 </p>
@@ -135,7 +135,7 @@
                     <div class="col-md-1">
                     </div>
                     <div class="col-md-2">
-                        <img src="img/profile.png" class="img-circle center-block img-pro" style="width: 150px" />
+                        <img src="img/user.png" class="img-circle center-block img-pro" style="width: 150px" />
                         <h3 class="text-center">
                             h3. Lorem ipsum dolor sit amet.
                         </h3>
