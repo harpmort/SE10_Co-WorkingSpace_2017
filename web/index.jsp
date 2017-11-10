@@ -174,7 +174,7 @@
                             </div>
                             <%}%>
                         </div>
-                        <div class="modal-footer">
+                        <div class="modal-footer modal-edit">
                             <button type="submit" value="submit" class="btn btn-primary" id="submit_bttn">Submit</button>
                             <button type="button" class="btn btn-primary" id="button-register-nextstep">Next</button>
                             <button id="back_bttn" type="button" class="btn btn-default" id="button-register-close">Back</button>
