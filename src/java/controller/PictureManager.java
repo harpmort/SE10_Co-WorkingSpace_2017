@@ -14,18 +14,19 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 
 public class PictureManager {
     String bucketName = "coworkingspacebucket";
     AmazonS3 s3client = new AmazonS3Client(new BasicAWSCredentials("AKIAI57BJP7VTQEQYSTA", "SsD9/C6C85slnq+RLcG0c9x1FH1H3/dLh9RVYzbs"));
-    public String savePicture(String destination, String filename, String filetype) throws IOException{
+    public String savePicture(String destination, String filename, String filetype, String filepath) throws IOException{
         String destinationName = destination + "/" + filename + "." + filetype;
         try {
             System.out.println("Uploading a new object to S3 from a file\n");
-            File file = new File("/Users/Plaster/Desktop/adventuretime1.jpg");
+            File file = new File(filepath);
             s3client.putObject(new PutObjectRequest(
-            		                 bucketName, destinationName, file));
+            		                 bucketName, destinationName, file).withCannedAcl(CannedAccessControlList.PublicRead));
 
          } catch (AmazonServiceException ase) {
             System.out.println("Caught an AmazonServiceException, which " +
