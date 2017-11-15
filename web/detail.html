@@ -166,13 +166,13 @@
 							<input type="text" class="form-control" value="" id="datetimepicker3">
 							<div class="input-group">
 								<span class="input-group-btn">
-									<button class="btn btn-default" id="btn-minuse">
+									<button class="btn btn-default" id="btn-minus" data-field="amount" type="button">
 										<i class="glyphicon glyphicon-minus"></i>
 									</button>
 								</span>
-								<input class="form-control input-number" type="text" min="1" max="10" value="1">
+								<input class="form-control input-number" type="text" min="1" max="10" value="1" name="amount">
 								<span class="input-group-btn">
-									<button class="btn btn-default" id="btn-pluss">
+									<button class="btn btn-default" id="btn-plus" data-field="amount" type="button">
 										<i class="glyphicon glyphicon-plus"></i>
 									</button>
 								</span>
@@ -214,6 +214,7 @@
 		minView: 2,
 		forceParse: 0
 	});
+
 	$('#datetimepicker2').datetimepicker({
 		format: 'hh:ii',
 		weekStart: 1,
@@ -225,6 +226,7 @@
 		maxView: 1,
 		forceParse: 0
 	});
+
 	$('#datetimepicker3').datetimepicker({
 		format: 'hh:ii',
 		weekStart: 1,
@@ -235,6 +237,24 @@
 		minView: 0,
 		maxView: 1,
 		forceParse: 0
+	});
+	
+	$('#btn-minus').on('click', function(){
+		fieldName = $(this).attr('data-field');
+    	var input = $("input[name='"+fieldName+"']");
+    	var currentVal = parseInt(input.val());
+    	if(currentVal > input.attr('min')) {
+            input.val(currentVal - 1).change();
+        }
+	});
+
+	$('#btn-plus').on('click', function(){
+		fieldName = $(this).attr('data-field');
+    	var input = $("input[name='"+fieldName+"']");
+    	var currentVal = parseInt(input.val());
+    	if (currentVal < input.attr('max')) {
+    		input.val(currentVal + 1).change();
+    	}
 	});
 </script>
 </body>
