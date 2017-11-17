@@ -39,34 +39,40 @@
 
                 <div class="collapse navbar-collapse" id="mynavbar">
                     <% if (check == 1) {%>
-                    <%model.Member member = (model.Member) session.getAttribute("member");%>
+                    <%model.Member member = (model.Member) session.getAttribute("member");
+                        int type = (int) session.getAttribute("type");%>
                     <div class="collapse navbar-collapse" id="mynavbar">
-                        <ul class="nav navbar-nav navbar-right">
-                            <li class="menu-bar"><a href="#">Link</a></li>
-                            <li class="menu-bar"><a href="#">Link</a></li>
-                            <li class="menu-bar"><a href="#">Link</a></li>
-                            <li class="menu-bar"><a href="#">Link</a></li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle menu-bar" data-toggle="dropdown"><%= member.getUsername()%><strong class="caret"></strong></a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a href="Profile.jsp">View Profile</a>
-                                    </li>
-                                    <li>
-                                        <a href="LogoutServlet">Logout</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
+                        <div class="collapse navbar-collapse" id="mynavbar">
+                            <ul class="nav navbar-nav navbar-right">
+                                <% if (type == 1) {%>
+                                <li class="menu-bar"><a href="index.jsp">HOME</a></li>
+                                <li class="menu-bar"><a href="insertcws.jsp">Add Space</a></li>
+                                <li class="menu-bar"><a href="BookingServlet">List Booking</a></li>
+                                <li class="menu-bar"><a href="HistoryServlet">History</a></li>
+                                    <%} else if (type == 2) {%>
+                                <li class="menu-bar"><a href="index.jsp">HOME</a></li>
+                                <li class="menu-bar"><a href="BookingServlet">List Booking</a></li>
+                                <li class="menu-bar"><a href="HistoryServlet">History</a></li>
+                                    <%}%>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle menu-bar" data-toggle="dropdown"><%= member.getUsername()%><strong class="caret"></strong></a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a href="Profile.jsp">View Profile</a>
+                                        </li>
+                                        <li>
+                                            <a href="LogoutServlet">Logout</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                     <%} else if (check != 1) {%>
                     <ul class="nav navbar-nav navbar-right">
                         <button type="button" class="btn btn-default navbar-btn"  data-toggle="modal" data-target="#registerModal">Sign up</button>
                         <button type="button" class="btn btn-default navbar-btn margin-3px" data-toggle="modal" data-target="#loginModal">Login</button>
-
                     </ul><%}%>
-
-
                 </div>
             </div>
         </nav>
@@ -92,36 +98,26 @@
         <div class="row-fluid margin-top">
             <div class="col-md-1"></div>
             <div class="col-md-10">
-
                 <div class="col-md-4">
-                    <div class="w3-card-4 card-margin">
-                        <div class="panel-thumbnail">
-                            <img src="img/img-slide2.jpg" class="img-responsive" style="width: 100%">
-                        </div>
-                        <div class="panel-body">
-                            <p class="lead" >TEST</p>
-                            <p>Test Test Hello Test</p>
-                        </div>
-                    </div>
+                    <c:forEach var="row" items="${sessionScope.space.detail_space}">
+                        <form action="ViewdetailspaceServlet" method="POST">
+                            <div class="w3-card-4 card-margin">
+                                <div class="panel-thumbnail">
+                                    <img src="${row.img[0]}" class="img-responsive" style="width: 100%">
+                                </div>
+                                <div class="panel-body">
+                                    <p class="lead" >${row.name} by ${row.username}</p>
+                                    <p>${row.location}</p>
+                                </div>
+                                <div class="panel-footer">
+                                    <button class="btn btn-sm  center-block btn-info" type="submit" name="name" value="${row.name}">
+                                        View Detail Space
+                                    </button>
+                                </div>
+                            </div>
 
-                    <div class="w3-card-4">
-                        <div class="panel-thumbnail">
-                            <img src="img/img-slide2.jpg" class="img-responsive" style="width: 100%">
-                        </div>
-                        <div class="panel-body">
-                            <p class="lead" >TEST</p>
-                            <p>Test Test Hello Test</p>
-                        </div>
-                    </div>
-                    <div class="w3-card-4 card-margin">
-                        <div class="panel-thumbnail">
-                            <img src="img/img-slide2.jpg" class="img-responsive" style="width: 100%">
-                        </div>
-                        <div class="panel-body">
-                            <p class="lead" >TEST</p>
-                            <p>Test Test Hello Test</p>
-                        </div>
-                    </div>
+                        </form>
+                    </c:forEach>
                 </div>
 
 

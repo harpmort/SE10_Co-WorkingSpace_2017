@@ -48,11 +48,14 @@
                     <div class="row">
                         <div class="col-md-12">
                             <form action="SearchServlet" method="POST">
-                                <div class="row input-group search-bar">
+                                <div class=" input-group search-bar">
                                     <input name="search" type="text" class="form-control" placeholder="Location or Lessor or Type Room or Type Desk.." />
                                     <span class="input-group-btn">
-                                        <button class="btn btn-default btn-search" type="submit"> <span class="glyphicon glyphicon-search"></span> </button>
-                                    </span></div>
+                                        <button class="btn btn-default btn-search" type="submit"> 
+                                            <span class="glyphicon glyphicon-search"></span> 
+                                        </button>
+                                    </span>
+                                </div>
                             </form>
                         </div>
                     </div>

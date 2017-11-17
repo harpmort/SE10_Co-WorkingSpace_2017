@@ -28,6 +28,7 @@ public class Member {
     private int type;
     private String checkemail;
     
+    
 
     Connection conn;
 
@@ -162,6 +163,5 @@ public class Member {
     public void setCheckemail(String checkemail) {
         this.checkemail = checkemail;
     }
-    
 
 }

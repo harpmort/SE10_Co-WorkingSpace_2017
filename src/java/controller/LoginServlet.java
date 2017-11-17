@@ -65,6 +65,8 @@ public class LoginServlet extends HttpServlet {
                             lessor.importData(username, password);
                             session.setAttribute("member", lessor);
                         }
+                        int type = rs.getInt("idtype_member");
+                        session.setAttribute("type", type);
                         check = 1;
                         session.setAttribute("check", check);
                         RequestDispatcher pg = request.getRequestDispatcher("landing.jsp");
