@@ -19,9 +19,10 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 
 public class PictureManager {
     String bucketName = "coworkingspacebucket";
-    AmazonS3 s3client = new AmazonS3Client(new BasicAWSCredentials("AKIAI57BJP7VTQEQYSTA", "SsD9/C6C85slnq+RLcG0c9x1FH1H3/dLh9RVYzbs"));
+    AmazonS3 s3client = new AmazonS3Client(new ProfileCredentialsProvider());
     public String savePicture(String destination, String filename, String filetype, String filepath) throws IOException{
         String destinationName = destination + "/" + filename + "." + filetype;
+        
         try {
             System.out.println("Uploading a new object to S3 from a file\n");
             File file = new File(filepath);
@@ -47,6 +48,7 @@ public class PictureManager {
             System.out.println("Error Message: " + ace.getMessage());
         }
         String url_link = getUrlImage(destination, filename, filetype);
+        System.out.println(url_link);
         return url_link;
     }
     public String getUrlImage(String destination, String filename, String filetype){
