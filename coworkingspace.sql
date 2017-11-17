@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
 --
 -- Host: localhost    Database: db_coworkingspace
 -- ------------------------------------------------------
--- Server version	5.7.20-log
+-- Server version	5.7.17-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -62,26 +62,27 @@ CREATE TABLE `co_working_space` (
   `location` varchar(200) DEFAULT NULL,
   `idtype_room` int(11) DEFAULT NULL,
   `idtype_desk` int(11) DEFAULT NULL,
-  `fk_idmember` int(4) unsigned zerofill DEFAULT NULL,
   `total_desk` varchar(45) DEFAULT NULL,
   `amount_desk` int(11) DEFAULT NULL,
   `description` varchar(200) DEFAULT NULL,
   `size_room` varchar(45) DEFAULT NULL,
-  `open_time` int(11) DEFAULT NULL,
+  `open_time` varchar(45) DEFAULT NULL,
   `close_time` varchar(45) DEFAULT NULL,
   `amount_people` varchar(45) DEFAULT NULL,
   `price` int(11) DEFAULT NULL,
   `rating` int(11) GENERATED ALWAYS AS (0) VIRTUAL,
   `num_of_review` int(11) GENERATED ALWAYS AS (0) VIRTUAL,
+  `fk_idmember` int(4) unsigned DEFAULT NULL,
+  `img` mediumblob,
   PRIMARY KEY (`idspace`),
   UNIQUE KEY `idspace_UNIQUE` (`idspace`),
   KEY `idtype_room_idx` (`idtype_room`),
   KEY `idtype_desk_idx` (`idtype_desk`),
   KEY `fk_idmember_idx` (`fk_idmember`),
-  CONSTRAINT `bkfk_idmember` FOREIGN KEY (`fk_idmember`) REFERENCES `member` (`idmember`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `idmember` FOREIGN KEY (`fk_idmember`) REFERENCES `member` (`idmember`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `idtype_desk` FOREIGN KEY (`idtype_desk`) REFERENCES `type_desk` (`idtype_desk`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `idtype_room` FOREIGN KEY (`idtype_room`) REFERENCES `type_room` (`idtype_room`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -90,7 +91,7 @@ CREATE TABLE `co_working_space` (
 
 LOCK TABLES `co_working_space` WRITE;
 /*!40000 ALTER TABLE `co_working_space` DISABLE KEYS */;
-INSERT INTO `co_working_space` (`idspace`, `name`, `location`, `idtype_room`, `idtype_desk`, `fk_idmember`, `total_desk`, `amount_desk`, `description`, `size_room`, `open_time`, `close_time`, `amount_people`, `price`) VALUES (0001,'muayland','LKB 32 Bangkok',1,2,0001,'10',10,'wifi. parking, air conditioner','40',9,'18.00','1',200),(0002,'boyland','suan siam Bangkok',2,1,0003,'4',4,'wifi. parking, air conditioner, board','20',9,'18.00','8',500);
+INSERT INTO `co_working_space` (`idspace`, `name`, `location`, `idtype_room`, `idtype_desk`, `total_desk`, `amount_desk`, `description`, `size_room`, `open_time`, `close_time`, `amount_people`, `price`, `fk_idmember`, `img`) VALUES (0001,'Muayland','LKB 32, Bangkok',1,2,'10',10,'wifi, parking, air conditioner','40','09.00','18.00','1',200,1,''),(0002,'Boyland','Suan Siam, Bangkok',2,1,'4',4,'wifi, parking, air conditioner, board','20','09.00','18.00','8',500,1,''),(0003,'ITLAND','IT KMITL, Bangkok',2,1,'2',2,'wifi, parking, air conditioner, board,แม่บ้าน','20','09.00','20.00','8',200,1,'No IMAGE'),(0013,'Miineland','Asoke, Bangkok',1,2,'9',9,'wifi, parking, air conditioner','35','09.00','19.00','1',200,3,NULL),(0014,'Monkey D Lufy','Sathorn, Bangkok',1,1,'5',5,'wifi, parking, air conditioner','40','09.00','18.00','1',250,3,NULL),(0015,'Conan Room','Asoke, Bangkok',1,1,'2',2,'wifi, parking, air conditioner','20','09.00','18.00','1',250,1,NULL),(0016,'Mori Room','Asoke, Bangkok',3,1,'10',10,'wifi, parking, air conditioner, board,แม่บ้าน','35','09.00','20.00','10',400,3,NULL),(0017,'Inn Land','Asoke, Bangkok',3,1,'5',5,'wifi, parking, air conditioner, board,แม่บ้าน','35','09.00','18.00','5',400,9,NULL),(0018,'Lovely Room','Klong Sansab, Bangkok',1,1,'40',40,'wifi, parking, air conditioner','60','08.00','21.00','1',200,9,NULL),(0019,'Pretty Room','Klong Sansab, Bangkok',3,1,'15',15,'wifi, parking, air conditioner, board,แม่บ้าน','30','08.00','21.00','15',500,9,NULL),(0020,'Ugly Room','Klong Sansab, Bangkok',2,1,'5',5,'wifi, parking, air conditioner, board,แม่บ้าน','20','08.00','21.00','5',350,9,NULL),(0021,'Wow Room','Klong Sansab, Bangkok',1,2,'50',50,'wifi, parking, air conditioner','60','08.00','21.00','1',200,9,NULL),(0022,'Jubu Land','Prawet, Bangkok',3,1,'15',15,'wifi, parking, air conditioner, board','60','09.00','20.00','15',400,1,NULL),(0023,'Jibi Land','Prawet, Bangkok',3,1,'10',10,'wifi, parking, air conditioner, board','40','09.00','20.00','10',400,3,NULL),(0024,'Maple Land','Nongkham, Bangkok',1,2,'30',30,'wifi, parking, air conditioner, แม่บ้าน','60','08.00','21.00','1',200,3,NULL),(0025,'Tissue Room','Nongjok, Bangkok',1,1,'20',20,'wifi, parking, air conditioner, แม่บ้าน','50','08.00','20.00','1',200,1,NULL),(0026,'Skyline','Suvanabhumi Airport, Samut Prakan',1,1,'20',20,'wifi, parking, air conditioner, แม่บ้าน','50','08.00','21.00','1',500,11,NULL);
 /*!40000 ALTER TABLE `co_working_space` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -102,20 +103,21 @@ DROP TABLE IF EXISTS `history`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `history` (
-  `idhistory` int(7) unsigned zerofill NOT NULL,
+  `idhistory` int(7) unsigned zerofill NOT NULL AUTO_INCREMENT,
   `date` date DEFAULT NULL,
   `begin_time` varchar(45) DEFAULT NULL,
   `end_time` varchar(45) DEFAULT NULL,
   `desk_booking` int(11) DEFAULT NULL,
   `fk_idmember` int(4) unsigned zerofill DEFAULT NULL,
   `fk_idspace` int(4) unsigned zerofill DEFAULT NULL,
+  `state_review` int(4) GENERATED ALWAYS AS (1) STORED,
   PRIMARY KEY (`idhistory`),
   UNIQUE KEY `idhistory_UNIQUE` (`idhistory`),
   KEY `history_ibfk_1` (`fk_idspace`),
   KEY `history_ibfk_2` (`fk_idmember`),
   CONSTRAINT `history_ibfk_1` FOREIGN KEY (`fk_idspace`) REFERENCES `co_working_space` (`idspace`),
   CONSTRAINT `history_ibfk_2` FOREIGN KEY (`fk_idmember`) REFERENCES `member` (`idmember`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -124,6 +126,7 @@ CREATE TABLE `history` (
 
 LOCK TABLES `history` WRITE;
 /*!40000 ALTER TABLE `history` DISABLE KEYS */;
+INSERT INTO `history` (`idhistory`, `date`, `begin_time`, `end_time`, `desk_booking`, `fk_idmember`, `fk_idspace`) VALUES (0000001,'2017-11-01','18.00','20.00',4,0002,0002),(0000002,'2017-10-29','10.00','20.00',4,0002,0002);
 /*!40000 ALTER TABLE `history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -143,11 +146,13 @@ CREATE TABLE `member` (
   `email` varchar(45) DEFAULT NULL,
   `phone` varchar(10) DEFAULT NULL,
   `idtype_member` int(11) DEFAULT NULL,
+  `img_profile` varchar(100) DEFAULT NULL,
+  `idcard` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`idmember`),
   UNIQUE KEY `idmember_UNIQUE` (`idmember`),
   KEY `idtype_member_idx` (`idtype_member`),
   CONSTRAINT `idtype_member` FOREIGN KEY (`idtype_member`) REFERENCES `type_member` (`idtype_member`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -156,7 +161,7 @@ CREATE TABLE `member` (
 
 LOCK TABLES `member` WRITE;
 /*!40000 ALTER TABLE `member` DISABLE KEYS */;
-INSERT INTO `member` VALUES (0001,'vipuwat','kumpalanon','PoloYah','boyjame55','boyjameza04@gmail.com','0943211994',1),(0002,'rujapa','chotisawatraksa','memiine','1234','memiine@hotmail.com','0943211995',2),(0003,'teejuta','kaewtong','iamplaster','1234','iamplaster@hotmail.com','0943211996',1);
+INSERT INTO `member` VALUES (0001,'vipuwat','kumpalanon','PoloYah','boyjame55','boyjameza04@gmail.com','0943211994',1,'C:UsersAsusDocumentsNetBeansProjectsCoWorkingSpacewebimguser.png','Not verified'),(0002,'rujapa','chotisawatraksa','memiine','1234','memiine@hotmail.com','0943211995',2,'C:UsersAsusDocumentsNetBeansProjectsCoWorkingSpacewebimguser.png','Not verified'),(0003,'teejuta','kaewtong','iamplaster','1234','iamplaster@hotmail.com','0943211996',1,'C:UsersAsusDocumentsNetBeansProjectsCoWorkingSpacewebimguser.png','Not verified'),(0004,'tester','naja','tester','12345678','abcd@gmail.com','0123456789',2,'C:UsersAsusDocumentsNetBeansProjectsCoWorkingSpacewebimguser.png','Not verified'),(0008,'trhstrhth','et5t5gw45g45','abcdefg','36985214','bcd@gmail.com','0963258741',2,'C:UsersAsusDocumentsNetBeansProjectsCoWorkingSpacewebimguser.png','Not verified'),(0009,'thitiphat','manitchalermchai','thiti','1234','thiti@hotmail.com','0999999999',1,'C:UsersAsusDocumentsNetBeansProjectsCoWorkingSpacewebimguser.png','Not verified'),(0010,'aum','aung','aa','1234','aumaung@hotmail.com','0966666666',2,'C:UsersAsusDocumentsNetBeansProjectsCoWorkingSpacewebimguser.png','Not verified'),(0011,'pokky','naja','pokky','1234','pokky@hotmail.com','0900011100',1,'C:UsersAsusDocumentsNetBeansProjectsCoWorkingSpacewebimguser.png','Not verified');
 /*!40000 ALTER TABLE `member` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -270,4 +275,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-11-05  3:04:03
+-- Dump completed on 2017-11-17 13:45:10
