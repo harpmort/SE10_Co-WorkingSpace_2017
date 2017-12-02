@@ -5,7 +5,7 @@
  */
 package model;
 
-import java.io.InputStream;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -80,7 +80,7 @@ public class Space {
                 space.setAmount_people(rs.getString("c.amount_people"));
                 space.setPrice(rs.getString("c.price"));
                 space.setUsername(rs.getString("m.username"));
-                space.setImg(rs.getString("img").replace("C:\\Users\\Asus\\Documents\\NetBeansProjects\\CoWorkingSpace\\web\\img\\", "img/").split(","));
+                space.setImg(rs.getString("img").split(","));
                 int count = space.getImg().length;
                 for (int i = 0; i < count; i++) {
                     System.out.println("img :" + space.getImg()[0]);
@@ -92,7 +92,7 @@ public class Space {
         }
     }
 
-    public void addSpace(String name,String location,String typeroom,String typedesk,String totaldesk,String amountdesk,String description,String roomsize,String open,String close,String people,String price,int idmember,InputStream inputStream){
+    public void addSpace(String name,String location,String typeroom,String typedesk,String totaldesk,String amountdesk,String description,String roomsize,String open,String close,String people,String price,int idmember,String path_img){
         try {
             String sql = "INSERT INTO `db_coworkingspace`.`co_working_space` (`name`, `location`, `idtype_room`, `idtype_desk`, `total_desk`, `amount_desk`, `description`, `size_room`, `open_time`, `close_time`, `amount_people`, `price`, `fk_idmember`, `img`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -109,8 +109,44 @@ public class Space {
             stmt.setString(11, people); 
             stmt.setString(12, price); 
             stmt.setInt(13, idmember); 
-            stmt.setBlob(14, inputStream);
+            stmt.setString(14, path_img);
             stmt.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public void showSpace(String name){
+        try {
+            Statement stmt = conn.createStatement();
+            String sql = "select name,c.location,r.type_room,d.type_desk,c.total_desk,c.amount_desk,c.description\n"
+                    + ",c.size_room,c.open_time,c.close_time,c.amount_people,c.price,m.username,c.img\n"
+                    + "from co_working_space c\n"
+                    + "join member m \n"
+                    + "on c.fk_idmember = m.idmember\n"
+                    + "join type_desk d\n"
+                    + "on c.idtype_desk = d.idtype_desk\n"
+                    + "join type_room r\n"
+                    + "on c.idtype_room = r.idtype_room\n"
+                    + "where name = '" + name + "'";
+            ResultSet rs = stmt.executeQuery(sql);
+            if(rs.next()) {
+                setName(rs.getString("name"));
+                setLocation(rs.getString("c.location"));
+                setType_room(rs.getString("r.type_room"));
+                setType_desk(rs.getString("d.type_desk"));
+                setTotal_desk(rs.getString("c.total_desk"));
+                setAmount_desk(rs.getString("c.amount_desk"));
+                setDescription(rs.getString("c.description"));
+                setSize_room(rs.getString("c.size_room"));
+                setOpen_time(rs.getString("c.open_time"));
+                setClose_time(rs.getString("c.close_time"));
+                setAmount_people(rs.getString("c.amount_people"));
+                setPrice(rs.getString("c.price"));
+                setUsername(rs.getString("m.username"));
+                setImg(rs.getString("img").split(","));
+                System.out.println("img_c :"+ img.length);
+            }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -235,5 +271,6 @@ public class Space {
     public void setConn(Connection conn) {
         this.conn = conn;
     }
+    
 
 }

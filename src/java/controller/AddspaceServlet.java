@@ -82,24 +82,20 @@ public class AddspaceServlet extends HttpServlet {
                 for(int k=0;count_revert-1>=k;count_revert--){
                     file_type += filetype_revert.charAt(count_revert-1);
                 }
-                System.out.println("name :"+name);
-                System.out.println("file_type :"+file_type);
-                System.out.println("img :"+img[i]);
+                
             
-                save_img.savePicture("space", name+"_"+i, file_type, img[i]);
+                save_img.savePicture("space", name+"_"+location+"_"+i, file_type, img[i]);
                 path_img += save_img.getUrlImage("space", name+"_"+location+"_"+i, file_type);
             }
             System.out.println("pi:"+path_img);
             
-            /**ได้ลิ้งไฟล์แล้ว เหลือเอาเข้าดาต้าเบส*/
-            /**
+            
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
             HttpSession session = request.getSession();
             Space new_space = new Space(conn);
-            Member member = (Member) session.getAttribute("member");
-            new_space.addSpace(name,location,typeroom,typedesk,amountdesk,amountdesk,description,roomsize,open,close,people,price,1,inputStream);
-            */
+            new_space.addSpace(name,location,typeroom,typedesk,amountdesk,amountdesk,description,roomsize,open,close,people,price,1,path_img);
+            
 
         }
     }

@@ -73,7 +73,7 @@ CREATE TABLE `co_working_space` (
   `rating` int(11) GENERATED ALWAYS AS (0) VIRTUAL,
   `num_of_review` int(11) GENERATED ALWAYS AS (0) VIRTUAL,
   `fk_idmember` int(4) unsigned DEFAULT NULL,
-  `img` mediumblob,
+  `img` varchar(1000) DEFAULT 'NO IMAGE',
   PRIMARY KEY (`idspace`),
   UNIQUE KEY `idspace_UNIQUE` (`idspace`),
   KEY `idtype_room_idx` (`idtype_room`),
@@ -82,7 +82,7 @@ CREATE TABLE `co_working_space` (
   CONSTRAINT `idmember` FOREIGN KEY (`fk_idmember`) REFERENCES `member` (`idmember`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `idtype_desk` FOREIGN KEY (`idtype_desk`) REFERENCES `type_desk` (`idtype_desk`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `idtype_room` FOREIGN KEY (`idtype_room`) REFERENCES `type_room` (`idtype_room`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -91,7 +91,7 @@ CREATE TABLE `co_working_space` (
 
 LOCK TABLES `co_working_space` WRITE;
 /*!40000 ALTER TABLE `co_working_space` DISABLE KEYS */;
-INSERT INTO `co_working_space` (`idspace`, `name`, `location`, `idtype_room`, `idtype_desk`, `total_desk`, `amount_desk`, `description`, `size_room`, `open_time`, `close_time`, `amount_people`, `price`, `fk_idmember`, `img`) VALUES (0001,'Muayland','LKB 32, Bangkok',1,2,'10',10,'wifi, parking, air conditioner','40','09.00','18.00','1',200,1,''),(0002,'Boyland','Suan Siam, Bangkok',2,1,'4',4,'wifi, parking, air conditioner, board','20','09.00','18.00','8',500,1,''),(0003,'ITLAND','IT KMITL, Bangkok',2,1,'2',2,'wifi, parking, air conditioner, board,แม่บ้าน','20','09.00','20.00','8',200,1,'No IMAGE'),(0013,'Miineland','Asoke, Bangkok',1,2,'9',9,'wifi, parking, air conditioner','35','09.00','19.00','1',200,3,NULL),(0014,'Monkey D Lufy','Sathorn, Bangkok',1,1,'5',5,'wifi, parking, air conditioner','40','09.00','18.00','1',250,3,NULL),(0015,'Conan Room','Asoke, Bangkok',1,1,'2',2,'wifi, parking, air conditioner','20','09.00','18.00','1',250,1,NULL),(0016,'Mori Room','Asoke, Bangkok',3,1,'10',10,'wifi, parking, air conditioner, board,แม่บ้าน','35','09.00','20.00','10',400,3,NULL),(0017,'Inn Land','Asoke, Bangkok',3,1,'5',5,'wifi, parking, air conditioner, board,แม่บ้าน','35','09.00','18.00','5',400,9,NULL),(0018,'Lovely Room','Klong Sansab, Bangkok',1,1,'40',40,'wifi, parking, air conditioner','60','08.00','21.00','1',200,9,NULL),(0019,'Pretty Room','Klong Sansab, Bangkok',3,1,'15',15,'wifi, parking, air conditioner, board,แม่บ้าน','30','08.00','21.00','15',500,9,NULL),(0020,'Ugly Room','Klong Sansab, Bangkok',2,1,'5',5,'wifi, parking, air conditioner, board,แม่บ้าน','20','08.00','21.00','5',350,9,NULL),(0021,'Wow Room','Klong Sansab, Bangkok',1,2,'50',50,'wifi, parking, air conditioner','60','08.00','21.00','1',200,9,NULL),(0022,'Jubu Land','Prawet, Bangkok',3,1,'15',15,'wifi, parking, air conditioner, board','60','09.00','20.00','15',400,1,NULL),(0023,'Jibi Land','Prawet, Bangkok',3,1,'10',10,'wifi, parking, air conditioner, board','40','09.00','20.00','10',400,3,NULL),(0024,'Maple Land','Nongkham, Bangkok',1,2,'30',30,'wifi, parking, air conditioner, แม่บ้าน','60','08.00','21.00','1',200,3,NULL),(0025,'Tissue Room','Nongjok, Bangkok',1,1,'20',20,'wifi, parking, air conditioner, แม่บ้าน','50','08.00','20.00','1',200,1,NULL),(0026,'Skyline','Suvanabhumi Airport, Samut Prakan',1,1,'20',20,'wifi, parking, air conditioner, แม่บ้าน','50','08.00','21.00','1',500,11,NULL);
+INSERT INTO `co_working_space` (`idspace`, `name`, `location`, `idtype_room`, `idtype_desk`, `total_desk`, `amount_desk`, `description`, `size_room`, `open_time`, `close_time`, `amount_people`, `price`, `fk_idmember`, `img`) VALUES (0001,'Muayland','LKB 32, Bangkok',1,2,'10',10,'wifi, parking, air conditioner','40','09.00','18.00','1',200,1,'NO IMAGE'),(0002,'Boyland','Suan Siam, Bangkok',2,1,'4',4,'wifi, parking, air conditioner, board','20','09.00','18.00','8',500,1,'NO IMAGE'),(0003,'ITLAND','IT KMITL, Bangkok',2,1,'2',2,'wifi, parking, air conditioner, board,แม่บ้าน','20','09.00','20.00','8',200,1,'NO IMAGE'),(0013,'Miineland','Asoke, Bangkok',1,2,'9',9,'wifi, parking, air conditioner','35','09.00','19.00','1',200,3,'NO IMAGE'),(0014,'Monkey D Lufy','Sathorn, Bangkok',1,1,'5',5,'wifi, parking, air conditioner','40','09.00','18.00','1',250,3,'NO IMAGE'),(0015,'Conan Room','Asoke, Bangkok',1,1,'2',2,'wifi, parking, air conditioner','20','09.00','18.00','1',250,1,'NO IMAGE'),(0016,'Mori Room','Asoke, Bangkok',3,1,'10',10,'wifi, parking, air conditioner, board,แม่บ้าน','35','09.00','20.00','10',400,3,'NO IMAGE'),(0017,'Inn Land','Asoke, Bangkok',3,1,'5',5,'wifi, parking, air conditioner, board,แม่บ้าน','35','09.00','18.00','5',400,9,'NO IMAGE'),(0018,'Lovely Room','Klong Sansab, Bangkok',1,1,'40',40,'wifi, parking, air conditioner','60','08.00','21.00','1',200,9,'NO IMAGE'),(0019,'Pretty Room','Klong Sansab, Bangkok',3,1,'15',15,'wifi, parking, air conditioner, board,แม่บ้าน','30','08.00','21.00','15',500,9,'NO IMAGE'),(0020,'Ugly Room','Klong Sansab, Bangkok',2,1,'5',5,'wifi, parking, air conditioner, board,แม่บ้าน','20','08.00','21.00','5',350,9,'NO IMAGE'),(0021,'Wow Room','Klong Sansab, Bangkok',1,2,'50',50,'wifi, parking, air conditioner','60','08.00','21.00','1',200,9,'NO IMAGE'),(0022,'Jubu Land','Prawet, Bangkok',3,1,'15',15,'wifi, parking, air conditioner, board','60','09.00','20.00','15',400,1,'NO IMAGE'),(0023,'Jibi Land','Prawet, Bangkok',3,1,'10',10,'wifi, parking, air conditioner, board','40','09.00','20.00','10',400,3,'NO IMAGE'),(0024,'Maple Land','Nongkham, Bangkok',1,2,'30',30,'wifi, parking, air conditioner, แม่บ้าน','60','08.00','21.00','1',200,3,'NO IMAGE'),(0025,'Tissue Room','Nongjok, Bangkok',1,1,'20',20,'wifi, parking, air conditioner, แม่บ้าน','50','08.00','20.00','1',200,1,'NO IMAGE'),(0026,'Skyline','Suvanabhumi Airport, Samut Prakan',1,1,'20',20,'wifi, parking, air conditioner, แม่บ้าน','50','08.00','21.00','1',500,11,'NO IMAGE'),(0027,'ทดสอบแลนด์','สวนสยาม',1,1,'4',4,'WIFI AIR ','30','09.00','20.00','10',200,1,'https://coworkingspacebucket.s3.amazonaws.com/space/ทดสอบแลนด์_สวนสยาม_0.jpg');
 /*!40000 ALTER TABLE `co_working_space` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -275,4 +275,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-11-17 13:45:10
+-- Dump completed on 2017-12-02 19:30:45

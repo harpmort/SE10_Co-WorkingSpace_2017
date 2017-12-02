@@ -83,31 +83,29 @@
                 </div>
             </div>
         </nav>
-
-        <h1 class="margin-left">ห้องประชุม</h1>
+        <%model.Space space = (model.Space) session.getAttribute("space");%>
+        <h1 class="margin-left"><%= space.getName()%></h1>
 
         <div class="container zero-gap" style="width: 100%">
             <div id="myCarousel" class="carousel slide" data-ride="carousel">
                 <!-- Indicators -->
                 <ol class="carousel-indicators">
-                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                    <li data-target="#myCarousel" data-slide-to="1"></li>
-                    <li data-target="#myCarousel" data-slide-to="2"></li>
+                    <% int count = space.getImg().length;%>
+                    <%for (int i = 0; i < count; i++) {
+                                if (i == 0) {%><li data-target="#myCarousel" data-slide-to="0" class="active"></li><%} else {%>
+                    <li data-target="#myCarousel" data-slide-to="<%=i%>"></li>
+                        <%}
+                            }%>
+
                 </ol>
 
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner">
-                    <div class="item active">
-                        <img src="img/img-slide2.jpg" style="width:100%;">
-                    </div>
-
-                    <div class="item">
-                        <img src="img/img-slide2.jpg" style="width:100%;">
-                    </div>
-
-                    <div class="item">
-                        <img src="img/img-slide2.jpg" style="width:100%;">
-                    </div>
+                    <% for (int j = 0; j < count; j++) {
+                            if (j == 0) {%><div class="item active"><img src="<%=space.getImg()[j]%>" style="width:100%;"></div><%} else {%>
+                    <div class="item"><img src="<%=space.getImg()[j]%>" style="width:100%;"></div>
+                        <%}
+                               }%>
                 </div>
 
                 <!-- Left and right controls -->
@@ -133,7 +131,7 @@
                                 <img src="img/actions.png" style="width: 32px">
                             </div>
                             <div class="col-md-10">
-                                <p style="font-size:initial;">จำนวนคน</p>
+                                <p style="font-size:initial;"><%= space.getAmount_people()%></p>
                             </div>
                         </div><br>
                         <div class="row">
@@ -141,7 +139,7 @@
                                 <img src="img/table.png" style="width: 32px">
                             </div>
                             <div class="col-md-10">
-                                <p style="font-size:initial;">ประเภทโต๊ะ</p>
+                                <p style="font-size:initial;"><%= space.getType_desk()%></p>
                             </div>
                         </div><br>
                         <div class="row">
@@ -149,7 +147,7 @@
                                 <img src="img/clock.png" style="width: 32px">
                             </div>
                             <div class="col-md-10">
-                                <p style="font-size:initial;">เวลาเปิดปิด</p>
+                                <p style="font-size:initial;"><%= space.getOpen_time()%> - <%= space.getClose_time()%></p>
                             </div>
                         </div>
                     </div>
@@ -159,7 +157,7 @@
                                 <img src="img/plans.png" style="width: 32px">
                             </div>
                             <div class="col-md-10">
-                                <p style="font-size:initial;">ขนาดห้อง</p>
+                                <p style="font-size:initial;"><%= space.getSize_room()%></p>
                             </div>
                         </div><br>
                         <div class="row">
@@ -167,7 +165,7 @@
                                 <img src="img/conference.png" style="width: 32px">
                             </div>
                             <div class="col-md-10">
-                                <p style="font-size:initial;">ประเภทห้อง</p>
+                                <p style="font-size:initial;"><%= space.getType_room()%></p>
                             </div>
                         </div>
                     </div>
@@ -179,7 +177,7 @@
                         <div class="book-bg margin-top book-margin">
                             <div class="book-title">
                                 <center>
-                                    <p>Price : 1000000000000000000000000000</p>
+                                    <p>Price : <%= space.getPrice()%></p>
                                 </center>
                             </div>
                             <div class="row">
@@ -232,7 +230,7 @@
                     <div class="jumbotron margin-top">
                         <div class="container">
                             <h3>Description</h3>
-                            <p>Hello, this is a best co-working space web booking</p>
+                            <p><%= space.getDescription()%></p>
                         </div>
                     </div>
 
