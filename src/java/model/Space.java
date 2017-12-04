@@ -21,6 +21,7 @@ import java.util.List;
 public class Space {
 
     List<Space> detail_space;
+    List<Space> takedslot;
     private String name;
     private String location;
     private String type_room;
@@ -44,10 +45,15 @@ public class Space {
     public Space(Connection connection) {
         conn = connection;
         detail_space = new LinkedList<Space>();
+        takedslot = new LinkedList<Space>();
     }
 
     public List<Space> getDetail_space() {
         return detail_space;
+    }
+    
+    public List<Space> getTakedslot() {
+        return takedslot;
     }
 
     public void search(String text) {

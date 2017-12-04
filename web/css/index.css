@@ -13,6 +13,7 @@
 .navbar-edit{
 	min-height: 50px !important;
 	margin-bottom: 0px;
+	
 }
 .brand-edit{
 	padding: 0px;
@@ -126,10 +127,13 @@
 	padding-right: 0px;
 }
 .book-title {
-	background: #e0e0e0;
+	background: #9cb1bb;
+	border-radius: 3px;
+	padding: 5px;
 }
 .book-bg {
-	background: lightgreen;
+	background: #edf2f5;
+	padding-bottom: 10px;
 }
 .book-margin {
 	margin-right: 10%;
@@ -145,7 +149,7 @@
 	margin-left: 10%;
 }
 .bg-column {
-	background-color: #e0e0e0;
+	background-color: white;
 }
 .title-margin-top {
 	margin-top: 60px;
@@ -155,4 +159,34 @@
 }
 body {
 	font-family: 'Prompt', sans-serif !important;
+	
+}
+/*detail.html*/
+.icon-room-detail{
+	margin: auto;
+	padding: 10px;
+}
+.input-number-pos{
+	text-align: center;	
+}
+.type-room-name{
+	margin-top: 3%;
+	margin-bottom: 2%;
+
+}
+.form-control-edit{
+	margin-bottom: 10px;
+}
+.text-pos{
+	margin-top: 30px;
+}
+.magin-book{
+	margin-left: 25px;
+}
+.text-edit{
+	margin-top: 10px;
+	margin-bottom: 20px;
+}
+.detail-des{
+	background-color: #edf2f5;
 }

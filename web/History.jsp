@@ -11,13 +11,14 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="index.css">
+        <link rel="stylesheet" type="text/css" href="css/index.css">
         <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Prompt:300">
         <title>Co-Working-Space</title>
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
     </head>
     <body>
+        <% int type = (int) session.getAttribute("type");%>
         <nav class="navbar navbar-default navbar-edit navbar-static-top">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -31,12 +32,19 @@
                         <span class="icon-bar-color icon-bar"></span> 
                     </button>
                 </div>
+                <%model.Member member = (model.Member) session.getAttribute("member");%>
                 <div class="collapse navbar-collapse" id="mynavbar">
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="menu-bar"><a href="landing.jsp">HOME</a></li>
+                        <% if (type == 1) {%>
+                        <li class="menu-bar"><a href="index.jsp">HOME</a></li>
+                        <li class="menu-bar"><a href="insertcws.jsp">Add Space</a></li>
                         <li class="menu-bar"><a href="BookingServlet">List Booking</a></li>
                         <li class="menu-bar"><a href="HistoryServlet">History</a></li>
-                            <%model.Member member = (model.Member) session.getAttribute("member");%>
+                            <%} else if (type == 2) {%>
+                        <li class="menu-bar"><a href="index.jsp">HOME</a></li>
+                        <li class="menu-bar"><a href="BookingServlet">List Booking</a></li>
+                        <li class="menu-bar"><a href="HistoryServlet">History</a></li>
+                            <%}%>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle menu-bar" data-toggle="dropdown"><%= member.getUsername()%><strong class="caret"></strong></a>
                             <ul class="dropdown-menu">

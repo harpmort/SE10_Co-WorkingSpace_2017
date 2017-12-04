@@ -35,33 +35,33 @@
                     </button>
                 </div>
                 <%model.Member member = (model.Member) session.getAttribute("member");%>
+
                 <div class="collapse navbar-collapse" id="mynavbar">
-                    <div class="collapse navbar-collapse" id="mynavbar">
-                        <ul class="nav navbar-nav navbar-right">
-                            <% if (type == 1) {%>
-                            <li class="menu-bar"><a href="index.jsp">HOME</a></li>
-                            <li class="menu-bar"><a href="insertcws.jsp">Add Space</a></li>
-                            <li class="menu-bar"><a href="BookingServlet">List Booking</a></li>
-                            <li class="menu-bar"><a href="HistoryServlet">History</a></li>
-                                <%} else if (type == 2) {%>
-                            <li class="menu-bar"><a href="index.jsp">HOME</a></li>
-                            <li class="menu-bar"><a href="BookingServlet">List Booking</a></li>
-                            <li class="menu-bar"><a href="HistoryServlet">History</a></li>
-                                <%}%>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle menu-bar" data-toggle="dropdown"><%= member.getUsername()%><strong class="caret"></strong></a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a href="Profile.jsp">View Profile</a>
-                                    </li>
-                                    <li>
-                                        <a href="LogoutServlet">Logout</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
+                    <ul class="nav navbar-nav navbar-right">
+                        <% if (type == 1) {%>
+                        <li class="menu-bar"><a href="index.jsp">HOME</a></li>
+                        <li class="menu-bar"><a href="insertcws.jsp">Add Space</a></li>
+                        <li class="menu-bar"><a href="BookingServlet">List Booking</a></li>
+                        <li class="menu-bar"><a href="HistoryServlet">History</a></li>
+                            <%} else if (type == 2) {%>
+                        <li class="menu-bar"><a href="index.jsp">HOME</a></li>
+                        <li class="menu-bar"><a href="BookingServlet">List Booking</a></li>
+                        <li class="menu-bar"><a href="HistoryServlet">History</a></li>
+                            <%}%>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle menu-bar" data-toggle="dropdown"><%= member.getUsername()%><strong class="caret"></strong></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="Profile.jsp">View Profile</a>
+                                </li>
+                                <li>
+                                    <a href="LogoutServlet">Logout</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
                 </div>
+
             </div>
         </nav>
 

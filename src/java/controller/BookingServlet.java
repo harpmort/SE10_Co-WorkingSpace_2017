@@ -16,8 +16,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.Lessor;
 import model.Rental;
-
 
 /**
  *
@@ -44,10 +44,18 @@ public class BookingServlet extends HttpServlet {
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
             HttpSession session = request.getSession();
-            Rental rental = (Rental) session.getAttribute("member");
-            Rental viewbooking = new Rental(conn);
-            viewbooking.viewListbooking(rental.getUsername());
-            session.setAttribute("viewbooking", viewbooking);
+            int type = (int) session.getAttribute("type");
+            if (type == 1) {
+                Lessor lessor = (Lessor) session.getAttribute("member");
+                Lessor viewbooking = new Lessor(conn);
+                viewbooking.viewListbooking(lessor.getUsername());
+                session.setAttribute("viewbooking", viewbooking);
+            } else {
+                Rental rental = (Rental) session.getAttribute("member");
+                Rental viewbooking = new Rental(conn);
+                viewbooking.viewListbooking(rental.getUsername());
+                session.setAttribute("viewbooking", viewbooking);
+            }
             RequestDispatcher pg = request.getRequestDispatcher("Listbooking.jsp");
             pg.forward(request, response);
 

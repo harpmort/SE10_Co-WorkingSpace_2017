@@ -16,7 +16,8 @@ import java.util.List;
  *
  * @author Asus
  */
-public class Rental extends Member{
+public class Rental extends Member {
+
     List<Member> lbooking_user;
     private String idbooking;
     private String location_name;
@@ -24,7 +25,7 @@ public class Rental extends Member{
     private String begin_time;
     private String end_time;
     private String desk_booking;
-    
+
     List<Member> lhistory_user;
     private String idhistory;
     Connection conn;
@@ -42,11 +43,11 @@ public class Rental extends Member{
     public List<Member> getLbooking_user() {
         return lbooking_user;
     }
-    
+
     public List<Member> getLhistory_user() {
         return lhistory_user;
     }
-    
+
     public void viewListbooking(String username) {
         try {
             Statement stmt = conn.createStatement();
@@ -69,6 +70,24 @@ public class Rental extends Member{
                 lb.setDesk_booking(rs.getString("b.desk_booking"));
                 lbooking_user.add(lb);
             }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void cancelBooking(String id_booking) {
+        try {
+            Statement stmt = conn.createStatement();
+            String sql = "SELECT *\n"
+                    + "FROM booking b\n"
+                    + "where idbooking = '"+ id_booking +"';";
+            ResultSet rs = stmt.executeQuery(sql);
+            rs.next();
+            String id_b = rs.getString("idbooking");
+            Statement stmt_id_b = conn.createStatement();
+            String sql_id_b = "DELETE FROM db_coworkingspace.booking WHERE idbooking = '"+ id_b +"';";
+            stmt_id_b.executeUpdate(sql_id_b);
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -158,5 +177,5 @@ public class Rental extends Member{
     public void setIdhistory(String idhistory) {
         this.idhistory = idhistory;
     }
-    
+
 }
