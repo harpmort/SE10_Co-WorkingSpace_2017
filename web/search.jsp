@@ -95,12 +95,17 @@
                 </center>
             </div>
         </div>
-        <div class="row-fluid margin-top">
+        
             <div class="col-md-1"></div>
+            
+            <% int i = 0; %>
+            
             <div class="col-md-10">
-                <div class="col-md-4">
+                
                     <c:forEach var="row" items="${sessionScope.space.detail_space}">
-                        <form action="ViewdetailspaceServlet" method="POST">
+                        
+                        <div class="col-md-4">
+                            <form action="ViewdetailspaceServlet" method="POST">
                             <div class="w3-card-4 card-margin">
                                 <div class="panel-thumbnail">
                                     <img src="${row.img[0]}" class="img-responsive" style="width: 100%">
@@ -115,77 +120,16 @@
                                     </button>
                                 </div>
                             </div>
-
                         </form>
+                        </div>
+                        
+                        
+                        
                     </c:forEach>
-                </div>
-
-
-                <div class="col-md-4">
-                    <div class="w3-card-4 card-margin">
-                        <div class="panel-thumbnail">
-                            <img src="img/img-slide2.jpg" class="img-responsive" style="width: 100%">
-                        </div>
-                        <div class="panel-body">
-                            <p class="lead" >TEST</p>
-                            <p>Test Test Hello Test</p>
-                        </div>
-                    </div>
-                    <div class="w3-card-4 card-margin">
-                        <div class="panel-thumbnail">
-                            <img src="img/img-slide2.jpg" class="img-responsive" style="width: 100%">
-                        </div>
-                        <div class="panel-body">
-                            <p class="lead" >TEST</p>
-                            <p>Test Test Hello Test</p>
-                        </div>
-                    </div>
-                    <div class="w3-card-4 card-margin">
-                        <div class="panel-thumbnail">
-                            <img src="img/img-slide2.jpg" class="img-responsive" style="width: 100%">
-                        </div>
-                        <div class="panel-body">
-                            <p class="lead" >TEST</p>
-                            <p>Test Test Hello Test</p>
-                        </div>
-                    </div>
-
-
-                </div>
-
-
-                <div class="col-md-4">
-                    <div class="w3-card-4 card-margin">
-                        <div class="panel-thumbnail">
-                            <img src="img/img-slide2.jpg" class="img-responsive" style="width: 100%">
-                        </div>
-                        <div class="panel-body">
-                            <p class="lead" >TEST</p>
-                            <p>Test Test Hello Test</p>
-                        </div>
-                    </div>
-                    <div class="w3-card-4 card-margin">
-                        <div class="panel-thumbnail">
-                            <img src="img/img-slide2.jpg" class="img-responsive" style="width: 100%">
-                        </div>
-                        <div class="panel-body">
-                            <p class="lead" >TEST</p>
-                            <p>Test Test Hello Test</p>
-                        </div>
-                    </div>
-                    <div class="w3-card-4 card-margin">
-                        <div class="panel-thumbnail">
-                            <img src="img/img-slide2.jpg" class="img-responsive" style="width: 100%">
-                        </div>
-                        <div class="panel-body">
-                            <p class="lead" >TEST</p>
-                            <p>Test Test Hello Test</p>
-                        </div>
-                    </div>
-                </div>
             </div>
+
             <div class="col-md-1"></div>
-        </div>
+        
         <!-- Login Modal -->
         <div id="loginModal" class="modal fade" role="dialog">
             <div class="modal-dialog">

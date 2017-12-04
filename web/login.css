@@ -51,13 +51,10 @@
 	background-color: black; 
 }
 .menu-bar{
-	display: inline-block;
+            display: inline-block;
     font-family: "Prompt";
     line-height: 2;
     font-size: 15px;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-transform: uppercase;
     color: #fff;
     position: relative;
 }

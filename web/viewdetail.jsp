@@ -183,8 +183,8 @@
                             <div class="row text-pos">
                                 <div class="col-md-6 ">
                                     <div class="col-md-3 magin-book">
-                                        <p>วันที่ : </p>
-                                        <p>เวลาเริ่ม : </p>
+                                        <div class="text-edit"><p>วันที่ : </p></div>
+                                        <div class="text-edit"><p>เวลาเริ่ม : </p></div>
                                     </div>
                                     <div class="col-md-7">
 
@@ -198,7 +198,7 @@
                                         <div class="text-edit">จำนวนคน : </div>
                                     </div>
                                     <div class="col-md-7">
-                                        <input type="text" class="form-control-edit" value="" id="datetimepicker3">
+                                        <input type="text" class="form-control form-control-edit" value="" id="datetimepicker3">
                                         <div class="input-group">
                                             <span class="input-group-btn">
                                                 <button class="btn btn-default" id="btn-minus" data-field="amount" type="button">

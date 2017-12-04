@@ -39,12 +39,12 @@
                 <div class="collapse navbar-collapse" id="mynavbar">
                     <ul class="nav navbar-nav navbar-right">
                         <% if (type == 1) {%>
-                        <li class="menu-bar"><a href="index.jsp">HOME</a></li>
+                        <li class="menu-bar"><a href="index.jsp">Home</a></li>
                         <li class="menu-bar"><a href="insertcws.jsp">Add Space</a></li>
                         <li class="menu-bar"><a href="BookingServlet">List Booking</a></li>
                         <li class="menu-bar"><a href="HistoryServlet">History</a></li>
                             <%} else if (type == 2) {%>
-                        <li class="menu-bar"><a href="index.jsp">HOME</a></li>
+                        <li class="menu-bar"><a href="index.jsp">Home</a></li>
                         <li class="menu-bar"><a href="BookingServlet">List Booking</a></li>
                         <li class="menu-bar"><a href="HistoryServlet">History</a></li>
                             <%}%>
