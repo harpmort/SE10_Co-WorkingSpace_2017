@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.Lessor;
 import model.Member;
 import model.Rental;
 
@@ -44,10 +45,18 @@ public class HistoryServlet extends HttpServlet {
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
             HttpSession session = request.getSession();
-            Rental rental = (Rental) session.getAttribute("member");
-            Rental viewhistory = new Rental(conn);
-            viewhistory.viewListbooking(rental.getUsername());
-            session.setAttribute("viewhistory", viewhistory);
+            int type = (int) session.getAttribute("type");
+            if (type == 1) {
+                Lessor lessor = (Lessor) session.getAttribute("member");
+                Lessor viewhistory = new Lessor(conn);
+                viewhistory.viewListhistory(lessor.getUsername());
+                session.setAttribute("viewhistory", viewhistory);
+            } else {
+                Rental rental = (Rental) session.getAttribute("member");
+                Rental viewhistory = new Rental(conn);
+                viewhistory.viewListhistory(rental.getUsername());
+                session.setAttribute("viewhistory", viewhistory);
+            }
             RequestDispatcher pg = request.getRequestDispatcher("History.jsp");
             pg.forward(request, response);
 

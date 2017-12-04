@@ -83,7 +83,7 @@
                                     <tr>
                                         <th>ID_Booking</th>
                                         <th>ชื่อสถานที่</th>
-                                        <th>ชื่อผู้จอง</th>
+                                        <th>ชื่อ</th>
                                         <th>วันที่จอง</th>
                                         <th>เวลาเริ่ม</th>
                                         <th>เวลาจบ</th>
@@ -92,7 +92,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <c:forEach var="row" items="${sessionScope.viewbooking.lbooking_user}">
+                                    <c:forEach var="row" items="${sessionScope.viewbooking.lbooking}">
                                         <tr class="success">
                                             <td>${row.idbooking}</td>
                                             <td>${row.location_name}</td>

@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class Rental extends Member {
 
-    List<Member> lbooking_user;
+    List<Member> lbooking;
     private String idbooking;
     private String location_name;
     private String date;
@@ -26,7 +26,7 @@ public class Rental extends Member {
     private String end_time;
     private String desk_booking;
 
-    List<Member> lhistory_user;
+    List<Member> lhistory;
     private String idhistory;
     Connection conn;
 
@@ -36,39 +36,41 @@ public class Rental extends Member {
     public Rental(Connection connection) {
         super(connection);
         conn = connection;
-        lbooking_user = new LinkedList<Member>();
-        lhistory_user = new LinkedList<Member>();
+        lbooking = new LinkedList<Member>();
+        lhistory = new LinkedList<Member>();
     }
 
-    public List<Member> getLbooking_user() {
-        return lbooking_user;
+    public List<Member> getLbooking() {
+        return lbooking;
     }
 
-    public List<Member> getLhistory_user() {
-        return lhistory_user;
+    public List<Member> getLhistory() {
+        return lhistory;
     }
 
     public void viewListbooking(String username) {
         try {
             Statement stmt = conn.createStatement();
-            String sql = "SELECT b.idbooking,c.name,m.username,b.date,b.begin_time,b.end_time,b.desk_booking\n"
+            String sql = "SELECT b.idbooking,c.name,ml.username,b.date,b.begin_time,b.end_time,b.desk_booking\n"
                     + "FROM booking b\n"
                     + "join member m \n"
                     + "on b.fk_idmember = m.idmember\n"
                     + "join co_working_space c\n"
                     + "on b.fk_idspace = c.idspace\n"
-                    + "where m.username = '" + username + "';";
+                    + "join member ml\n"
+                    + "on ml.idmember = c.fk_idmember\n"
+                    + "where m.username = '"+ username +"';";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 Rental lb = new Rental();
                 lb.setIdbooking(rs.getString("b.idbooking"));
                 lb.setLocation_name(rs.getString("c.name"));
-                lb.setUsername(rs.getString("m.username"));
+                lb.setUsername(rs.getString("ml.username"));
                 lb.setDate(rs.getString("b.date"));
                 lb.setBegin_time(rs.getString("b.begin_time"));
                 lb.setEnd_time(rs.getString("b.end_time"));
                 lb.setDesk_booking(rs.getString("b.desk_booking"));
-                lbooking_user.add(lb);
+                lbooking.add(lb);
             }
 
         } catch (SQLException ex) {
@@ -81,12 +83,12 @@ public class Rental extends Member {
             Statement stmt = conn.createStatement();
             String sql = "SELECT *\n"
                     + "FROM booking b\n"
-                    + "where idbooking = '"+ id_booking +"';";
+                    + "where idbooking = '" + id_booking + "';";
             ResultSet rs = stmt.executeQuery(sql);
             rs.next();
             String id_b = rs.getString("idbooking");
             Statement stmt_id_b = conn.createStatement();
-            String sql_id_b = "DELETE FROM db_coworkingspace.booking WHERE idbooking = '"+ id_b +"';";
+            String sql_id_b = "DELETE FROM db_coworkingspace.booking WHERE idbooking = '" + id_b + "';";
             stmt_id_b.executeUpdate(sql_id_b);
 
         } catch (SQLException ex) {
@@ -97,24 +99,26 @@ public class Rental extends Member {
     public void viewListhistory(String username) {
         try {
             Statement stmt = conn.createStatement();
-            String sql = "SELECT h.idhistory,c.name,h.date,h.begin_time,h.end_time,h.desk_booking\n"
+            String sql = "SELECT h.idhistory,c.name,h.date,h.begin_time,h.end_time,h.desk_booking,ml.username\n"
                     + "FROM history h\n"
                     + "join member m \n"
                     + "on h.fk_idmember = m.idmember\n"
                     + "join co_working_space c\n"
                     + "on h.fk_idspace = c.idspace\n"
+                    + "join member ml\n"
+                    + "on c.fk_idmember = ml.idmember\n"
                     + "where m.username = '" + username + "';";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 Rental lh = new Rental();
                 lh.setIdhistory(rs.getString("h.idhistory"));
                 lh.setLocation_name(rs.getString("c.name"));
-                lh.setUsername(rs.getString("m.username"));
+                lh.setUsername(rs.getString("ml.username"));
                 lh.setDate(rs.getString("h.date"));
                 lh.setBegin_time(rs.getString("h.begin_time"));
                 lh.setEnd_time(rs.getString("h.end_time"));
                 lh.setDesk_booking(rs.getString("h.desk_booking"));
-                lhistory_user.add(lh);
+                lhistory.add(lh);
             }
 
         } catch (SQLException ex) {

@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class Lessor extends Member {
 
-    List<Member> lbooking_user;
+    List<Member> lbooking;
     private String idbooking;
     private String location_name;
     private String date;
@@ -26,26 +26,26 @@ public class Lessor extends Member {
     private String end_time;
     private String desk_booking;
 
-    List<Member> lhistory_user;
+    List<Member> lhistory;
     private String idhistory;
     Connection conn;
 
     public Lessor() {
     }
 
-    public Lessor(Connection connection){
+    public Lessor(Connection connection) {
         super(connection);
         conn = connection;
-        lbooking_user = new LinkedList<Member>();
-        lhistory_user = new LinkedList<Member>();
+        lbooking = new LinkedList<Member>();
+        lhistory = new LinkedList<Member>();
     }
 
-    public List<Member> getLbooking_user() {
-        return lbooking_user;
+    public List<Member> getLbooking() {
+        return lbooking;
     }
 
-    public List<Member> getLhistory_user() {
-        return lhistory_user;
+    public List<Member> getLhistory() {
+        return lhistory;
     }
 
     public void viewListbooking(String username) {
@@ -57,10 +57,12 @@ public class Lessor extends Member {
                     + "on b.fk_idmember = m.idmember\n"
                     + "join co_working_space c\n"
                     + "on b.fk_idspace = c.idspace\n"
-                    + "where m.username = '" + username + "';";
+                    + "join member ml\n"
+                    + "on c.fk_idmember = ml.idmember\n"
+                    + "where ml.username = '" + username + "';";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                Rental lb = new Rental();
+                Lessor lb = new Lessor();
                 lb.setIdbooking(rs.getString("b.idbooking"));
                 lb.setLocation_name(rs.getString("c.name"));
                 lb.setUsername(rs.getString("m.username"));
@@ -68,7 +70,7 @@ public class Lessor extends Member {
                 lb.setBegin_time(rs.getString("b.begin_time"));
                 lb.setEnd_time(rs.getString("b.end_time"));
                 lb.setDesk_booking(rs.getString("b.desk_booking"));
-                lbooking_user.add(lb);
+                lbooking.add(lb);
             }
 
         } catch (SQLException ex) {
@@ -79,13 +81,15 @@ public class Lessor extends Member {
     public void viewListhistory(String username) {
         try {
             Statement stmt = conn.createStatement();
-            String sql = "SELECT h.idhistory,c.name,h.date,h.begin_time,h.end_time,h.desk_booking\n"
+            String sql = "SELECT h.idhistory,c.name,h.date,h.begin_time,h.end_time,h.desk_booking,m.username\n"
                     + "FROM history h\n"
                     + "join member m \n"
                     + "on h.fk_idmember = m.idmember\n"
                     + "join co_working_space c\n"
                     + "on h.fk_idspace = c.idspace\n"
-                    + "where m.username = '" + username + "';";
+                    + "join member ml\n"
+                    + "on c.fk_idmember = ml.idmember\n"
+                    + "where ml.username like '"+ username +"';";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 Rental lh = new Rental();
@@ -96,7 +100,7 @@ public class Lessor extends Member {
                 lh.setBegin_time(rs.getString("h.begin_time"));
                 lh.setEnd_time(rs.getString("h.end_time"));
                 lh.setDesk_booking(rs.getString("h.desk_booking"));
-                lhistory_user.add(lh);
+                lhistory.add(lh);
             }
 
         } catch (SQLException ex) {

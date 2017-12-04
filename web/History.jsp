@@ -92,9 +92,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <c:forEach var="row" items="${sessionScope.viewbooking.lbooking_user}">
+                                    <c:forEach var="row" items="${sessionScope.viewhistory.lhistory}">
                                         <tr class="success">
-                                            <td>${row.idbooking}</td>
+                                            <td>${row.idhistory}</td>
                                             <td>${row.location_name}</td>
                                             <td>${row.username}</td>
                                             <td>${row.date}</td>

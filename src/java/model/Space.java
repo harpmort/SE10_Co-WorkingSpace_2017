@@ -5,7 +5,6 @@
  */
 package model;
 
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -51,7 +50,7 @@ public class Space {
     public List<Space> getDetail_space() {
         return detail_space;
     }
-    
+
     public List<Space> getTakedslot() {
         return takedslot;
     }
@@ -98,31 +97,31 @@ public class Space {
         }
     }
 
-    public void addSpace(String name,String location,String typeroom,String typedesk,String totaldesk,String amountdesk,String description,String roomsize,String open,String close,String people,String price,int idmember,String path_img){
+    public void addSpace(String name, String location, String typeroom, String typedesk, String totaldesk, String amountdesk, String description, String roomsize, String open, String close, String people, String price, int idmember, String path_img) {
         try {
             String sql = "INSERT INTO `db_coworkingspace`.`co_working_space` (`name`, `location`, `idtype_room`, `idtype_desk`, `total_desk`, `amount_desk`, `description`, `size_room`, `open_time`, `close_time`, `amount_people`, `price`, `fk_idmember`, `img`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, name);
-            stmt.setString(2, location); 
-            stmt.setString(3, typeroom); 
-            stmt.setString(4, typedesk); 
-            stmt.setString(5, totaldesk); 
-            stmt.setString(6, amountdesk); 
-            stmt.setString(7, description); 
-            stmt.setString(8, roomsize); 
-            stmt.setString(9, open); 
-            stmt.setString(10, close); 
-            stmt.setString(11, people); 
-            stmt.setString(12, price); 
-            stmt.setInt(13, idmember); 
+            stmt.setString(2, location);
+            stmt.setString(3, typeroom);
+            stmt.setString(4, typedesk);
+            stmt.setString(5, totaldesk);
+            stmt.setString(6, amountdesk);
+            stmt.setString(7, description);
+            stmt.setString(8, roomsize);
+            stmt.setString(9, open);
+            stmt.setString(10, close);
+            stmt.setString(11, people);
+            stmt.setString(12, price);
+            stmt.setInt(13, idmember);
             stmt.setString(14, path_img);
             stmt.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
-    
-    public void showSpace(String name){
+
+    public void showSpace(String name) {
         try {
             Statement stmt = conn.createStatement();
             String sql = "select name,c.location,r.type_room,d.type_desk,c.total_desk,c.amount_desk,c.description\n"
@@ -136,7 +135,7 @@ public class Space {
                     + "on c.idtype_room = r.idtype_room\n"
                     + "where name = '" + name + "'";
             ResultSet rs = stmt.executeQuery(sql);
-            if(rs.next()) {
+            if (rs.next()) {
                 setName(rs.getString("name"));
                 setLocation(rs.getString("c.location"));
                 setType_room(rs.getString("r.type_room"));
@@ -151,8 +150,13 @@ public class Space {
                 setPrice(rs.getString("c.price"));
                 setUsername(rs.getString("m.username"));
                 setImg(rs.getString("img").split(","));
-                System.out.println("img_c :"+ img.length);
+                System.out.println("img_c :" + img.length);
             }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        try {
+            Statement stmt = conn.createStatement();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -277,6 +281,5 @@ public class Space {
     public void setConn(Connection conn) {
         this.conn = conn;
     }
-    
 
 }
