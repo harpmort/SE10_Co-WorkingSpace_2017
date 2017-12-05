@@ -10,9 +10,11 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta charset="utf-8">
+        
+        
+        
 
-        <!-- <link rel="stylesheet" href="js/bootstrap-datetimepicker.min.js" />
-                <link rel="stylesheet" type="text/css" href="js/moment.js"> -->
+        <link rel="stylesheet" href="js/bootstrap-datetimepicker.min.js" />
         <link rel="stylesheet" type="text/css" href="css/bootstrap-datetimepicker.min.css">
 
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
@@ -20,10 +22,12 @@
         <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
         <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Prompt:300">
         <title>Co-Working-Space</title>
-        <script src="js/jquery.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/bootstrap-datetimepicker.js"></script>
-        <script src="js/locales/bootstrap-datetimepicker.ua.js"></script>
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.min.jss"></script>
+        <script type="text/javascript" src="js/bootstrap-datetimepicker.js"></script>
+        <script type="text/javascript" src="js/locales/bootstrap-datetimepicker.ua.js"></script>
+        <script type="text/javascript" src="js/moment.min.js"></script>
+        <script type="text/javascript" src="js/moment.js"></script>
     </head>
     <body>
         <% int check = 0;
@@ -586,7 +590,7 @@
                 startView: 1,
                 minView: 0,
                 maxView: 1,
-                forceParse: 0
+                forceParse: 0  
             });
 
             $('#datetimepicker3').datetimepicker({
