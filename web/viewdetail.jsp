@@ -84,159 +84,161 @@
             </div>
         </nav>
         <%model.Space space = (model.Space) session.getAttribute("space");%>
-        <h1 class="margin-left type-room-name"><%= space.getName()%></h1>
+        <form action="ReserServlet" method="POST">
+            <h1 class="margin-left type-room-name"><%= space.getName()%></h1>
 
-        <div class="container zero-gap" style="width: 80%">
-            <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                <!-- Indicators -->
-                <ol class="carousel-indicators">
-                    <% int count = space.getImg().length;%>
-                    <%for (int i = 0; i < count; i++) {
+            <div class="container zero-gap" style="width: 80%">
+                <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators">
+                        <% int count = space.getImg().length;%>
+                        <%for (int i = 0; i < count; i++) {
                             if (i == 0) {%><li data-target="#myCarousel" data-slide-to="0" class="active"></li><%} else {%>
-                    <li data-target="#myCarousel" data-slide-to="<%=i%>"></li>
-                        <%}
+                        <li data-target="#myCarousel" data-slide-to="<%=i%>"></li>
+                            <%}
                             }%>
 
-                </ol>
+                    </ol>
 
-                <!-- Wrapper for slides -->
-                <div class="carousel-inner">
-                    <% for (int j = 0; j < count; j++) {
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner">
+                        <% for (int j = 0; j < count; j++) {
                             if (j == 0) {%><div class="item active"><img src="<%=space.getImg()[j]%>" style="width:100%;"></div><%} else {%>
-                    <div class="item"><img src="<%=space.getImg()[j]%>" style="width:100%;"></div>
-                        <%}
+                        <div class="item"><img src="<%=space.getImg()[j]%>" style="width:100%;"></div>
+                            <%}
                             }%>
-                </div>
+                    </div>
 
-                <!-- Left and right controls -->
-                <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-                    <span class="glyphicon glyphicon-chevron-left"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="right carousel-control" href="#myCarousel" data-slide="next">
-                    <span class="glyphicon glyphicon-chevron-right"></span>
-                    <span class="sr-only">Next</span>
-                </a>
+                    <!-- Left and right controls -->
+                    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
             </div>
-        </div>
 
-        <div class="margin-top ">
-            <div class="col-md-2"></div>
-            <div class="col-md-8">
-                <!-- //Icon & Room Detail -->
-                <div class="row icon-room-detail">
-                    <div class="col-md-6">
-                        <div class="row">
-                            <div class="col-md-2">
-                                <img src="img/actions.png" style="width: 32px">
-                            </div>
-                            <div class="col-md-10">
-                                <p style="font-size:initial;"><%= space.getAmount_people()%></p>
-                            </div>
-                        </div><br>
-                        <div class="row">
-                            <div class="col-md-2">
-                                <img src="img/table.png" style="width: 32px">
-                            </div>
-                            <div class="col-md-10">
-                                <p style="font-size:initial;"><%= space.getType_desk()%></p>
-                            </div>
-                        </div><br>
-                        <div class="row">
-                            <div class="col-md-2">
-                                <img src="img/clock.png" style="width: 32px">
-                            </div>
-                            <div class="col-md-10">
-                                <p style="font-size:initial;"><%= space.getOpen_time()%> - <%= space.getClose_time()%></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="row">
-                            <div class="col-md-2">
-                                <img src="img/plans.png" style="width: 32px">
-                            </div>
-                            <div class="col-md-10">
-                                <p style="font-size:initial;"><%= space.getSize_room()%></p>
-                            </div>
-                        </div><br>
-                        <div class="row">
-                            <div class="col-md-2">
-                                <img src="img/conference.png" style="width: 32px">
-                            </div>
-                            <div class="col-md-10">
-                                <p style="font-size:initial;"><%= space.getType_room()%></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="">
-                    <!-- Booking Detail -->
-                    <div class="">
-                        <div class="book-bg margin-top book-margin">
-                            <div class="book-title">
-                                <center>
-                                    <div class="price"><p>Price : <%= space.getPrice()%></p></div>
-                                </center>
-                            </div>
-                            <div class="row text-pos">
-                                <div class="col-md-6 ">
-                                    <div class="col-md-3 magin-book">
-                                        <div class="text-edit"><p>วันที่ : </p></div>
-                                        <div class="text-edit"><p>เวลาเริ่ม : </p></div>
-                                    </div>
-                                    <div class="col-md-7">
-
-                                        <input type="text" class="form-control form-control-edit" value="" id="datetimepicker">
-                                        <input type="text" class="form-control form-control-edit" value="" id="datetimepicker2">
-                                    </div>
+            <div class="margin-top ">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <!-- //Icon & Room Detail -->
+                    <div class="row icon-room-detail">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <img src="img/actions.png" style="width: 32px">
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="col-md-4">
-                                        <div class="text-edit">เวลาสิ้นสุด : </div>
-                                        <div class="text-edit">จำนวนคน : </div>
+                                <div class="col-md-10">
+                                    <p style="font-size:initial;"><%= space.getAmount_people()%></p>
+                                </div>
+                            </div><br>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <img src="img/table.png" style="width: 32px">
+                                </div>
+                                <div class="col-md-10">
+                                    <p style="font-size:initial;"><%= space.getType_desk()%></p>
+                                </div>
+                            </div><br>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <img src="img/clock.png" style="width: 32px">
+                                </div>
+                                <div class="col-md-10">
+                                    <p style="font-size:initial;"><%= space.getOpen_time()%> - <%= space.getClose_time()%></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <img src="img/plans.png" style="width: 32px">
+                                </div>
+                                <div class="col-md-10">
+                                    <p style="font-size:initial;"><%= space.getSize_room()%></p>
+                                </div>
+                            </div><br>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <img src="img/conference.png" style="width: 32px">
+                                </div>
+                                <div class="col-md-10">
+                                    <p style="font-size:initial;"><%= space.getType_room()%></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="">
+                        <!-- Booking Detail -->
+                        <div class="">
+                            <div class="book-bg margin-top book-margin">
+                                <div class="book-title">
+                                    <center>
+                                        <div class="price"><p>Price : <%= space.getPrice()%></p></div>
+                                    </center>
+                                </div>
+                                <div class="row text-pos">
+                                    <div class="col-md-6 ">
+                                        <div class="col-md-3 magin-book">
+                                            <div class="text-edit"><p>วันที่ : </p></div>
+                                            <div class="text-edit"><p>เวลาเริ่ม : </p></div>
+                                        </div>
+                                        <div class="col-md-7">
+
+                                            <input type="text" class="form-control form-control-edit" value="" id="datetimepicker" name="date">
+                                            <input type="text" class="form-control form-control-edit" value="" id="datetimepicker2" name="time_start">
+                                        </div>
                                     </div>
-                                    <div class="col-md-7">
-                                        <input type="text" class="form-control form-control-edit" value="" id="datetimepicker3">
-                                        <div class="input-group">
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-default" id="btn-minus" data-field="amount" type="button">
-                                                    <i class="glyphicon glyphicon-minus"></i>
-                                                </button>
-                                            </span>
-                                            <input class="form-control input-number input-number-pos form-control-edit" type="text" min="1" max="10" value="1" name="amount">
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-default" id="btn-plus" data-field="amount" type="button">
-                                                    <i class="glyphicon glyphicon-plus"></i>
-                                                </button>
-                                            </span>
+                                    <div class="col-md-6">
+                                        <div class="col-md-4">
+                                            <div class="text-edit">เวลาสิ้นสุด : </div>
+                                            <div class="text-edit">จำนวนคน : </div>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <input type="text" class="form-control form-control-edit" value="" id="datetimepicker3" name="time_end">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-default" id="btn-minus" data-field="amount" type="button">
+                                                        <i class="glyphicon glyphicon-minus"></i>
+                                                    </button>
+                                                </span>
+                                                <input class="form-control input-number input-number-pos form-control-edit" type="text" min="1" max="10" value="1" name="amount">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-default" id="btn-plus" data-field="amount" type="button">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                    </button>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="book-btn">
-                                <center><button class="btn btn-default btn-margin">Book</button></center>
+                                <div class="book-btn">
+                                    <center><button class="btn btn-default btn-margin">Book</button></center>
 
+                                </div>
                             </div>
                         </div>
-                    </div>
 
 
-                    <div class="jumbotron margin-top detail-des">
-                        <div class="container">
-                            <h3>Description</h3>
-                            <p><%= space.getDescription()%></p>
+                        <div class="jumbotron margin-top detail-des">
+                            <div class="container">
+                                <h3>Description</h3>
+                                <p><%= space.getDescription()%></p>
+                            </div>
                         </div>
+
                     </div>
 
                 </div>
+                <div class="col-md-2"></div>
 
             </div>
-            <div class="col-md-2"></div>
-
-        </div>
+        </form>
         <!-- Login Modal -->
         <div id="loginModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
