@@ -39,6 +39,7 @@
                 </div>
             </div>
         </nav>
+        <%model.Member member = (model.Member) session.getAttribute("member");%>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
@@ -51,7 +52,7 @@
                         <div class="col-md-2">
                             <img src="img/brand.png" width="100" />
                             <h3>
-                                PoloYaH
+                                <%= member.getUsername()%>
                             </h3>
                         </div>
                         <div class="col-md-6">
@@ -59,7 +60,7 @@
                                 <div class="form-group">
 
                                     <label for="exampleInputEmail1">
-                                        Email address
+                                        <%= member.getEmail()%>
                                     </label>
                                     <input type="email" class="form-control" id="exampleInputEmail1" />
                                 </div>

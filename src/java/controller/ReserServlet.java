@@ -7,6 +7,9 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -35,34 +38,36 @@ public class ReserServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ReserServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ReserServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            String text = request.getParameter("search");
+            ServletContext ctx = getServletContext();
+            Connection conn = (Connection) ctx.getAttribute("connection");
+            HttpSession session = request.getSession();
+            Space space = (Space) session.getAttribute("space");
+            Rental rental = (Rental) session.getAttribute("member");
+            
             String date = request.getParameter("date");
             String time_start = request.getParameter("time_start");
             String time_end = request.getParameter("time_end");
             String amount = request.getParameter("amount");
+            String s_name =  space.getName();
+            String username = rental.getUsername();
             
-            System.out.println("date :"+date);
-            System.out.println("t_s :"+time_start);
-            System.out.println("t_e :"+time_end);
-            System.out.println("amount :"+amount);
-            HttpSession session = request.getSession();
-            Space space = (Space) session.getAttribute("space");
-            Rental rental = (Rental) session.getAttribute("member");
-            System.out.println("name :"+ space.getName());
-            System.out.println("username :"+ rental.getUsername());
+            Rental reser = new Rental(conn);
+            reser.reserSpace(date, time_start, time_end, amount, s_name, username);
+            
+            
+            
+            
+            
+            RequestDispatcher pg = request.getRequestDispatcher("viewdetail.jsp");
+            pg.forward(request, response);
+
         }
     }
-
+        
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

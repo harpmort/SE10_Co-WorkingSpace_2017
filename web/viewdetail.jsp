@@ -3,27 +3,22 @@
     Created on : Nov 15, 2017, 9:23:08 AM
     Author     : Asus
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
-        
-        
-        
-
-        <link rel="stylesheet" href="js/bootstrap-datetimepicker.min.js" />
-        <link rel="stylesheet" type="text/css" href="css/bootstrap-datetimepicker.min.css">
-
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="css/index.css">
-        <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
         <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Prompt:300">
         <title>Co-Working-Space</title>
-        <script type="text/javascript" src="js/jquery.min.js"></script>
-        <script type="text/javascript" src="js/bootstrap.min.jss"></script>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="js/bootstrap-datetimepicker.min.js" />
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-datetimepicker.min.css">
         <script type="text/javascript" src="js/bootstrap-datetimepicker.js"></script>
         <script type="text/javascript" src="js/locales/bootstrap-datetimepicker.ua.js"></script>
         <script type="text/javascript" src="js/moment.min.js"></script>
@@ -33,6 +28,7 @@
         <% int check = 0;
             if (session.getAttribute("check") != null) {
                 check = (int) session.getAttribute("check");
+                System.out.println("strhr :" + check);
             }%>
         <nav class="navbar navbar-default navbar-edit navbar-static-top">
             <div class="container-fluid">
@@ -53,31 +49,30 @@
                     <%model.Member member = (model.Member) session.getAttribute("member");
                         int type = (int) session.getAttribute("type");%>
                     <div class="collapse navbar-collapse" id="mynavbar">
-                        <div class="collapse navbar-collapse" id="mynavbar">
-                            <ul class="nav navbar-nav navbar-right">
-                                <% if (type == 1) {%>
-                                <li class="menu-bar"><a href="index.jsp">HOME</a></li>
-                                <li class="menu-bar"><a href="insertcws.jsp">Add Space</a></li>
-                                <li class="menu-bar"><a href="BookingServlet">List Booking</a></li>
-                                <li class="menu-bar"><a href="HistoryServlet">History</a></li>
-                                    <%} else if (type == 2) {%>
-                                <li class="menu-bar"><a href="index.jsp">HOME</a></li>
-                                <li class="menu-bar"><a href="BookingServlet">List Booking</a></li>
-                                <li class="menu-bar"><a href="HistoryServlet">History</a></li>
-                                    <%}%>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle menu-bar" data-toggle="dropdown"><%= member.getUsername()%><strong class="caret"></strong></a>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a href="Profile.jsp">View Profile</a>
-                                        </li>
-                                        <li>
-                                            <a href="LogoutServlet">Logout</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
+                        <ul class="nav navbar-nav navbar-right">
+                            <% if (type == 1) {%>
+                            <li class="menu-bar"><a href="landing.jsp">HOME</a></li>
+                            <li class="menu-bar"><a href="insertcws.jsp">Add Space</a></li>
+                            <li class="menu-bar"><a href="BookingServlet">List Booking</a></li>
+                            <li class="menu-bar"><a href="HistoryServlet">History</a></li>
+                                <%} else if (type == 2) {%>
+                            <li class="menu-bar"><a href="landing.jsp">HOME</a></li>
+                            <li class="menu-bar"><a href="BookingServlet">List Booking</a></li>
+                            <li class="menu-bar"><a href="HistoryServlet">History</a></li>
+                                <%}%>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle menu-bar" data-toggle="dropdown"><%= member.getUsername()%><strong class="caret"></strong></a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="Profile.jsp">View Profile</a>
+                                    </li>
+                                    <li>
+                                        <a href="LogoutServlet">Logout</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+
                     </div>
                     <%} else if (check != 1) {%>
                     <ul class="nav navbar-nav navbar-right">
@@ -97,20 +92,20 @@
                     <ol class="carousel-indicators">
                         <% int count = space.getImg().length;%>
                         <%for (int i = 0; i < count; i++) {
-                            if (i == 0) {%><li data-target="#myCarousel" data-slide-to="0" class="active"></li><%} else {%>
+                                if (i == 0) {%><li data-target="#myCarousel" data-slide-to="0" class="active"></li><%} else {%>
                         <li data-target="#myCarousel" data-slide-to="<%=i%>"></li>
                             <%}
-                            }%>
+                                }%>
 
                     </ol>
 
                     <!-- Wrapper for slides -->
                     <div class="carousel-inner">
                         <% for (int j = 0; j < count; j++) {
-                            if (j == 0) {%><div class="item active"><img src="<%=space.getImg()[j]%>" style="width:100%;"></div><%} else {%>
+                                if (j == 0) {%><div class="item active"><img src="<%=space.getImg()[j]%>" style="width:100%;"></div><%} else {%>
                         <div class="item"><img src="<%=space.getImg()[j]%>" style="width:100%;"></div>
                             <%}
-                            }%>
+                                }%>
                     </div>
 
                     <!-- Left and right controls -->
@@ -369,6 +364,7 @@
 
             </div>
         </div>
+
         <% if (check == 2 || check == 3) { %>
         <script type="text/javascript">
             $(document).ready(function () {
@@ -571,6 +567,28 @@
                 });
             });
         </script>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $(".register-modal-step2").hide();
+            });
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#button-register-nextstep").click(function () {
+                    $(".register-modal-step1").hide();
+                    $(".register-modal-step2").show();
+                });
+            });
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#button-register-close").click(function () {
+                    $(".register-modal-step1").delay(1000).show(0);
+                    $(".register-modal-step2").delay(1000).hide(0);
+                });
+            });
+        </script>
         <script type="text/javascript">
             $('#datetimepicker').datetimepicker({
                 format: 'dd-mm-yyyy',
@@ -592,7 +610,7 @@
                 startView: 1,
                 minView: 0,
                 maxView: 1,
-                forceParse: 0  
+                forceParse: 0
             });
 
             $('#datetimepicker3').datetimepicker({
@@ -625,5 +643,7 @@
                 }
             });
         </script>
+
+
     </body>
 </html>
