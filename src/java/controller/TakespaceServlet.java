@@ -11,7 +11,6 @@ import java.sql.Connection;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,9 +22,8 @@ import model.Space;
  *
  * @author Asus
  */
-@WebServlet(name = "AddspaceServlet", urlPatterns = {"/AddspaceServlet"})
-@MultipartConfig(location = "C:/Users/Asus/Documents/NetBeansProjects/CoWorkingSpace/web/img", maxFileSize = 16177215)
-public class AddspaceServlet extends HttpServlet {
+@WebServlet(name = "TakespaceServlet", urlPatterns = {"/TakespaceServlet"})
+public class TakespaceServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,56 +40,18 @@ public class AddspaceServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String username = request.getParameter("username");
             String name = request.getParameter("name");
-            String location = request.getParameter("location");
-            String amountdesk = request.getParameter("amountdesk");
-            String people = request.getParameter("people");
-            String roomsize = request.getParameter("roomsize");
-            String typedesk = request.getParameter("typedesk");
-            String typeroom = request.getParameter("typeroom");
-            String open = request.getParameter("open");
-            String close = request.getParameter("close");
-            String description = request.getParameter("description");
-            String price = request.getParameter("price");
-            String img[] = request.getParameterValues("img");
-            int count = img.length;
-            PictureManager save_img = new PictureManager();
-            String path_img = "";
-            for(int i=0;i<count;i++){
-                if(i>0){
-                    path_img += ",";
-                }
-                String[] path = img[i].split("");
-                int count_path = path.length;
-                String filetype_revert ="";
-                for(int j=0;count_path-1>=j;count_path--){
-                    if(!path[count_path-1].equals(".")){
-                        filetype_revert += path[count_path-1];
-                    }else if(path[count_path-1].equals(".")){
-                        break;
-                    }
-                }
-                int count_revert = filetype_revert.length();
-                String file_type = "";
-                for(int k=0;count_revert-1>=k;count_revert--){
-                    file_type += filetype_revert.charAt(count_revert-1);
-                }
-                
             
-                save_img.savePicture("space", name+"_"+location+"_"+i, file_type, img[i]);
-                path_img += save_img.getUrlImage("space", name+"_"+location+"_"+i, file_type);
-            }
-            System.out.println("pi:"+path_img);
-            
-            
+
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
             HttpSession session = request.getSession();
-            Space new_space = new Space(conn);
-            new_space.addSpace(name,location,typeroom,typedesk,amountdesk,amountdesk,description,roomsize,open,close,people,price,path_img,username);
+            Space space = new Space(conn);
+            space.showSpace(name);
+            session.setAttribute("space", space);
+            request.setAttribute("check_data", 1);
             
-            RequestDispatcher pg = request.getRequestDispatcher("insertcws.jsp");
+            RequestDispatcher pg = request.getRequestDispatcher("editspace.jsp");
             pg.forward(request, response);
 
         }

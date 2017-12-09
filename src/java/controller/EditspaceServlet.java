@@ -11,7 +11,6 @@ import java.sql.Connection;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,9 +22,8 @@ import model.Space;
  *
  * @author Asus
  */
-@WebServlet(name = "AddspaceServlet", urlPatterns = {"/AddspaceServlet"})
-@MultipartConfig(location = "C:/Users/Asus/Documents/NetBeansProjects/CoWorkingSpace/web/img", maxFileSize = 16177215)
-public class AddspaceServlet extends HttpServlet {
+@WebServlet(name = "EditspaceServlet", urlPatterns = {"/EditspaceServlet"})
+public class EditspaceServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,7 +40,6 @@ public class AddspaceServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String username = request.getParameter("username");
             String name = request.getParameter("name");
             String location = request.getParameter("location");
             String amountdesk = request.getParameter("amountdesk");
@@ -58,6 +55,13 @@ public class AddspaceServlet extends HttpServlet {
             int count = img.length;
             PictureManager save_img = new PictureManager();
             String path_img = "";
+            ServletContext ctx = getServletContext();
+            Connection conn = (Connection) ctx.getAttribute("connection");
+            HttpSession session = request.getSession();
+            Space space = (Space) session.getAttribute("space");
+            String name_real = space.getName();
+            int count_img = space.getImg().length;
+            System.out.println("ci:"+count_img);
             for(int i=0;i<count;i++){
                 if(i>0){
                     path_img += ",";
@@ -79,19 +83,16 @@ public class AddspaceServlet extends HttpServlet {
                 }
                 
             
-                save_img.savePicture("space", name+"_"+location+"_"+i, file_type, img[i]);
-                path_img += save_img.getUrlImage("space", name+"_"+location+"_"+i, file_type);
+                save_img.savePicture("space", ""+(i+count_img), file_type, img[i]);
+                path_img += save_img.getUrlImage("space", ""+(i+count_img), file_type);
             }
-            System.out.println("pi:"+path_img);
             
             
-            ServletContext ctx = getServletContext();
-            Connection conn = (Connection) ctx.getAttribute("connection");
-            HttpSession session = request.getSession();
-            Space new_space = new Space(conn);
-            new_space.addSpace(name,location,typeroom,typedesk,amountdesk,amountdesk,description,roomsize,open,close,people,price,path_img,username);
             
-            RequestDispatcher pg = request.getRequestDispatcher("insertcws.jsp");
+            Space edit_space = new Space(conn);
+            edit_space.editSpace(name_real,name,location,typeroom,typedesk,amountdesk,amountdesk,description,roomsize,open,close,people,price,path_img);
+            
+            RequestDispatcher pg = request.getRequestDispatcher("editspace.jsp");
             pg.forward(request, response);
 
         }

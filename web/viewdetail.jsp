@@ -28,7 +28,6 @@
         <% int check = 0;
             if (session.getAttribute("check") != null) {
                 check = (int) session.getAttribute("check");
-                System.out.println("strhr :" + check);
             }%>
         <nav class="navbar navbar-default navbar-edit navbar-static-top">
             <div class="container-fluid">
@@ -188,8 +187,8 @@
                                         </div>
                                         <div class="col-md-7">
 
-                                            <input type="text" class="form-control form-control-edit" value="" id="datetimepicker" name="date">
-                                            <input type="text" class="form-control form-control-edit" value="" id="datetimepicker2" name="time_start">
+                                            <input type="text" class="form-control form-control-edit" readonly="true" value="" id="datetimepicker" name="date">
+                                            <input type="text" class="form-control form-control-edit" readonly="true" id="datetimepicker2" name="time_start">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -198,7 +197,7 @@
                                             <div class="text-edit">จำนวนคน : </div>
                                         </div>
                                         <div class="col-md-7">
-                                            <input type="text" class="form-control form-control-edit" value="" id="datetimepicker3" name="time_end">
+                                            <input type="text" class="form-control form-control-edit" value=""  readonly="true" id="datetimepicker3" name="time_end">
                                             <div class="input-group">
                                                 <span class="input-group-btn">
                                                     <button class="btn btn-default" id="btn-minus" data-field="amount" type="button">

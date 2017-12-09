@@ -97,8 +97,15 @@ public class Space {
         }
     }
 
-    public void addSpace(String name, String location, String typeroom, String typedesk, String totaldesk, String amountdesk, String description, String roomsize, String open, String close, String people, String price, int idmember, String path_img) {
+    public void addSpace(String name, String location, String typeroom, String typedesk, String totaldesk, String amountdesk, String description, String roomsize, String open, String close, String people, String price, String path_img,String username) {
         try {
+            Statement stmt_id = conn.createStatement();
+            String sql_id = "select idmember, from co_working_space where username = '"+ username +"';";
+            ResultSet rs = stmt_id.executeQuery(sql_id);
+            String idmember = "";
+            if (rs.next()) {
+                idmember = rs.getString("idmember");
+            }
             String sql = "INSERT INTO `db_coworkingspace`.`co_working_space` (`name`, `location`, `idtype_room`, `idtype_desk`, `total_desk`, `amount_desk`, `description`, `size_room`, `open_time`, `close_time`, `amount_people`, `price`, `fk_idmember`, `img`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, name);
@@ -113,7 +120,7 @@ public class Space {
             stmt.setString(10, close);
             stmt.setString(11, people);
             stmt.setString(12, price);
-            stmt.setInt(13, idmember);
+            stmt.setInt(13, Integer.parseInt(idmember));
             stmt.setString(14, path_img);
             stmt.executeUpdate();
         } catch (SQLException ex) {
@@ -155,8 +162,116 @@ public class Space {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+        
+    }
+    
+    public void editSpace(String name_real,String name, String location, String typeroom, String typedesk, String totaldesk, String amountdesk, String description, String roomsize, String open, String close, String people, String price,  String path_img){
         try {
             Statement stmt = conn.createStatement();
+            System.out.println("name:"+name_real);
+            String sql_id = "select idspace,img from co_working_space where name = '"+ name_real +"';";
+            ResultSet rs = stmt.executeQuery(sql_id);
+            String idspace = "";
+            String pic = "";
+            if (rs.next()) {
+                System.out.println("rs next na ja");
+                idspace = rs.getString("idspace");
+                pic = rs.getString("img");
+            }
+            
+            if (!name.equals("-") && !name.equals("")) {
+                String sql = "UPDATE co_working_space\n"
+                        + "SET name = '"+ name +"'\n"
+                        + "WHERE idspace = '"+ idspace +"';";
+                stmt.executeUpdate(sql);
+            }
+
+            if (!location.equals("-") && !location.equals("")) {
+                String sql = "UPDATE co_working_space\n"
+                        + "SET location = '"+ location +"'\n"
+                        + "WHERE idspace = '"+ idspace +"';";
+                stmt.executeUpdate(sql);
+            }
+            
+            if (!typeroom.equals("-") && !typeroom.equals("")) {
+                String sql = "UPDATE co_working_space\n"
+                        + "SET idtype_room = '"+ typeroom +"'\n"
+                        + "WHERE idspace = '"+ idspace +"';";
+                stmt.executeUpdate(sql);
+            }
+            
+            if (!typedesk.equals("-") && !typedesk.equals("")) {
+                String sql = "UPDATE co_working_space\n"
+                        + "SET idtype_desk = '"+ typedesk +"'\n"
+                        + "WHERE idspace = '"+ idspace +"';";
+                stmt.executeUpdate(sql);
+            }
+            
+            if (!totaldesk.equals("-") && !totaldesk.equals("")) {
+                String sql = "UPDATE co_working_space\n"
+                        + "SET total_desk = '"+ totaldesk +"'\n"
+                        + "WHERE idspace = '"+ idspace +"';";
+                stmt.executeUpdate(sql);
+            }
+            
+            if (!description.equals("-") && !description.equals("")) {
+                String sql = "UPDATE co_working_space\n"
+                        + "SET description = '"+ description +"'\n"
+                        + "WHERE idspace = '"+ idspace +"';";
+                stmt.executeUpdate(sql);
+            }
+            
+            if (!roomsize.equals("-") && !roomsize.equals("")) {
+                String sql = "UPDATE co_working_space\n"
+                        + "SET size_room = '"+ roomsize +"'\n"
+                        + "WHERE idspace = '"+ idspace +"';";
+                stmt.executeUpdate(sql);
+            }
+            
+            if (!amountdesk.equals("-") && !amountdesk.equals("")) {
+                String sql = "UPDATE co_working_space\n"
+                        + "SET amount_desk = '"+ amountdesk +"'\n"
+                        + "WHERE idspace = '"+ idspace +"';";
+                stmt.executeUpdate(sql);
+            }
+            
+            if (!open.equals("-") && !open.equals("")) {
+                String sql = "UPDATE co_working_space\n"
+                        + "SET open_time = '"+ open +"'\n"
+                        + "WHERE idspace = '"+ idspace +"';";
+                stmt.executeUpdate(sql);
+            }
+            
+            if (!close.equals("-") && !close.equals("")) {
+                String sql = "UPDATE co_working_space\n"
+                        + "SET close_time = '"+ close +"'\n"
+                        + "WHERE idspace = '"+ idspace +"';";
+                stmt.executeUpdate(sql);
+            }
+            
+            if (!people.equals("-") && !people.equals("")) {
+                String sql = "UPDATE co_working_space\n"
+                        + "SET amount_people = '"+ people +"'\n"
+                        + "WHERE idspace = '"+ idspace +"';";
+                stmt.executeUpdate(sql);
+            }
+            
+            if (!price.equals("-") && !price.equals("")) {
+                String sql = "UPDATE co_working_space\n"
+                        + "SET price = '"+ price +"'\n"
+                        + "WHERE idspace = '"+ idspace +"';";
+                stmt.executeUpdate(sql);
+            }
+            
+            if (!path_img.equals("-") && !path_img.equals("")) {
+                String sql = "UPDATE co_working_space\n"
+                        + "SET img = '"+ pic+','+path_img +"'\n"
+                        + "WHERE idspace = '"+ idspace +"';";
+                stmt.executeUpdate(sql);
+            }
+            
+            
+
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
