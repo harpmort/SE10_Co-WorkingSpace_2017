@@ -23,6 +23,15 @@
             if (session.getAttribute("check") != null) {
                 check = (int) session.getAttribute("check");
             }%>
+            
+        <% int pos = 0;
+            if (session.getAttribute("pos") != null) {
+                pos = (int) session.getAttribute("pos");
+            }%>
+        <% int i = 0;
+            if (session.getAttribute("i") != null) {
+                i = (int) session.getAttribute("i");
+            }%>
         <nav class="navbar navbar-default navbar-edit navbar-static-top">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -98,12 +107,12 @@
         
             <div class="col-md-1"></div>
             
-            <% int i = 0; %>
-            
             <div class="col-md-10">
                 
+                <% int count = 0; %>
+                
                     <c:forEach var="row" items="${sessionScope.space.detail_space}">
-                        
+                        <% if (count >= i && count <= pos) { %>
                         <div class="col-md-4">
                             <form action="ViewdetailspaceServlet" method="POST">
                             <div class="w3-card-4 card-margin">
@@ -123,12 +132,25 @@
                         </form>
                         </div>
                         
-                        
+                        <% } %>
+                        <% if (count <= pos) {
+                           count++; }%>
                         
                     </c:forEach>
+                
             </div>
 
-            <div class="col-md-1"></div>
+            <div class="col-md-1">
+                <form action="search.jsp" method="POST">
+                    <% session.setAttribute("i", count); %>
+                    <% session.setAttribute("pos", count*2); %>
+                    <% session.setAttribute("space", session.getAttribute("space")); %>
+                    <% String text = (String) session.getAttribute("text"); %>
+                    <button class="btn btn-default btn-search" type="submit" value="<%=text%>">
+                        Next
+                    </button>
+                </form>
+            </div>
         
         <!-- Login Modal -->
         <div id="loginModal" class="modal fade" role="dialog">
