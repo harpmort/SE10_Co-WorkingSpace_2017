@@ -16,7 +16,7 @@
 	
 }
 .brand-edit{
-	padding: 0px;
+/*	padding: 0px;*/
 }
 .margin-3px{
 	margin-left: 0px;
@@ -197,7 +197,7 @@ body {
 }
 
 
-/*booking list*/
+/*booking page*/
 .list-book{
     margin-top: 30px;
     font-size: 30px;
@@ -216,4 +216,31 @@ body {
     width: 100%;
     height: 1000px;
     background: #999;
+}
+
+/*history page*/
+.history-head{
+    padding-top: 40px;
+    padding-bottom: 15px;
+}
+.his-data{
+    background-color: white;
+}
+
+/*profile page*/
+.head-pro{
+    font-size: 50px;
+    padding: 30px;
+}
+.show-pro{
+    font-size: 25px;
+    line-height: 60px;
+    padding-left: 20px;
+}
+
+.btn-edit-pro{
+    font-size: 15px;
+    padding: 5px;
+    text-align: center;
+    margin-top: 60px;
 }
