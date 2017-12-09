@@ -8,9 +8,6 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -19,16 +16,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.Lessor;
-import model.Rental;
 import model.Space;
 
 /**
  *
  * @author Asus
  */
-@WebServlet(name = "ViewdetailspaceServlet", urlPatterns = {"/ViewdetailspaceServlet"})
-public class ViewdetailspaceServlet extends HttpServlet {
+@WebServlet(name = "EditspaceServlet", urlPatterns = {"/EditspaceServlet"})
+public class EditspaceServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,15 +41,58 @@ public class ViewdetailspaceServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
             String name = request.getParameter("name");
+            String location = request.getParameter("location");
+            String amountdesk = request.getParameter("amountdesk");
+            String people = request.getParameter("people");
+            String roomsize = request.getParameter("roomsize");
+            String typedesk = request.getParameter("typedesk");
+            String typeroom = request.getParameter("typeroom");
+            String open = request.getParameter("open");
+            String close = request.getParameter("close");
+            String description = request.getParameter("description");
+            String price = request.getParameter("price");
+            String img[] = request.getParameterValues("img");
+            int count = img.length;
+            PictureManager save_img = new PictureManager();
+            String path_img = "";
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
             HttpSession session = request.getSession();
-
-            Space space = new Space(conn);
-            space.showSpace(name);
-            session.setAttribute("space", space);
-           
-            RequestDispatcher pg = request.getRequestDispatcher("viewdetail.jsp");
+            Space space = (Space) session.getAttribute("space");
+            String name_real = space.getName();
+            int count_img = space.getImg().length;
+            System.out.println("ci:"+count_img);
+            for(int i=0;i<count;i++){
+                if(i>0){
+                    path_img += ",";
+                }
+                String[] path = img[i].split("");
+                int count_path = path.length;
+                String filetype_revert ="";
+                for(int j=0;count_path-1>=j;count_path--){
+                    if(!path[count_path-1].equals(".")){
+                        filetype_revert += path[count_path-1];
+                    }else if(path[count_path-1].equals(".")){
+                        break;
+                    }
+                }
+                int count_revert = filetype_revert.length();
+                String file_type = "";
+                for(int k=0;count_revert-1>=k;count_revert--){
+                    file_type += filetype_revert.charAt(count_revert-1);
+                }
+                
+            
+                save_img.savePicture("space", ""+(i+count_img), file_type, img[i]);
+                path_img += save_img.getUrlImage("space", ""+(i+count_img), file_type);
+            }
+            
+            
+            
+            Space edit_space = new Space(conn);
+            edit_space.editSpace(name_real,name,location,typeroom,typedesk,amountdesk,amountdesk,description,roomsize,open,close,people,price,path_img);
+            
+            RequestDispatcher pg = request.getRequestDispatcher("editspace.jsp");
             pg.forward(request, response);
 
         }

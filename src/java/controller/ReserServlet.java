@@ -8,9 +8,6 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -19,7 +16,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.Lessor;
 import model.Rental;
 import model.Space;
 
@@ -27,8 +23,8 @@ import model.Space;
  *
  * @author Asus
  */
-@WebServlet(name = "ViewdetailspaceServlet", urlPatterns = {"/ViewdetailspaceServlet"})
-public class ViewdetailspaceServlet extends HttpServlet {
+@WebServlet(name = "ReserServlet", urlPatterns = {"/ReserServlet"})
+public class ReserServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,21 +41,33 @@ public class ViewdetailspaceServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String name = request.getParameter("name");
+            String text = request.getParameter("search");
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
             HttpSession session = request.getSession();
-
-            Space space = new Space(conn);
-            space.showSpace(name);
-            session.setAttribute("space", space);
-           
+            Space space = (Space) session.getAttribute("space");
+            Rental rental = (Rental) session.getAttribute("member");
+            
+            String date = request.getParameter("date");
+            String time_start = request.getParameter("time_start");
+            String time_end = request.getParameter("time_end");
+            String amount = request.getParameter("amount");
+            String s_name =  space.getName();
+            String username = rental.getUsername();
+            
+            Rental reser = new Rental(conn);
+            reser.reserSpace(date, time_start, time_end, amount, s_name, username);
+            
+            
+            
+            
+            
             RequestDispatcher pg = request.getRequestDispatcher("viewdetail.jsp");
             pg.forward(request, response);
 
         }
     }
-
+        
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

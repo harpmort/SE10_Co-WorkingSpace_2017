@@ -59,7 +59,7 @@ public class Rental extends Member {
                     + "on b.fk_idspace = c.idspace\n"
                     + "join member ml\n"
                     + "on ml.idmember = c.fk_idmember\n"
-                    + "where m.username = '"+ username +"';";
+                    + "where m.username = '" + username + "';";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 Rental lb = new Rental();
@@ -90,6 +90,44 @@ public class Rental extends Member {
             Statement stmt_id_b = conn.createStatement();
             String sql_id_b = "DELETE FROM db_coworkingspace.booking WHERE idbooking = '" + id_b + "';";
             stmt_id_b.executeUpdate(sql_id_b);
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void reserSpace(String date, String time_start, String time_end, String amount, String s_name, String username) {
+        try {
+            Statement stmt = conn.createStatement();
+            String sql = "SELECT idspace\n"
+                    + "FROM co_working_space c\n"
+                    + "where name = '" + s_name + "';";
+            ResultSet rs = stmt.executeQuery(sql);
+            rs.next();
+            String idspace = rs.getString("idspace");
+
+            Statement stmt_user = conn.createStatement();
+            String sql_user = "SELECT idmember\n"
+                    + "FROM member m\n"
+                    + "where username = '" + username + "';";
+            ResultSet rs_user = stmt_user.executeQuery(sql_user);
+            rs_user.next();
+            String idmember = rs_user.getString("idmember");
+
+            String[] date_split = date.split("-");
+            int count_split = date_split.length;
+            String date_reverse = "";
+            for(int i =0;count_split-1>=i;count_split--){
+                date_reverse += date_split[count_split-1];
+                date_reverse += "-";
+            }
+            
+            Statement stmt_reser = conn.createStatement();
+            String sql_reser = "INSERT INTO db_coworkingspace.booking(date, begin_time, end_time, desk_booking, fk_idmember, fk_idspace) \n"
+                    + "	VALUES ('" + date_reverse + "', '" + time_start + "', '" + time_end + "', '" + amount + "', '" + idmember + "', '" + idspace + "');";
+            stmt_reser.executeUpdate(sql_reser);
+
+            
 
         } catch (SQLException ex) {
             ex.printStackTrace();

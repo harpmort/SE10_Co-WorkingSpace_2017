@@ -1,8 +1,10 @@
 <%-- 
-    Document   : insertcws
-    Created on : Nov 3, 2017, 5:17:35 PM
-    Author     : Administrator
+    Document   : editspace
+    Created on : Dec 9, 2017, 10:44:42 AM
+    Author     : Asus
 --%>
+
+<%@taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -32,8 +34,9 @@
             </div>
             <div class="collapse navbar-collapse" id="mynavbar">
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="menu-bar"><a href="index.jsp">Home</a></li>
+                    <li class="menu-bar"><a href="landing.jsp">Home</a></li>
                     <li class="menu-bar"><a href="insertcws.jsp">Add Space</a></li>
+                    <li class="menu-bar"><a href="editspace.jsp">Edit Space</a></li>
                     <li class="menu-bar"><a href="BookingServlet">List Booking</a></li>
                     <li class="menu-bar"><a href="HistoryServlet">History</a></li>
                         <%model.Member member = (model.Member) session.getAttribute("member");%>
@@ -52,10 +55,35 @@
             </div>
         </div>
     </nav>
+    <sql:setDataSource var="db_coworkingspace"
+                       driver="com.mysql.jdbc.Driver"
+                       url="jdbc:mysql://localhost:3306/db_coworkingspace" user="root"
+                       password="root" />
 
+    <sql:query var="all" dataSource="${db_coworkingspace}" >
+        SELECT name 
+        FROM co_working_space c
+        join member m
+        on m.idmember = c.fk_idmember
+        where m.username = '<%= member.getUsername()%>';
+    </sql:query>
     <div class="container-fluid">
         <div class="row content">
             <div class="col-md-12">
+                <form action="TakespaceServlet" method="POST">
+                    <select name="name">
+                        <c:forEach var="row" items="${all.rows}">
+                            <option value="${row.name}">${row.name}</option>
+                        </c:forEach>
+                    </select>
+                    <input type="submit" value="Edit" name="edit" />
+                </form>
+                <%int check_data = 0;
+                    if (request.getAttribute("check_data") != null) {
+                        check_data = (int) request.getAttribute("check_data");
+                    }%>
+                <%model.Space space = (model.Space) session.getAttribute("space");%>
+                <%if (check_data != 0) {%>
                 <div class="row">
                     <div class="col-md-2">
                     </div>
@@ -63,83 +91,92 @@
                         <h3>
                             Add Space :D
                         </h3><br>
-                        <form action="AddspaceServlet" method="post" role="form" >
+                        <form action="EditspaceServlet" method="post" role="form" >
                             <div class="form-group">
-                                <label for="name">
+                                <label for="name" >
                                     ชื่อ
                                 </label>
-                                <input type="text" class="form-control" id="name" name="name" />
+                                <input type="text" class="form-control" id="name" name="name" placeholder="<%= space.getName()%>"/>
                             </div>
                             <div class="form-group">
                                 <label for="location">
                                     ชื่อสถานที่
                                 </label>
-                                <input type="text" class="form-control" id="location" name="location" />
+                                <input type="text" class="form-control" id="location" name="location" placeholder="<%= space.getLocation()%>"/>
                             </div>
                             <div class="form-group">
                                 <label for="people">
                                     จำนวนคน
                                 </label>
-                                <input type="text" class="form-control" id="people" name="people" />
+                                <input type="text" class="form-control" id="people" name="people" placeholder="<%= space.getAmount_people()%>"/>
                             </div>
                             <div class="form-group">
                                 <label for="roomsize">
                                     ขนาดห้อง
                                 </label>
-                                <input type="text" class="form-control" id="roomsize" name="roomsize" />
+                                <input type="text" class="form-control" id="roomsize" name="roomsize" placeholder="<%= space.getSize_room()%>"/>
                             </div>
                             <div class="form-group">
                                 <label for="typedesk">
                                     ประเภทโต๊ะ
                                 </label>
-                                <input type="text" class="form-control" id="typedesk" name="typedesk" />
+                                <input type="text" class="form-control" id="typedesk" name="typedesk" placeholder="<%= space.getType_desk()%>"/>
                             </div>
                             <div class="form-group">
                                 <label for="amountdesk">
                                     จำนวนโต๊ะ
                                 </label>
-                                <input type="text" class="form-control" id="amountdesk" name="amountdesk" />
+                                <input type="text" class="form-control" id="amountdesk" name="amountdesk" placeholder="<%= space.getTotal_desk()%>"/>
                             </div>
                             <div class="form-group">
                                 <label for="typeroom">
                                     ประเภทห้อง
                                 </label>
-                                <input type="text" class="form-control" id="typeroom" name="typeroom" />
+                                <input type="text" class="form-control" id="typeroom" name="typeroom" placeholder="<%= space.getType_room()%>"/>
                             </div>
                             <div class="form-group">
                                 <label for="open">
                                     เวลาเปิด
                                 </label>
-                                <input type="text" class="form-control" id="closeopen" name="open" />
+                                <input type="text" class="form-control" id="closeopen" name="open" placeholder="<%= space.getOpen_time()%>" />
                             </div>
                             <div class="form-group">
                                 <label for="close">
                                     เวลาปิด
                                 </label>
-                                <input type="text" class="form-control" id="close" name="close" />
+                                <input type="text" class="form-control" id="close" name="close" placeholder="<%= space.getClose_time()%>"/>
                             </div>
                             <div class="form-group">
                                 <label for="price">
                                     ราคา
                                 </label>
-                                <input type="text" class="form-control" id="price" name="price" />
+                                <input type="text" class="form-control" id="price" name="price" placeholder="<%= space.getPrice()%>"/>
                             </div>
                             <div class="form-group">
                                 <label for="description">
                                     คำอธิบาย
                                 </label>
-                                <input type="text" class="form-control" id="description" name="description"/>
+                                <input type="text" class="form-control" id="description" name="description" placeholder="<%= space.getDescription()%>"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="img">
+                                    รูป
+                                </label>
+                                <% int count = space.getImg().length;%>
+                                <% for (int j = 0; j < count; j++) {%>
+                                    <div class="item"><img src="<%=space.getImg()[j]%>" style="width:30%;"></div>
+                                <%}%>
                             </div>
                             <div class="form-group">
                                 <label for="img">
                                     อัพรูป
                                 </label>
-                                <input multiple="mumltiple" type="file" name="img"/>
+                                <input multiple="multiple" type="file" name="img"/>
                                 <p class="help-block">
                                     img name
                                 </p>
                             </div>
-                            <button type="submit" class="btn btn-default center-block" value="<%=member.getUsername()%>">
+                            <button type="submit" class="btn btn-default center-block">
                                 Confirm
                             </button>
                         </form>
@@ -155,6 +192,7 @@
                     <div class="col-md-">
                     </div>
                 </div>
+                <%}%>
             </div>
         </div>
     </div>

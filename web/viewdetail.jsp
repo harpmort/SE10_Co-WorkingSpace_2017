@@ -3,27 +3,26 @@
     Created on : Nov 15, 2017, 9:23:08 AM
     Author     : Asus
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
-
-        <!-- <link rel="stylesheet" href="js/bootstrap-datetimepicker.min.js" />
-                <link rel="stylesheet" type="text/css" href="js/moment.js"> -->
-        <link rel="stylesheet" type="text/css" href="css/bootstrap-datetimepicker.min.css">
-
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="css/index.css">
-        <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
         <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Prompt:300">
         <title>Co-Working-Space</title>
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
-        <script src="js/bootstrap-datetimepicker.js"></script>
-        <script src="js/locales/bootstrap-datetimepicker.ua.js"></script>
+        <link rel="stylesheet" href="js/bootstrap-datetimepicker.min.js" />
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-datetimepicker.min.css">
+        <script type="text/javascript" src="js/bootstrap-datetimepicker.js"></script>
+        <script type="text/javascript" src="js/locales/bootstrap-datetimepicker.ua.js"></script>
+        <script type="text/javascript" src="js/moment.min.js"></script>
+        <script type="text/javascript" src="js/moment.js"></script>
     </head>
     <body>
         <% int check = 0;
@@ -49,31 +48,30 @@
                     <%model.Member member = (model.Member) session.getAttribute("member");
                         int type = (int) session.getAttribute("type");%>
                     <div class="collapse navbar-collapse" id="mynavbar">
-                        <div class="collapse navbar-collapse" id="mynavbar">
-                            <ul class="nav navbar-nav navbar-right">
-                                <% if (type == 1) {%>
-                                <li class="menu-bar"><a href="index.jsp">HOME</a></li>
-                                <li class="menu-bar"><a href="insertcws.jsp">Add Space</a></li>
-                                <li class="menu-bar"><a href="BookingServlet">List Booking</a></li>
-                                <li class="menu-bar"><a href="HistoryServlet">History</a></li>
-                                    <%} else if (type == 2) {%>
-                                <li class="menu-bar"><a href="index.jsp">HOME</a></li>
-                                <li class="menu-bar"><a href="BookingServlet">List Booking</a></li>
-                                <li class="menu-bar"><a href="HistoryServlet">History</a></li>
-                                    <%}%>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle menu-bar" data-toggle="dropdown"><%= member.getUsername()%><strong class="caret"></strong></a>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a href="Profile.jsp">View Profile</a>
-                                        </li>
-                                        <li>
-                                            <a href="LogoutServlet">Logout</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
+                        <ul class="nav navbar-nav navbar-right">
+                            <% if (type == 1) {%>
+                            <li class="menu-bar"><a href="landing.jsp">HOME</a></li>
+                            <li class="menu-bar"><a href="insertcws.jsp">Add Space</a></li>
+                            <li class="menu-bar"><a href="BookingServlet">List Booking</a></li>
+                            <li class="menu-bar"><a href="HistoryServlet">History</a></li>
+                                <%} else if (type == 2) {%>
+                            <li class="menu-bar"><a href="landing.jsp">HOME</a></li>
+                            <li class="menu-bar"><a href="BookingServlet">List Booking</a></li>
+                            <li class="menu-bar"><a href="HistoryServlet">History</a></li>
+                                <%}%>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle menu-bar" data-toggle="dropdown"><%= member.getUsername()%><strong class="caret"></strong></a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="Profile.jsp">View Profile</a>
+                                    </li>
+                                    <li>
+                                        <a href="LogoutServlet">Logout</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+
                     </div>
                     <%} else if (check != 1) {%>
                     <ul class="nav navbar-nav navbar-right">
@@ -84,159 +82,161 @@
             </div>
         </nav>
         <%model.Space space = (model.Space) session.getAttribute("space");%>
-        <h1 class="margin-left type-room-name"><%= space.getName()%></h1>
+        <form action="ReserServlet" method="POST">
+            <h1 class="margin-left type-room-name"><%= space.getName()%></h1>
 
-        <div class="container zero-gap" style="width: 80%">
-            <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                <!-- Indicators -->
-                <ol class="carousel-indicators">
-                    <% int count = space.getImg().length;%>
-                    <%for (int i = 0; i < count; i++) {
-                            if (i == 0) {%><li data-target="#myCarousel" data-slide-to="0" class="active"></li><%} else {%>
-                    <li data-target="#myCarousel" data-slide-to="<%=i%>"></li>
-                        <%}
-                            }%>
+            <div class="container zero-gap" style="width: 80%">
+                <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators">
+                        <% int count = space.getImg().length;%>
+                        <%for (int i = 0; i < count; i++) {
+                                if (i == 0) {%><li data-target="#myCarousel" data-slide-to="0" class="active"></li><%} else {%>
+                        <li data-target="#myCarousel" data-slide-to="<%=i%>"></li>
+                            <%}
+                                }%>
 
-                </ol>
+                    </ol>
 
-                <!-- Wrapper for slides -->
-                <div class="carousel-inner">
-                    <% for (int j = 0; j < count; j++) {
-                            if (j == 0) {%><div class="item active"><img src="<%=space.getImg()[j]%>" style="width:100%;"></div><%} else {%>
-                    <div class="item"><img src="<%=space.getImg()[j]%>" style="width:100%;"></div>
-                        <%}
-                            }%>
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner">
+                        <% for (int j = 0; j < count; j++) {
+                                if (j == 0) {%><div class="item active"><img src="<%=space.getImg()[j]%>" style="width:100%;"></div><%} else {%>
+                        <div class="item"><img src="<%=space.getImg()[j]%>" style="width:100%;"></div>
+                            <%}
+                                }%>
+                    </div>
+
+                    <!-- Left and right controls -->
+                    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
                 </div>
-
-                <!-- Left and right controls -->
-                <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-                    <span class="glyphicon glyphicon-chevron-left"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="right carousel-control" href="#myCarousel" data-slide="next">
-                    <span class="glyphicon glyphicon-chevron-right"></span>
-                    <span class="sr-only">Next</span>
-                </a>
             </div>
-        </div>
 
-        <div class="margin-top ">
-            <div class="col-md-2"></div>
-            <div class="col-md-8">
-                <!-- //Icon & Room Detail -->
-                <div class="row icon-room-detail">
-                    <div class="col-md-6">
-                        <div class="row">
-                            <div class="col-md-2">
-                                <img src="img/actions.png" style="width: 32px">
-                            </div>
-                            <div class="col-md-10">
-                                <p style="font-size:initial;"><%= space.getAmount_people()%></p>
-                            </div>
-                        </div><br>
-                        <div class="row">
-                            <div class="col-md-2">
-                                <img src="img/table.png" style="width: 32px">
-                            </div>
-                            <div class="col-md-10">
-                                <p style="font-size:initial;"><%= space.getType_desk()%></p>
-                            </div>
-                        </div><br>
-                        <div class="row">
-                            <div class="col-md-2">
-                                <img src="img/clock.png" style="width: 32px">
-                            </div>
-                            <div class="col-md-10">
-                                <p style="font-size:initial;"><%= space.getOpen_time()%> - <%= space.getClose_time()%></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="row">
-                            <div class="col-md-2">
-                                <img src="img/plans.png" style="width: 32px">
-                            </div>
-                            <div class="col-md-10">
-                                <p style="font-size:initial;"><%= space.getSize_room()%></p>
-                            </div>
-                        </div><br>
-                        <div class="row">
-                            <div class="col-md-2">
-                                <img src="img/conference.png" style="width: 32px">
-                            </div>
-                            <div class="col-md-10">
-                                <p style="font-size:initial;"><%= space.getType_room()%></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="">
-                    <!-- Booking Detail -->
-                    <div class="">
-                        <div class="book-bg margin-top book-margin">
-                            <div class="book-title">
-                                <center>
-                                    <div class="price"><p>Price : <%= space.getPrice()%></p></div>
-                                </center>
-                            </div>
-                            <div class="row text-pos">
-                                <div class="col-md-6 ">
-                                    <div class="col-md-3 magin-book">
-                                        <div class="text-edit"><p>วันที่ : </p></div>
-                                        <div class="text-edit"><p>เวลาเริ่ม : </p></div>
-                                    </div>
-                                    <div class="col-md-7">
-
-                                        <input type="text" class="form-control form-control-edit" value="" id="datetimepicker">
-                                        <input type="text" class="form-control form-control-edit" value="" id="datetimepicker2">
-                                    </div>
+            <div class="margin-top ">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <!-- //Icon & Room Detail -->
+                    <div class="row icon-room-detail">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <img src="img/actions.png" style="width: 32px">
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="col-md-4">
-                                        <div class="text-edit">เวลาสิ้นสุด : </div>
-                                        <div class="text-edit">จำนวนคน : </div>
+                                <div class="col-md-10">
+                                    <p style="font-size:initial;"><%= space.getAmount_people()%></p>
+                                </div>
+                            </div><br>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <img src="img/table.png" style="width: 32px">
+                                </div>
+                                <div class="col-md-10">
+                                    <p style="font-size:initial;"><%= space.getType_desk()%></p>
+                                </div>
+                            </div><br>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <img src="img/clock.png" style="width: 32px">
+                                </div>
+                                <div class="col-md-10">
+                                    <p style="font-size:initial;"><%= space.getOpen_time()%> - <%= space.getClose_time()%></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <img src="img/plans.png" style="width: 32px">
+                                </div>
+                                <div class="col-md-10">
+                                    <p style="font-size:initial;"><%= space.getSize_room()%></p>
+                                </div>
+                            </div><br>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <img src="img/conference.png" style="width: 32px">
+                                </div>
+                                <div class="col-md-10">
+                                    <p style="font-size:initial;"><%= space.getType_room()%></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="">
+                        <!-- Booking Detail -->
+                        <div class="">
+                            <div class="book-bg margin-top book-margin">
+                                <div class="book-title">
+                                    <center>
+                                        <div class="price"><p>Price : <%= space.getPrice()%></p></div>
+                                    </center>
+                                </div>
+                                <div class="row text-pos">
+                                    <div class="col-md-6 ">
+                                        <div class="col-md-3 magin-book">
+                                            <div class="text-edit"><p>วันที่ : </p></div>
+                                            <div class="text-edit"><p>เวลาเริ่ม : </p></div>
+                                        </div>
+                                        <div class="col-md-7">
+
+                                            <input type="text" class="form-control form-control-edit" readonly="true" value="" id="datetimepicker" name="date">
+                                            <input type="text" class="form-control form-control-edit" readonly="true" id="datetimepicker2" name="time_start">
+                                        </div>
                                     </div>
-                                    <div class="col-md-7">
-                                        <input type="text" class="form-control form-control-edit" value="" id="datetimepicker3">
-                                        <div class="input-group">
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-default" id="btn-minus" data-field="amount" type="button">
-                                                    <i class="glyphicon glyphicon-minus"></i>
-                                                </button>
-                                            </span>
-                                            <input class="form-control input-number input-number-pos form-control-edit" type="text" min="1" max="10" value="1" name="amount">
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-default" id="btn-plus" data-field="amount" type="button">
-                                                    <i class="glyphicon glyphicon-plus"></i>
-                                                </button>
-                                            </span>
+                                    <div class="col-md-6">
+                                        <div class="col-md-4">
+                                            <div class="text-edit">เวลาสิ้นสุด : </div>
+                                            <div class="text-edit">จำนวนคน : </div>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <input type="text" class="form-control form-control-edit" value=""  readonly="true" id="datetimepicker3" name="time_end">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-default" id="btn-minus" data-field="amount" type="button">
+                                                        <i class="glyphicon glyphicon-minus"></i>
+                                                    </button>
+                                                </span>
+                                                <input class="form-control input-number input-number-pos form-control-edit" type="text" min="1" max="10" value="1" name="amount">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-default" id="btn-plus" data-field="amount" type="button">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                    </button>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="book-btn">
-                                <center><button class="btn btn-default btn-margin">Book</button></center>
+                                <div class="book-btn">
+                                    <center><button class="btn btn-default btn-margin">Book</button></center>
 
+                                </div>
                             </div>
                         </div>
-                    </div>
 
 
-                    <div class="jumbotron margin-top detail-des">
-                        <div class="container">
-                            <h3>Description</h3>
-                            <p><%= space.getDescription()%></p>
+                        <div class="jumbotron margin-top detail-des">
+                            <div class="container">
+                                <h3>Description</h3>
+                                <p><%= space.getDescription()%></p>
+                            </div>
                         </div>
+
                     </div>
 
                 </div>
+                <div class="col-md-2"></div>
 
             </div>
-            <div class="col-md-2"></div>
-
-        </div>
+        </form>
         <!-- Login Modal -->
         <div id="loginModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
@@ -363,6 +363,7 @@
 
             </div>
         </div>
+
         <% if (check == 2 || check == 3) { %>
         <script type="text/javascript">
             $(document).ready(function () {
@@ -565,6 +566,28 @@
                 });
             });
         </script>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $(".register-modal-step2").hide();
+            });
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#button-register-nextstep").click(function () {
+                    $(".register-modal-step1").hide();
+                    $(".register-modal-step2").show();
+                });
+            });
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#button-register-close").click(function () {
+                    $(".register-modal-step1").delay(1000).show(0);
+                    $(".register-modal-step2").delay(1000).hide(0);
+                });
+            });
+        </script>
         <script type="text/javascript">
             $('#datetimepicker').datetimepicker({
                 format: 'dd-mm-yyyy',
@@ -619,5 +642,7 @@
                 }
             });
         </script>
+
+
     </body>
 </html>

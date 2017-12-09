@@ -22,6 +22,7 @@
         <% int check = 0;
             if (session.getAttribute("check") != null) {
                 check = (int) session.getAttribute("check");
+                System.out.println("strhr :"+check);
             }%>
             
         <% int pos = 0;
@@ -51,31 +52,30 @@
                     <%model.Member member = (model.Member) session.getAttribute("member");
                         int type = (int) session.getAttribute("type");%>
                     <div class="collapse navbar-collapse" id="mynavbar">
-                        <div class="collapse navbar-collapse" id="mynavbar">
-                            <ul class="nav navbar-nav navbar-right">
-                                <% if (type == 1) {%>
-                                <li class="menu-bar"><a href="index.jsp">HOME</a></li>
-                                <li class="menu-bar"><a href="insertcws.jsp">Add Space</a></li>
-                                <li class="menu-bar"><a href="BookingServlet">List Booking</a></li>
-                                <li class="menu-bar"><a href="HistoryServlet">History</a></li>
-                                    <%} else if (type == 2) {%>
-                                <li class="menu-bar"><a href="index.jsp">HOME</a></li>
-                                <li class="menu-bar"><a href="BookingServlet">List Booking</a></li>
-                                <li class="menu-bar"><a href="HistoryServlet">History</a></li>
-                                    <%}%>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle menu-bar" data-toggle="dropdown"><%= member.getUsername()%><strong class="caret"></strong></a>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a href="Profile.jsp">View Profile</a>
-                                        </li>
-                                        <li>
-                                            <a href="LogoutServlet">Logout</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
+                        <ul class="nav navbar-nav navbar-right">
+                            <% if (type == 1) {%>
+                            <li class="menu-bar"><a href="landing.jsp">HOME</a></li>
+                            <li class="menu-bar"><a href="insertcws.jsp">Add Space</a></li>
+                            <li class="menu-bar"><a href="BookingServlet">List Booking</a></li>
+                            <li class="menu-bar"><a href="HistoryServlet">History</a></li>
+                                <%} else if (type == 2) {%>
+                            <li class="menu-bar"><a href="landing.jsp">HOME</a></li>
+                            <li class="menu-bar"><a href="BookingServlet">List Booking</a></li>
+                            <li class="menu-bar"><a href="HistoryServlet">History</a></li>
+                                <%}%>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle menu-bar" data-toggle="dropdown"><%= member.getUsername()%><strong class="caret"></strong></a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="Profile.jsp" >View Profile</a>
+                                    </li>
+                                    <li>
+                                        <a href="LogoutServlet">Logout</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+
                     </div>
                     <%} else if (check != 1) {%>
                     <ul class="nav navbar-nav navbar-right">
@@ -104,6 +104,7 @@
                 </center>
             </div>
         </div>
+<<<<<<< HEAD
         
             <div class="col-md-1"></div>
             
@@ -128,9 +129,34 @@
                                         View Detail Space
                                     </button>
                                 </div>
+=======
+
+        <div class="col-md-1"></div>
+
+        <% int i = 0; %>
+
+        <div class="col-md-10">
+
+            <c:forEach var="row" items="${sessionScope.space.detail_space}">
+
+                <div class="col-md-4">
+                    <form action="ViewdetailspaceServlet" method="POST">
+                        <div class="w3-card-4 card-margin">
+                            <div class="panel-thumbnail">
+                                <img src="${row.img[0]}" class="img-responsive" style="width: 100%">
                             </div>
-                        </form>
+                            <div class="panel-body">
+                                <p class="lead" >${row.name} by ${row.username}</p>
+                                <p>${row.location}</p>
+                            </div>
+                            <div class="panel-footer">
+                                <button class="btn btn-sm  center-block btn-info" type="submit" name="name" value="${row.name}">
+                                    View Detail Space
+                                </button>
+>>>>>>> 9c1165427f0b4e767c4b70209be8d08cfc746a90
+                            </div>
                         </div>
+<<<<<<< HEAD
                         
                         <% } %>
                         <% if (count <= pos) {
@@ -152,6 +178,18 @@
                 </form>
             </div>
         
+=======
+                    </form>
+                </div>
+
+
+
+            </c:forEach>
+        </div>
+
+        <div class="col-md-1"></div>
+
+>>>>>>> 9c1165427f0b4e767c4b70209be8d08cfc746a90
         <!-- Login Modal -->
         <div id="loginModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
@@ -481,19 +519,7 @@
                 });
             });
         </script>
-        <% if (check == 2 || check == 3) { %>
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $('#loginModal').modal('show');
-            });
-        </script>
-        <%} else if (check == 4) {%>
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $('#regiserrorModal').modal('show');
-            });
-        </script>
-        <%}%>
+
         <script type="text/javascript">
             $(document).ready(function () {
                 $(".register-modal-step2").hide();

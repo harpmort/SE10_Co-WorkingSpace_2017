@@ -8,9 +8,6 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -19,16 +16,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.Lessor;
-import model.Rental;
 import model.Space;
 
 /**
  *
  * @author Asus
  */
-@WebServlet(name = "ViewdetailspaceServlet", urlPatterns = {"/ViewdetailspaceServlet"})
-public class ViewdetailspaceServlet extends HttpServlet {
+@WebServlet(name = "TakespaceServlet", urlPatterns = {"/TakespaceServlet"})
+public class TakespaceServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,15 +41,17 @@ public class ViewdetailspaceServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
             String name = request.getParameter("name");
+            
+
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
             HttpSession session = request.getSession();
-
             Space space = new Space(conn);
             space.showSpace(name);
             session.setAttribute("space", space);
-           
-            RequestDispatcher pg = request.getRequestDispatcher("viewdetail.jsp");
+            request.setAttribute("check_data", 1);
+            
+            RequestDispatcher pg = request.getRequestDispatcher("editspace.jsp");
             pg.forward(request, response);
 
         }
