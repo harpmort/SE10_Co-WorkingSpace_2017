@@ -22,7 +22,7 @@
             <div class="container-fluid">
                 <div class="navbar-header">
                     <a class="navbar-brand brand-edit" href="index.jsp">
-                        <img alt="Brand" src="img/cws.png" style="width: 78px">
+                        <img alt="Brand" src="img/brand.png" style="width: 78px">
                     </a>
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mynavbar">
                         <span class="sr-only">Toggle navigation</span>
@@ -39,31 +39,27 @@
                 </div>
             </div>
         </nav>
-        <%model.Member member = (model.Member) session.getAttribute("member");%>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <h3 class="text-center head-pro">
+                    <h3 class="text-center">
                        Profile
                     </h3>
                     <div class="row">
                         <div class="col-md-2">
                         </div>
                         <div class="col-md-2">
-                            <div class="img-pro"><img src="img/profile.png" width="100%" /></div>
-                            <div class="name-pro" style="text-align: center"><h3>
-                                <%= member.getUsername()%>
-                                </h3></div>
-                            <div class="btn-edit-pro"><button type="submit" class="btn btn-default">
-                                    edit profile
-                                </button></div>
+                            <img src="img/brand.png" width="100" />
+                            <h3>
+                                PoloYaH
+                            </h3>
                         </div>
                         <div class="col-md-6">
-<!--                            <form role="form">
+                            <form role="form">
                                 <div class="form-group">
 
                                     <label for="exampleInputEmail1">
-                                        <%= member.getEmail()%>
+                                        Email address
                                     </label>
                                     <input type="email" class="form-control" id="exampleInputEmail1" />
                                 </div>
@@ -93,14 +89,7 @@
                                 <button type="submit" class="btn btn-default">
                                     Submit
                                 </button>
-                            </form>-->
-                            <div class="show-pro">ชื่อ</div>
-                            <div class="show-pro">นามสกุล</div>
-                            <div class="show-pro">email</div>
-                            <div class="show-pro">เบอร์</div>
-                            <div class="show-pro">ประเภทผู้ใช้งาน</div>
-                            <div class="show-pro">สถานะยืนยันตัวตน</div>
-                            
+                            </form>
                         </div>
                         <div class="col-md-2">
                         </div>

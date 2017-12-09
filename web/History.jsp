@@ -23,7 +23,7 @@
             <div class="container-fluid">
                 <div class="navbar-header">
                     <a class="navbar-brand brand-edit" href="index.jsp">
-                        <img alt="Brand" src="img/cws.png" style="width: 78px">
+                        <img alt="Brand" src="img/brand.png" style="width: 78px">
                     </a>
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mynavbar">
                         <span class="sr-only">Toggle navigation</span>
@@ -36,12 +36,12 @@
                 <div class="collapse navbar-collapse" id="mynavbar">
                     <ul class="nav navbar-nav navbar-right">
                         <% if (type == 1) {%>
-                        <li class="menu-bar"><a href="landing.jsp">Home</a></li>
+                        <li class="menu-bar"><a href="index.jsp">Home</a></li>
                         <li class="menu-bar"><a href="insertcws.jsp">Add Space</a></li>
                         <li class="menu-bar"><a href="BookingServlet">List Booking</a></li>
                         <li class="menu-bar"><a href="HistoryServlet">History</a></li>
                             <%} else if (type == 2) {%>
-                        <li class="menu-bar"><a href="landing.jsp">Home</a></li>
+                        <li class="menu-bar"><a href="index.jsp">Home</a></li>
                         <li class="menu-bar"><a href="BookingServlet">List Booking</a></li>
                         <li class="menu-bar"><a href="HistoryServlet">History</a></li>
                             <%}%>
@@ -67,7 +67,7 @@
                         <div class="col-md-4">
                         </div>
                         <div class="col-md-4">
-                            <h3 class="text-center history-head">
+                            <h3 class="text-center">
                                 History
                             </h3>
                         </div>
@@ -92,8 +92,8 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach var="row" items="${sessionScope.viewhistory.lhistory}">
-                                        <tr class="success his-data">
+                                    <c:forEach var="row" items="${sessionScope.viewhistory.lhistory}">
+                                        <tr class="success">
                                             <td>${row.idhistory}</td>
                                             <td>${row.location_name}</td>
                                             <td>${row.username}</td>

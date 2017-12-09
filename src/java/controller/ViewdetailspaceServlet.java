@@ -53,7 +53,8 @@ public class ViewdetailspaceServlet extends HttpServlet {
             Space space = new Space(conn);
             space.showSpace(name);
             session.setAttribute("space", space);
-           
+            
+            System.out.println("img :"+space.getImg().length);
             RequestDispatcher pg = request.getRequestDispatcher("viewdetail.jsp");
             pg.forward(request, response);
 

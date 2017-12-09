@@ -187,8 +187,8 @@
                                         </div>
                                         <div class="col-md-7">
 
-                                            <input type="text" class="form-control form-control-edit" readonly="true" value="" id="datetimepicker" name="date">
-                                            <input type="text" class="form-control form-control-edit" readonly="true" id="datetimepicker2" name="time_start">
+                                            <input type="text" class="form-control form-control-edit" value="" id="datetimepicker" name="date">
+                                            <input type="text" class="form-control form-control-edit" value="" id="datetimepicker2" name="time_start">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -197,7 +197,7 @@
                                             <div class="text-edit">จำนวนคน : </div>
                                         </div>
                                         <div class="col-md-7">
-                                            <input type="text" class="form-control form-control-edit" value=""  readonly="true" id="datetimepicker3" name="time_end">
+                                            <input type="text" class="form-control form-control-edit" value="" id="datetimepicker3" name="time_end">
                                             <div class="input-group">
                                                 <span class="input-group-btn">
                                                     <button class="btn btn-default" id="btn-minus" data-field="amount" type="button">
@@ -609,7 +609,7 @@
                 startView: 1,
                 minView: 0,
                 maxView: 1,
-                forceParse: 0
+                forceParse: 0 
             });
 
             $('#datetimepicker3').datetimepicker({
@@ -623,6 +623,7 @@
                 maxView: 1,
                 forceParse: 0
             });
+            $('#datetimepicker2').datetimepicker("setMinutesDisabled","30");
 
             $('#btn-minus').on('click', function () {
                 fieldName = $(this).attr('data-field');

@@ -10,7 +10,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet" type="text/css" href="index.css">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Prompt:300">
     <title>Co-Working-Space</title>
     <script src="js/jquery.min.js"></script>
@@ -139,7 +139,7 @@
                                     img name
                                 </p>
                             </div>
-                            <button type="submit" class="btn btn-default center-block" value="<%=member.getUsername()%>">
+                            <button type="submit" class="btn btn-default center-block">
                                 Confirm
                             </button>
                         </form>

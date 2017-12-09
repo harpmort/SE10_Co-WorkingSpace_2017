@@ -47,9 +47,6 @@ public class SearchServlet extends HttpServlet {
             Space space = new Space(conn);
             space.search(text);
             session.setAttribute("space", space);
-            session.setAttribute("pos", 11);
-            session.setAttribute("i", 0);
-            session.setAttribute("text", text);
             RequestDispatcher pg = request.getRequestDispatcher("search.jsp");
             pg.forward(request, response);
 

@@ -6,8 +6,12 @@
 package controller;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -17,6 +21,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
+import model.Member;
 import model.Space;
 
 /**
@@ -42,7 +48,6 @@ public class AddspaceServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String username = request.getParameter("username");
             String name = request.getParameter("name");
             String location = request.getParameter("location");
             String amountdesk = request.getParameter("amountdesk");
@@ -89,10 +94,8 @@ public class AddspaceServlet extends HttpServlet {
             Connection conn = (Connection) ctx.getAttribute("connection");
             HttpSession session = request.getSession();
             Space new_space = new Space(conn);
-            new_space.addSpace(name,location,typeroom,typedesk,amountdesk,amountdesk,description,roomsize,open,close,people,price,path_img,username);
+            new_space.addSpace(name,location,typeroom,typedesk,amountdesk,amountdesk,description,roomsize,open,close,people,price,1,path_img);
             
-            RequestDispatcher pg = request.getRequestDispatcher("insertcws.jsp");
-            pg.forward(request, response);
 
         }
     }
