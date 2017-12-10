@@ -15,6 +15,7 @@ public class Order {
         if(input == null){
             input = new ArrayList<>();
         }
+        System.out.println("input");
         for(int i = 0; i < input.size(); i++){
             
             if(myOrder.size() == 0){

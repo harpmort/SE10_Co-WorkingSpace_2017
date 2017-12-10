@@ -164,7 +164,6 @@ public class Space {
         }
 
         try {
-            System.out.println("name :" + name);
             Statement stmt = conn.createStatement();
             String sql = "select date,begin_time,end_time\n"
                     + "from booking b\n"
@@ -175,16 +174,16 @@ public class Space {
             while (rs.next()) {
                 String[] date_split = rs.getString("date").split("-");
                 String date = date_split[2] + "/" + date_split[1] + "/" + date_split[0];
-                System.out.println("date :" + date);
-                System.out.println("be :" + rs.getString("begin_time"));
-                System.out.println("end :" + rs.getString("end_time"));
-                takedslot.add(date+"-"+rs.getString("begin_time")+"-"+rs.getString("end_time"));
+                takedslot.add(date + "-" + rs.getString("begin_time") + "-" + rs.getString("end_time"));
             }
-            System.out.println(takedslot);
-            System.out.println(takedslot.get(0));
+            System.out.println("takedslot is : " + takedslot);
+            if (takedslot == null) {
+                System.out.println("takedslot is null? : ");
+            }
             Order order = new Order();
-            order.orderMePlease(takedslot);
-            System.out.println("return order :"+order.orderMePlease(takedslot));
+            setTakedslot((ArrayList) order.orderMePlease(takedslot));
+            System.out.println("takedslot real :"+getTakedslot());
+            System.out.println("return order :" + order.orderMePlease(takedslot));
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -419,5 +418,11 @@ public class Space {
     public void setConn(Connection conn) {
         this.conn = conn;
     }
+
+    public void setTakedslot(ArrayList takedslot) {
+        this.takedslot = takedslot;
+    }
+    
+    
 
 }
