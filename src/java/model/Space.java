@@ -182,7 +182,9 @@ public class Space {
             }
             System.out.println(takedslot);
             System.out.println(takedslot.get(0));
-
+            Order order = new Order();
+            order.orderMePlease(takedslot);
+            System.out.println("return order :"+order.orderMePlease(takedslot));
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
