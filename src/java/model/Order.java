@@ -12,9 +12,10 @@ public class Order {
     
     public List<String> orderMePlease(List<String> input){
         List<String> myOrder = new ArrayList<>();
+        if(input == null){
+            input = new ArrayList<>();
+        }
         for(int i = 0; i < input.size(); i++){
-            System.out.println("pass this main loop with i=" + i + "and size=" + input.size());
-            System.out.println("myorder is: "+ myOrder);
             
             if(myOrder.size() == 0){
                 myOrder.add(input.get(i));
@@ -24,7 +25,6 @@ public class Order {
             String[] date = timeDateSplit[0].split("/");
             String time = timeDateSplit[1];
             for(int j = 0; j < myOrder.size(); j++){
-                System.out.println("pass this sub loop with j=" + j + "and size=" + myOrder.size());
                 if(Integer.parseInt(date[2]) < Integer.parseInt(myOrder.get(j).split("-")[0].split("/")[2])){
                     myOrder.add(j, input.get(i));
                     break;
