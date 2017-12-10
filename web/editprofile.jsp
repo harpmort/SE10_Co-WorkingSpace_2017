@@ -1,6 +1,6 @@
 <%-- 
-    Document   : Profile
-    Created on : Nov 3, 2017, 4:55:10 PM
+    Document   : editprofile
+    Created on : Dec 9, 2017, 11:18:44 PM
     Author     : Asus
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -18,7 +18,7 @@
         <script src="js/bootstrap.min.js"></script>
     </head>
     <body>
-         <% int check = 0;
+        <% int check = 0;
             if (session.getAttribute("check") != null) {
                 check = (int) session.getAttribute("check");
             }%>
@@ -70,61 +70,77 @@
                 </div>
             </div>
         </nav>
-        
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
                     <h3 class="text-center head-pro">
-                        Profile
+                        Edit Profile
                     </h3>
                     <div class="row">
-                        <div class="col-md-2">
-                        </div>
+                        <div class="col-md-2"></div>
                         <div class="col-md-2">
                             <div class="img-pro"><img src="<%= member.getImg_user()%>" width="100%" /></div>
                             <div class="name-pro" style="text-align: center"><h3>
                                     <%= member.getUsername()%>
                                 </h3></div>
-                            <form action="editprofile.jsp" method="POST">
-                                <div class="btn-edit-pro">
-                                    <button type="submit" class="btn btn-default" >
-                                        edit profile
-                                    </button>
-                                </div>
-                            </form>
-
                         </div>
                         <div class="col-md-6">
-                            <div class="show-pro">ชื่อ : <%= member.getFirstname()%></div>
-                            <div class="show-pro">นามสกุล : <%= member.getLastname()%></div>
-                            <div class="show-pro">Email : <%= member.getEmail()%></div>
-                            <div class="show-pro">เบอร์โทรศัพท์ : <%= member.getPhone()%></div>
-                            <%int type = member.getType();
-                                String type_mem;
-                                if (type == 1) {
-                                    type_mem = "Lessor(ผู้ให้เช่า)";
-                                } else {
-                                    type_mem = "Rental(ผู้เช่า)";
-                                }
-                            %>
-                            <div class="show-pro">ประเภทผู้ใช้งาน : <%= type_mem%></div>
-
-                            <%String idcard = member.getIdcard();
-                                String verified;
-                                if (idcard.equals("Not verified")) {
-                                    verified = "ยังไม่ได้ยืนยันตัวตน";
-                                } else {
-                                    verified = "ยืนยันตัวตนแล้ว";
-                                }
-                            %>
-                            <div class="show-pro">สถานะยืนยันตัวตน : <%= verified%></div>
-
+                            <form action="EditprofileServlet" method="post" role="form" >
+                                <div class="form-group">
+                                    <label for="firstname" >
+                                        ชื่อ : 
+                                    </label>
+                                    <input type="text" class="form-control" id="firstname" name="firstname" placeholder="<%= member.getFirstname()%>"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastname" >
+                                        นามสุกล : 
+                                    </label>
+                                    <input type="text" class="form-control" id="lastname" name="lastname" placeholder="<%= member.getLastname()%>"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email" >
+                                        Email : 
+                                    </label>
+                                    <input type="text" class="form-control" id="email" name="email" placeholder="<%= member.getEmail()%>"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone" >
+                                        เบอร์โทรศัพท์ : 
+                                    </label>
+                                    <input type="text" class="form-control" id="phone" name="phone" placeholder="<%= member.getPhone()%>"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="img">
+                                        change image
+                                    </label>
+                                    <input type="file" name="profileimg"/>
+                                    <p class="help-block">
+                                        profile img name
+                                    </p>
+                                </div>
+                                <%String idcard = member.getIdcard();
+                                    if (idcard.equals("Not verified")) {%>
+                                <div class="form-group">
+                                    <label for="img">
+                                        ยืนยันตัวตนด้วย ID Card
+                                    </label>
+                                    <input type="file" name="idcardimg"/>
+                                    <p class="help-block">
+                                        idcard img name
+                                    </p>
+                                </div>
+                                <%}%>
+                                <button type="submit" class="btn btn-default center-block">
+                                    Confirm
+                                </button>
+                            </form>
                         </div>
-                        <div class="col-md-2">
-                        </div>
+                        <div class="col-md-2"></div>
                     </div>
                 </div>
             </div>
         </div>
+
     </body>
 </html>

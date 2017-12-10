@@ -27,6 +27,8 @@ public class Member {
     private String phone;
     private int type;
     private String checkemail;
+    private String img_user;
+    private String idcard;
     
     
 
@@ -53,6 +55,8 @@ public class Member {
                     email = rs.getString("email");
                     phone = rs.getString("phone");
                     type = rs.getInt("idtype_member");
+                    img_user = rs.getString("img_profile");
+                    idcard = rs.getString("idcard");
                 }
             }
         } catch (SQLException ex) {
@@ -87,6 +91,71 @@ public class Member {
                         + "VALUES ('" + firstname + "', '" + lastname + "', '" + username + "', '" + password + "', '" + email + "', '" + phone + "', '" + type + "', '" + img + "', '" + idcard + "');";
                 stmt.executeUpdate(sql);
             }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public void editProfile(String firstname, String lastname, String email, String phone, String path_img, String path_card,String username) {
+        try {
+            Statement stmt = conn.createStatement();
+            String sql_id = "select idmember from member where username = '" + username + "';";
+            ResultSet rs = stmt.executeQuery(sql_id);
+            String idmember = "";
+            if (rs.next()) {
+                idmember = rs.getString("idmember");
+            }
+
+            if (!firstname.equals("-") && !firstname.equals("")) {
+                String sql = "UPDATE member\n"
+                        + "SET firstname = '" + firstname + "'\n"
+                        + "WHERE idmember = '" + idmember + "';";
+                stmt.executeUpdate(sql);
+                this.firstname = firstname;
+            }
+
+            if (!lastname.equals("-") && !lastname.equals("")) {
+                String sql = "UPDATE member\n"
+                        + "SET lastname = '" + lastname + "'\n"
+                        + "WHERE idmember = '" + idmember + "';";
+                stmt.executeUpdate(sql);
+                this.lastname = lastname;
+            }
+
+            if (!email.equals("-") && !email.equals("")) {
+                String sql = "UPDATE member\n"
+                        + "SET email = '" + email + "'\n"
+                        + "WHERE idmember = '" + idmember + "';";
+                stmt.executeUpdate(sql);
+                this.email = email;
+            }
+
+            if (!phone.equals("-") && !phone.equals("")) {
+                String sql = "UPDATE member\n"
+                        + "SET phone = '" + phone + "'\n"
+                        + "WHERE idmember = '" + idmember + "';";
+                stmt.executeUpdate(sql);
+                this.phone = phone;
+            }
+
+            if (!path_img.equals("-") && !path_img.equals("")) {
+                String sql = "UPDATE member\n"
+                        + "SET img_profile = '" + path_img + "'\n"
+                        + "WHERE idmember = '" + idmember + "';";
+                stmt.executeUpdate(sql);
+                this.img_user = path_img;
+            }
+            
+            if (!path_card.equals("-") && !path_card.equals("")) {
+                String sql = "UPDATE member\n"
+                        + "SET idcard = '" + path_card + "'\n"
+                        + "WHERE idmember = '" + idmember + "';";
+                stmt.executeUpdate(sql);
+                this.idcard = path_card;
+            }
+            
+            
+
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -163,5 +232,25 @@ public class Member {
     public void setCheckemail(String checkemail) {
         this.checkemail = checkemail;
     }
+
+    public String getImg_user() {
+        return img_user;
+    }
+
+    public void setImg_user(String img_user) {
+        this.img_user = img_user;
+    }
+
+    public String getIdcard() {
+        return idcard;
+    }
+
+    public void setIdcard(String idcard) {
+        this.idcard = idcard;
+    }
+    
+    
+    
+    
 
 }

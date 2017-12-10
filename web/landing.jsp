@@ -24,8 +24,8 @@
         <nav class="navbar navbar-default navbar-edit navbar-static-top">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand brand-edit" href="index.jsp">
-                        <img alt="Brand" src="img/brand.png" style="width: 78px">
+                    <a class="navbar-brand brand-edit" href="landing.jsp">
+                        <img alt="Brand" src="img/cws.png" style="width: 78px">
                     </a>
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mynavbar">
                         <span class="sr-only">Toggle navigation</span>

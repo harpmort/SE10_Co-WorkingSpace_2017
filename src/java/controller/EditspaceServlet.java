@@ -61,7 +61,6 @@ public class EditspaceServlet extends HttpServlet {
             Space space = (Space) session.getAttribute("space");
             String name_real = space.getName();
             int count_img = space.getImg().length;
-            System.out.println("ci:"+count_img);
             for(int i=0;i<count;i++){
                 if(i>0){
                     path_img += ",";

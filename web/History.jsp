@@ -22,7 +22,7 @@
         <nav class="navbar navbar-default navbar-edit navbar-static-top">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand brand-edit" href="index.jsp">
+                    <a class="navbar-brand brand-edit" href="landing.jsp">
                         <img alt="Brand" src="img/cws.png" style="width: 78px">
                     </a>
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mynavbar">
@@ -38,6 +38,7 @@
                         <% if (type == 1) {%>
                         <li class="menu-bar"><a href="landing.jsp">Home</a></li>
                         <li class="menu-bar"><a href="insertcws.jsp">Add Space</a></li>
+                        <li class="menu-bar"><a href="editspace.jsp">Edit Space</a></li>
                         <li class="menu-bar"><a href="BookingServlet">List Booking</a></li>
                         <li class="menu-bar"><a href="HistoryServlet">History</a></li>
                             <%} else if (type == 2) {%>

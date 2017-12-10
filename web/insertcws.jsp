@@ -20,8 +20,8 @@
     <nav class="navbar navbar-default navbar-edit navbar-static-top">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand brand-edit" href="index.jsp">
-                    <img alt="Brand" src="img/brand.png" style="width: 78px">
+                <a class="navbar-brand brand-edit" href="landing.jsp">
+                    <img alt="Brand" src="img/cws.png" style="width: 78px">
                 </a>
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mynavbar">
                     <span class="sr-only">Toggle navigation</span>
@@ -34,6 +34,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li class="menu-bar"><a href="index.jsp">Home</a></li>
                     <li class="menu-bar"><a href="insertcws.jsp">Add Space</a></li>
+                    <li class="menu-bar"><a href="editspace.jsp">Edit Space</a></li>
                     <li class="menu-bar"><a href="BookingServlet">List Booking</a></li>
                     <li class="menu-bar"><a href="HistoryServlet">History</a></li>
                         <%model.Member member = (model.Member) session.getAttribute("member");%>
@@ -134,7 +135,7 @@
                                 <label for="img">
                                     อัพรูป
                                 </label>
-                                <input multiple="mumltiple" type="file" name="img"/>
+                                <input multiple="multiple" type="file" name="img"/>
                                 <p class="help-block">
                                     img name
                                 </p>
