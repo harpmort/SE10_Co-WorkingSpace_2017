@@ -12,6 +12,9 @@ public class Order {
     
     public List<String> orderMePlease(List<String> input){
         List<String> myOrder = new ArrayList<>();
+        if(input == null){
+            input = new ArrayList<>();
+        }
         for(int i = 0; i < input.size(); i++){
             
             if(myOrder.size() == 0){
