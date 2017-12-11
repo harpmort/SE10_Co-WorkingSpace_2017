@@ -104,12 +104,10 @@
                                             <td>${row.desk_booking}</td>
                                     <form action="#" method="POST">
                                         <td class="his-data">
-                                            <button class="btn btn-sm btn-info" type="submit" name="idbooking" value="${row.idbooking}">
-                                        <td class="success">
                                             <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#ratingModal" type="submit" name="idbooking" value="${row.idbooking}">
-                                                Rating
+                                            Rating
                                             </button>
-                                        </td>
+                                            </td>
                                     </form>
                                     </tr>
                                 </c:forEach>
