@@ -132,7 +132,7 @@
                         <form action="" method="post">
                             <div class="form-group">
                                 <input type="radio" name="rate" value="1" />
-                                <img class="" src="" style="width: 20px;"/><br
+                                <img class="" src="" style="width: 20px;"/><br>
                                 <input type="radio" name="rate" value="2" />
                                 <img class="" src="" style="width: 20px;"/><br>
                                 <input type="radio" name="rate" value="3" />
