@@ -886,7 +886,7 @@
             }
 
           }else if(typeStartEnd == "end"){
-            if(thistime < starttimerelation){
+            if(thistime <= starttimerelation){
               disabledState = "disabled";
             }
             for(var k = 0; k < timeDisabledInterval.length; k++){

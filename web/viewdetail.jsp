@@ -656,6 +656,9 @@
                     var datepull_temp = datepull.split("-");
                     var datepull_ok = datepull_temp.join("/");
                     var slot_per_day = [];
+                    var opentime = new String("<%= space.getOpen_time() %>");
+                    var closetime = new String("<%= space.getClose_time() %>");
+                    slot_per_day.push("00:00-" + opentime);
                     for (var i = 0; i < takedslot_li.length; i++) {
                         var temp = takedslot_li[i].toString().split("-")[0];
                         if (temp === datepull_ok) {
@@ -664,6 +667,7 @@
                             slot_per_day.push(temp2 + temp3);
                         }
                     }
+                    slot_per_day.push(closetime + "-23:59");
                     $('#datetimepicker2').datetimepicker("setTimeDisabledInterval", slot_per_day);
                     $('#datetimepicker3').datetimepicker("setTimeDisabledInterval", slot_per_day);
                     $('[data-toggle="endtimetooltip"]').tooltip('disable');
