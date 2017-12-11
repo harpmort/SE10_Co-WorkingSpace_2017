@@ -79,22 +79,22 @@
                         <div class="col-md-2">
                         </div>
                         <div class="col-md-8">
-                            <table class="table">
+                            <table class="table his-center">
                                 <thead>
                                     <tr>
-                                        <th>ID_History</th>
-                                        <th>ชื่อสถานที่</th>
-                                        <th>ชื่อผู้จอง</th>
-                                        <th>วันที่จอง</th>
-                                        <th>เวลาเริ่ม</th>
-                                        <th>เวลาจบ</th>
-                                        <th>จำนวนโต๊ะที่จอง</th>
-                                        <th>Rating</th>
+                                        <th id="his-center">ID_History</th>
+                                        <th id="his-center">ชื่อสถานที่</th>
+                                        <th id="his-center">ชื่อผู้จอง</th>
+                                        <th id="his-center">วันที่จอง</th>
+                                        <th id="his-center">เวลาเริ่ม</th>
+                                        <th id="his-center">เวลาจบ</th>
+                                        <th id="his-center">จำนวนโต๊ะที่จอง</th>
+                                        <th id="his-center">Rating</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 <c:forEach var="row" items="${sessionScope.viewhistory.lhistory}">
-                                        <tr class="success his-data">
+                                        <tr class="his-data">
                                             <td>${row.idhistory}</td>
                                             <td>${row.location_name}</td>
                                             <td>${row.username}</td>
@@ -103,7 +103,7 @@
                                             <td>${row.end_time}</td>
                                             <td>${row.desk_booking}</td>
                                     <form action="#" method="POST">
-                                        <td class="success">
+                                        <td class="his-data">
                                             <button class="btn btn-sm btn-info" type="submit" name="idbooking" value="${row.idbooking}">
                                                 Rating
                                             </button>
