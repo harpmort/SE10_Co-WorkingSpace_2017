@@ -102,8 +102,8 @@
                     <!-- Wrapper for slides -->
                     <div class="carousel-inner">
                         <% for (int j = 0; j < count; j++) {
-                                if (j == 0) {%><div class="item active"><img src="<%=space.getImg()[j]%>" style="width:100%;"></div><%} else {%>
-                        <div class="item"><img src="<%=space.getImg()[j]%>" style="width:100%;"></div>
+                            if (j == 0) {%><div class="item active"><img class="img-detail-crop" src="<%=space.getImg()[j]%>" style="width:100%;"></div><%} else {%>
+                                <div class="item"><img class="img-blueprint-crop" src="<%=space.getImg()[j]%>" style="width:100%;"></div>
                             <%}
                                 }%>
                     </div>
