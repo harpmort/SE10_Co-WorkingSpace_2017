@@ -253,3 +253,6 @@ body {
     width: 100%;
     height: 260px;
 }
+.opacity{
+    opacity: 0;
+}
