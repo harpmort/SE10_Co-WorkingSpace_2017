@@ -57,7 +57,7 @@
     <div class="container-fluid">
         <div class="row content">
             <div class="col-md-12">
-                <div class="row">
+                <div class="row insert-page-pos">
                     <div class="col-md-2">
                     </div>
                     <div class="col-md-6">
@@ -91,9 +91,12 @@
                             </div>
                             <div class="form-group">
                                 <label for="typedesk">
-                                    ประเภทโต๊ะ
+                                    ประเภทโต๊ะ   
                                 </label>
-                                <input type="text" class="form-control" id="typedesk" name="typedesk" />
+                                <div class="type-table-pos">
+                                    <input type="radio" name="typedesk" value="1" checked="checked" /> Fix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="radio" name="typedesk" value="2"  /> Share
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="amountdesk">
@@ -105,7 +108,11 @@
                                 <label for="typeroom">
                                     ประเภทห้อง
                                 </label>
-                                <input type="text" class="form-control" id="typeroom" name="typeroom" />
+                                <div class="type-table-pos">
+                                    <input type="radio" name="typeroom" value="1" checked="checked" /> Share Room &nbsp;
+                                    <input type="radio" name="typeroom" value="2"  /> Private Room &nbsp;
+                                <input type="radio" name="typeroom" value="3"  /> Meeting Room
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="open">
@@ -140,7 +147,7 @@
                                     img name
                                 </p>
                             </div>
-                            <button type="submit" class="btn btn-default center-block" value="<%=member.getUsername()%>">
+                            <button type="submit" class="btn btn-default center-block btn-confirm" value="<%=member.getUsername()%>">
                                 Confirm
                             </button>
                         </form>
