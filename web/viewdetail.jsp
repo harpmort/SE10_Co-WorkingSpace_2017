@@ -624,7 +624,7 @@
                 maxView: 1,
                 forceParse: 0
             });
-
+            
             $('#btn-minus').on('click', function () {
                 fieldName = $(this).attr('data-field');
                 var input = $("input[name='" + fieldName + "']");
