@@ -3,6 +3,7 @@
     Created on : Nov 15, 2017, 9:23:08 AM
     Author     : Asus
 --%>
+<%@page import="java.util.List"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -82,7 +83,16 @@
                 </div>
             </div>
         </nav>
-        <%model.Space space = (model.Space) session.getAttribute("space");%>
+        <%model.Space space = (model.Space) session.getAttribute("space");
+         List<String> takedslot = space.getTakedslot();
+         String takedslot_st = "";
+         for(int i = 0; i < takedslot.size(); i++){
+             takedslot_st += takedslot.get(i);
+             if(i < takedslot.size()-1){
+                 takedslot_st += ",";
+             }
+         }
+        %>
         <form action="ReserServlet" method="POST">
             <h1 class="margin-left type-room-name"><%= space.getName()%></h1>
 
@@ -590,6 +600,9 @@
             });
         </script>
         <script type="text/javascript">
+            var takedslot = new String("<%= takedslot_st %>");
+            console.log("takedslot: " + takedslot);
+            
             $('#datetimepicker').datetimepicker({
                 format: 'dd-mm-yyyy',
                 weekStart: 1,
@@ -598,7 +611,8 @@
                 todayHighlight: 1,
                 startView: 2,
                 minView: 2,
-                forceParse: 0
+                forceParse: 0,
+                startDate: new Date()
             });
 
             $('#datetimepicker2').datetimepicker({
@@ -618,6 +632,23 @@
                 var dtp =  $('#datetimepicker2');
                 var stat = false;
                 $('#datetimepicker2').click(function(){
+                    var takedslot_li = takedslot.split(",");
+                    console.log("takedslot_li" + takedslot_li);
+                    var datepull = $('#datetimepicker').val().toString();
+                    var datepull_temp = datepull.split("-");
+                    var datepull_ok = datepull_temp.join("/");
+                    var slot_per_day = [];
+                    for(var i = 0; i < takedslot_li.length; i++){
+                        var temp = takedslot_li[i].toString().split("-")[0];
+                        if(temp === datepull_ok){
+                            var temp2 = takedslot_li[i].toString().split("-")[1].toString() + "-";
+                            var temp3 = takedslot_li[i].toString().split("-")[2].toString();
+                            console.log("test" + temp2 + temp3);
+                            slot_per_day.push(temp2 + temp3);
+                        }
+                    }
+                    $('#datetimepicker2').datetimepicker("setTimeDisabledInterval", slot_per_day);
+                    $('#datetimepicker3').datetimepicker("setTimeDisabledInterval", slot_per_day);
                     $('[data-toggle="endtimetooltip"]').tooltip('disable');
                 });
                 
@@ -628,6 +659,7 @@
                     }else{
                         stat = true;
                         $('[data-toggle="endtimetooltip"]').tooltip('disable');
+                        $('#datetimepicker3').datetimepicker("setRelationStart", dtp.val());
                     }
                     if(!stat){
                         $('#datetimepicker3').datetimepicker("hide");
@@ -646,12 +678,8 @@
                 forceParse: 0
             });
             $('#datetimepicker3').datetimepicker("setStartEndType", "end");
-            $('#datetimepicker3').datetimepicker("setTimeDisabledInterval", ["10:30-11:30", "15:30-17:30"]);
-            $('#datetimepicker3').datetimepicker("setRelationStart", "13:30");
             $('#datetimepicker3').datetimepicker("hide"); 
             $('#datetimepicker2').datetimepicker("setStartEndType", "start");
-            
-            $('#datetimepicker2').datetimepicker("setTimeDisabledInterval", ["10:30-11:30", "15:30-17:30"]);
             
 
             $('#btn-minus').on('click', function () {
