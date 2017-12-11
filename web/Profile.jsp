@@ -74,9 +74,9 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <h3 class="text-center head-pro">
+<!--                    <h3 class="text-center head-pro">
                         Profile
-                    </h3>
+                    </h3>-->
                     <div class="row">
                         <div class="col-md-2">
                         </div>
@@ -85,7 +85,7 @@
                             <div class="name-pro" style="text-align: center"><h3>
                                     <%= member.getUsername()%>
                                 </h3></div>
-                            <form action="editprofile.jsp" method="POST">
+                            <form action="editprofile.jsp" met hod="POST">
                                 <div class="btn-edit-pro">
                                     <button type="submit" class="btn btn-default" >
                                         edit profile
