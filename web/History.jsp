@@ -88,12 +88,14 @@
                                         <th>วันที่จอง</th>
                                         <th>เวลาเริ่ม</th>
                                         <th>เวลาจบ</th>
-                                        <th>จำนวนโต๊ะที่จอง</th>
+                                        <th>จำนวนคนที่จอง</th>
+                                            <%if (type == 2) {%>
                                         <th>Rating</th>
+                                            <%}%>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach var="row" items="${sessionScope.viewhistory.lhistory}">
+                                    <c:forEach var="row" items="${sessionScope.viewhistory.lhistory}">
                                         <tr class="success his-data">
                                             <td>${row.idhistory}</td>
                                             <td>${row.location_name}</td>
@@ -102,6 +104,7 @@
                                             <td>${row.begin_time}</td>
                                             <td>${row.end_time}</td>
                                             <td>${row.desk_booking}</td>
+                                    <%if (type == 2) {%>
                                     <form action="#" method="POST">
                                         <td class="success">
                                             <button class="btn btn-sm btn-info" type="submit" name="idbooking" value="${row.idbooking}">
@@ -109,6 +112,7 @@
                                             </button>
                                         </td>
                                     </form>
+                                    <%}%>
                                     </tr>
                                 </c:forEach>
                                 </tbody>
