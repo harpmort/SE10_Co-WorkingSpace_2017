@@ -51,46 +51,52 @@ public class EditspaceServlet extends HttpServlet {
             String close = request.getParameter("close");
             String description = request.getParameter("description");
             String price = request.getParameter("price");
-            String img[] = request.getParameterValues("img");
-            int count = img.length;
-            PictureManager save_img = new PictureManager();
-            String path_img = "";
+            String[] img = request.getParameterValues("img");
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
             HttpSession session = request.getSession();
             Space space = (Space) session.getAttribute("space");
             String name_real = space.getName();
-            int count_img = space.getImg().length;
-            for(int i=0;i<count;i++){
-                if(i>0){
-                    path_img += ",";
-                }
-                String[] path = img[i].split("");
-                int count_path = path.length;
-                String filetype_revert ="";
-                for(int j=0;count_path-1>=j;count_path--){
-                    if(!path[count_path-1].equals(".")){
-                        filetype_revert += path[count_path-1];
-                    }else if(path[count_path-1].equals(".")){
-                        break;
+            PictureManager save_img = new PictureManager();
+                String path_img = "";
+            if (!img[0].equals("")) {
+                int count = img.length;
+                int count_img = space.getImg().length;
+                System.out.println("count_img :"+space.getImg().length);
+                for (int i = 0; i < count; i++) {
+                    System.out.println("count loop : "+ count);
+                    System.out.println("path_img be if: "+path_img);
+                    
+                    String[] path = img[i].split("");
+                    int count_path = path.length;
+                    String filetype_revert = "";
+                    for (int j = 0; count_path - 1 >= j; count_path--) {
+                        if (!path[count_path - 1].equals(".")) {
+                            filetype_revert += path[count_path - 1];
+                        } else if (path[count_path - 1].equals(".")) {
+                            break;
+                        }
+                    }
+                    int count_revert = filetype_revert.length();
+                    String file_type = "";
+                    for (int k = 0; count_revert - 1 >= k; count_revert--) {
+                        file_type += filetype_revert.charAt(count_revert - 1);
+                    }
+
+                    save_img.savePicture("space", name_real+"_" + (i + count_img), file_type, img[i]);
+                    path_img += save_img.getUrlImage("space", name_real+"_" + (i + count_img), file_type);
+                    System.out.println("path_img af if af path: " + path_img);
+                    if (i >= 0 && i != count-1) {
+                        path_img += ",";
+                        System.out.println("path_img in if: "+path_img);
+                        
                     }
                 }
-                int count_revert = filetype_revert.length();
-                String file_type = "";
-                for(int k=0;count_revert-1>=k;count_revert--){
-                    file_type += filetype_revert.charAt(count_revert-1);
-                }
-                
-            
-                save_img.savePicture("space", ""+(i+count_img), file_type, img[i]);
-                path_img += save_img.getUrlImage("space", ""+(i+count_img), file_type);
             }
-            
-            
-            
+
             Space edit_space = new Space(conn);
-            edit_space.editSpace(name_real,name,location,typeroom,typedesk,amountdesk,amountdesk,description,roomsize,open,close,people,price,path_img);
-            
+            edit_space.editSpace(name_real, name, location, typeroom, typedesk, amountdesk, amountdesk, description, roomsize, open, close, people, price, path_img);
+
             RequestDispatcher pg = request.getRequestDispatcher("editspace.jsp");
             pg.forward(request, response);
 

@@ -201,6 +201,12 @@ public class Space {
                 System.out.println("rs next na ja");
                 idspace = rs.getString("idspace");
                 pic = rs.getString("img");
+                if(pic.equals("NO IMAGE")){
+                    pic = "";
+                }
+                else{
+                    pic+=",";
+                }
             }
 
             if (!name.equals("-") && !name.equals("")) {
@@ -289,7 +295,7 @@ public class Space {
 
             if (!path_img.equals("-") && !path_img.equals("")) {
                 String sql = "UPDATE co_working_space\n"
-                        + "SET img = '" + pic + ',' + path_img + "'\n"
+                        + "SET img = '" + pic + path_img + "'\n"
                         + "WHERE idspace = '" + idspace + "';";
                 stmt.executeUpdate(sql);
             }

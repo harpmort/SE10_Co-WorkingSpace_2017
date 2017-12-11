@@ -89,7 +89,7 @@
                     </div>
                     <div class="col-md-6">
                         <h3>
-                            Add Space :D
+                            Edit Space :D
                         </h3><br>
                         <form action="EditspaceServlet" method="post" role="form" >
                             <div class="form-group">

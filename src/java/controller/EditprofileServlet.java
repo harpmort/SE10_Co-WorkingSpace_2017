@@ -83,7 +83,7 @@ public class EditprofileServlet extends HttpServlet {
                 path_img += save.getUrlImage("space", "profileimg" + username, file_type);
             }
             String path_card = "";
-            if (idcard != null) {
+            if (idcard != null && !idcard.equals("")) {
 
                 String[] path_c = idcard.split("");
                 count = path_c.length;

@@ -59,50 +59,60 @@ public class RegisterServlet extends HttpServlet {
             Connection conn = (Connection) ctx.getAttribute("connection");
             HttpSession session = request.getSession();
             int check = 0;
-            PictureManager save_img = new PictureManager();
+            PictureManager save = new PictureManager();
+            int count;
+            String filetype_revert;
+            int count_revert;
+            String file_type;
             String path_img = "";
-            String[] path = img.split("");
-            int count_path = path.length;
-            String filetype_revert = "";
-            for (int j = 0; count_path - 1 >= j; count_path--) {
-                if (!path[count_path - 1].equals(".")) {
-                    filetype_revert += path[count_path - 1];
-                } else if (path[count_path - 1].equals(".")) {
-                    break;
+            if (img != null && !img.equals("")) {
+                String[] path_i = img.split("");
+                count = path_i.length;
+                filetype_revert = "";
+                for (int j = 0; count - 1 >= j; count--) {
+                    if (!path_i[count - 1].equals(".")) {
+                        filetype_revert += path_i[count - 1];
+                    } else if (path_i[count - 1].equals(".")) {
+                        break;
+                    }
                 }
-            }
-            int count_revert = filetype_revert.length();
-            String file_type = "";
-            for (int k = 0; count_revert - 1 >= k; count_revert--) {
-                file_type += filetype_revert.charAt(count_revert - 1);
-            }
 
-            save_img.savePicture("space", firstname+"_" +lastname, file_type, img);
-            path_img += save_img.getUrlImage("space", firstname+"_" +lastname, file_type);
-            
-            PictureManager save_idcard = new PictureManager();
-            String path_idcard = "";
-            String[] path_card = idcard.split("");
-            int count_path_card = path_card.length;
-            String revert = "";
-            for (int j = 0; count_path_card - 1 >= j; count_path_card--) {
-                if (!path_card[count_path_card - 1].equals(".")) {
-                    revert += path_card[count_path_card - 1];
-                } else if (path_card[count_path_card - 1].equals(".")) {
-                    break;
+                count_revert = filetype_revert.length();
+                file_type = "";
+
+                for (int k = 0; count_revert - 1 >= k; count_revert--) {
+                    file_type += filetype_revert.charAt(count_revert - 1);
                 }
+                save.savePicture("space", "profileimg" + username, file_type, img);
+                path_img += save.getUrlImage("space", "profileimg" + username, file_type);
             }
-            int count_revert_card = revert.length();
-            String file_type_card = "";
-            for (int k = 0; count_revert_card - 1 >= k; count_revert_card--) {
-                file_type_card += revert.charAt(count_revert_card - 1);
-            }
+            String path_card = "";
+            if (idcard != null && !idcard.equals("")) {
 
-            save_idcard.savePicture("space", username+"_"+firstname+"_" +lastname, file_type_card, idcard);
-            path_idcard += save_idcard.getUrlImage("space", username+"_"+firstname+"_" +lastname, file_type_card);
+                String[] path_c = idcard.split("");
+                count = path_c.length;
+                filetype_revert = "";
+
+                for (int j = 0; count - 1 >= j; count--) {
+                    if (!path_c[count - 1].equals(".")) {
+                        filetype_revert += path_c[count - 1];
+                    } else if (path_c[count - 1].equals(".")) {
+                        break;
+                    }
+                }
+
+                count_revert = filetype_revert.length();
+                file_type = "";
+
+                for (int k = 0; count_revert - 1 >= k; count_revert--) {
+                    file_type += filetype_revert.charAt(count_revert - 1);
+                }
+                save.savePicture("space", "idcardimg" + username, file_type, idcard);
+                path_card += save.getUrlImage("space", "idcardimg" + username, file_type);
+            }
             if (verify) {
                 Member member = new Member(conn);
-                member.register(firstname, lastname, username, password, email, phone, type, path_img, path_idcard);
+                member.register(firstname, lastname, username, password, email, phone, type, path_img, path_card);
                 if (member.getCheckemail().equals("isEmailUnused")) {
                     check = 4;
 

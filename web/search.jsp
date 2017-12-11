@@ -56,6 +56,7 @@
                                 <% if (type == 1) {%>
                                 <li class="menu-bar"><a href="index.jsp">HOME</a></li>
                                 <li class="menu-bar"><a href="insertcws.jsp">Add Space</a></li>
+                                <li class="menu-bar"><a href="editspace.jsp">Edit Space</a></li>
                                 <li class="menu-bar"><a href="BookingServlet">List Booking</a></li>
                                 <li class="menu-bar"><a href="HistoryServlet">History</a></li>
                                     <%} else if (type == 2) {%>
@@ -116,7 +117,7 @@
                         <div class="col-md-4">
                             <form action="ViewdetailspaceServlet" method="POST">
                             <div class="w3-card-4 card-margin">
-                                <div class="panel-thumbnail">
+                                <div class="panel-thumbnail ">
                                     <img src="${row.img[0]}" class="img-responsive" style="width: 100%">
                                 </div>
                                 <div class="panel-body">
