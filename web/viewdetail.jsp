@@ -620,20 +620,19 @@
                 weekStart: 1,
                 todayBtn: 1,
                 autoclose: 1,
-                todayHighlight: 1,
+                todayHighlight: 0,
                 startView: 1,
                 minView: 0,
-                maxView: 1,
-                forceParse: 0
+                maxView: 0,
+                forceParse: 0,
+                formatViewType: 'time'
             });
-
 
             $(document).ready(function () {
                 var dtp = $('#datetimepicker2');
                 var stat = false;
                 $('#datetimepicker2').click(function () {
                     var takedslot_li = takedslot.split(",");
-                    console.log("takedslot_li" + takedslot_li);
                     var datepull = $('#datetimepicker').val().toString();
                     var datepull_temp = datepull.split("-");
                     var datepull_ok = datepull_temp.join("/");
@@ -643,7 +642,6 @@
                         if (temp === datepull_ok) {
                             var temp2 = takedslot_li[i].toString().split("-")[1].toString() + "-";
                             var temp3 = takedslot_li[i].toString().split("-")[2].toString();
-                            console.log("test" + temp2 + temp3);
                             slot_per_day.push(temp2 + temp3);
                         }
                     }
@@ -671,11 +669,12 @@
                 weekStart: 1,
                 todayBtn: 1,
                 autoclose: 1,
-                todayHighlight: 1,
+                todayHighlight: 0,
                 startView: 1,
                 minView: 0,
-                maxView: 1,
-                forceParse: 0
+                maxView: 0,
+                forceParse: 0,
+                formatViewType: 'time'
             });
             $('#datetimepicker3').datetimepicker("setStartEndType", "end");
             $('#datetimepicker3').datetimepicker("hide");
