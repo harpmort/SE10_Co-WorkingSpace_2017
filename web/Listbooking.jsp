@@ -88,7 +88,7 @@
                                         <th id="booking-center">วันที่จอง</th>
                                         <th id="booking-center">เวลาเริ่ม</th>
                                         <th id="booking-center">เวลาจบ</th>
-                                        <th id="booking-center">จำนวนโต๊ะที่จอง</th>
+                                        <th id="booking-center">จำนวนคนที่จอง</th>
                                         <th id="booking-center">ยกเลิกการจอง</th>
                                     </tr>
                                 </thead>
