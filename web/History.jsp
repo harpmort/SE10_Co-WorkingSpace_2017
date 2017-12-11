@@ -102,13 +102,12 @@
                                             <td>${row.begin_time}</td>
                                             <td>${row.end_time}</td>
                                             <td>${row.desk_booking}</td>
-                                    <form action="#" method="POST">
                                         <td class="his-data">
-                                            <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#ratingModal" type="submit" name="idbooking" value="${row.idbooking}">
+                                            <button id="rateButton" class="btn btn-sm btn-info" data-toggle="modal" data-target="#ratingModal" type="submit" name="idbooking" value="${row.idbooking}">
                                             Rating
                                             </button>
                                             </td>
-                                    </form>
+        
                                     </tr>
                                 </c:forEach>
                                 </tbody>
@@ -132,15 +131,15 @@
                         <form action="" method="post">
                             <div class="form-group">
                                 <input type="radio" name="rate" value="1" />
-                                <img class="" src="" style="width: 20px;"/><br>
+                                <img class="" src="img/1.png" style="height: 20px;"/><br>
                                 <input type="radio" name="rate" value="2" />
-                                <img class="" src="" style="width: 20px;"/><br>
+                                <img class="" src="img/2.png" style="height: 20px;"/><br>
                                 <input type="radio" name="rate" value="3" />
-                                <img class="" src="" style="width: 20px;"/><br>
+                                <img class="" src="img/3.png" style="height: 20px;"/><br>
                                 <input type="radio" name="rate" value="4" />
-                                <img class="" src="" style="width: 20px;"/><br>
+                                <img class="" src="img/4.png" style="height: 20px;"/><br>
                                 <input type="radio" name="rate" value="5" />
-                                <img class="" src="" style="width: 20px;"/>
+                                <img class="" src="img/5.png" style="height: 20px;"/>
                             </div>
                             <center><button type="Login" class="btn btn-default">Submit</button></center>
                         </form>
@@ -151,10 +150,5 @@
                 </div>
             </div>
         </div>
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $('#ratingModal').modal('show');
-            });
-        </script>
     </body>
 </html>
