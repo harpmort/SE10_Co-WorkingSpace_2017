@@ -149,7 +149,7 @@
                     <% if(count >= i && i >= 11) { %>
                         <form action="SearchServlet" method="POST">
                     <div class="row input-group search-bar">
-//                        <input name="search" type="text" class="opacity"/>
+                        <input name="search" type="text" class="opacity" style="width: 0%"/>
                         <button class="btn btn-default btn-search" type="submit">Back</button>
                     </div>
                     </form>
