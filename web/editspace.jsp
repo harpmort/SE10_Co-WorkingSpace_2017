@@ -188,10 +188,10 @@
                             <div class="form-group">
                                 <label for="img">
                                     รูป
-                                </label>
+                                </label><br>
                                 <% int count = space.getImg().length;%>
                                 <% for (int j = 0; j < count; j++) {%>
-                                <div class="item"><img src="<%=space.getImg()[j]%>" style="width:30%;"></div>
+                                <img src="<%=space.getImg()[j]%>" style="width:35%;">
                                     <%}%>
                             </div>
                             <div class="form-group">
