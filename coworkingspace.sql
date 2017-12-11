@@ -16,6 +16,59 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `admin`
+--
+
+DROP TABLE IF EXISTS `admin`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `admin` (
+  `idadmin` int(2) unsigned zerofill NOT NULL,
+  `username` varchar(45) DEFAULT NULL,
+  `password` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`idadmin`),
+  UNIQUE KEY `idadmin_UNIQUE` (`idadmin`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `admin`
+--
+
+LOCK TABLES `admin` WRITE;
+/*!40000 ALTER TABLE `admin` DISABLE KEYS */;
+INSERT INTO `admin` VALUES (01,'admin001','1234'),(02,'admin999','1234');
+/*!40000 ALTER TABLE `admin` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `approve`
+--
+
+DROP TABLE IF EXISTS `approve`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `approve` (
+  `idapprove` int(4) unsigned zerofill NOT NULL AUTO_INCREMENT,
+  `fk_id_member` int(4) unsigned DEFAULT NULL,
+  PRIMARY KEY (`idapprove`),
+  UNIQUE KEY `idapprove_UNIQUE` (`idapprove`),
+  KEY `idmember_idx` (`fk_id_member`),
+  CONSTRAINT `fk_id_member` FOREIGN KEY (`fk_id_member`) REFERENCES `member` (`idmember`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `approve`
+--
+
+LOCK TABLES `approve` WRITE;
+/*!40000 ALTER TABLE `approve` DISABLE KEYS */;
+INSERT INTO `approve` VALUES (0002,11),(0009,13),(0010,14);
+/*!40000 ALTER TABLE `approve` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `booking`
 --
 
@@ -36,7 +89,7 @@ CREATE TABLE `booking` (
   KEY `booking_ibfk_1` (`fk_idspace`),
   CONSTRAINT `booking_ibfk_1` FOREIGN KEY (`fk_idspace`) REFERENCES `co_working_space` (`idspace`),
   CONSTRAINT `fk_idmember` FOREIGN KEY (`fk_idmember`) REFERENCES `member` (`idmember`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -45,7 +98,7 @@ CREATE TABLE `booking` (
 
 LOCK TABLES `booking` WRITE;
 /*!40000 ALTER TABLE `booking` DISABLE KEYS */;
-INSERT INTO `booking` VALUES (000001,'2017-11-03','09:00','10:00',1,0009,0001),(000002,'2017-11-07','16:00','17:00',4,0003,0002),(000003,'2017-11-07','14:00','15:00',1,0002,0001),(000004,'2017-12-14','10:00','19:00',3,0002,0027),(000005,'2017-12-11','09:00','14:30',1,0002,0027),(000006,'2017-12-11','15:00','18:00',1,0002,0027);
+INSERT INTO `booking` VALUES (000001,'2017-11-03','09:00','10:00',1,0009,0001),(000002,'2017-11-07','16:00','17:00',4,0003,0002),(000004,'2017-12-14','10:00','19:00',3,0002,0027),(000005,'2017-12-11','09:00','14:30',1,0002,0027),(000006,'2017-12-11','15:00','18:00',1,0002,0027),(000007,'2017-12-15','10:00','15:00',2,0002,0002);
 /*!40000 ALTER TABLE `booking` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -148,11 +201,12 @@ CREATE TABLE `member` (
   `idtype_member` int(11) DEFAULT NULL,
   `img_profile` varchar(100) DEFAULT NULL,
   `idcard` varchar(100) DEFAULT NULL,
+  `approve_status` varchar(50) DEFAULT 'No Approve',
   PRIMARY KEY (`idmember`),
   UNIQUE KEY `idmember_UNIQUE` (`idmember`),
   KEY `idtype_member_idx` (`idtype_member`),
   CONSTRAINT `idtype_member` FOREIGN KEY (`idtype_member`) REFERENCES `type_member` (`idtype_member`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -161,7 +215,7 @@ CREATE TABLE `member` (
 
 LOCK TABLES `member` WRITE;
 /*!40000 ALTER TABLE `member` DISABLE KEYS */;
-INSERT INTO `member` VALUES (0001,'Vipuwat','Kumpalanon','PoloYah','boyjame55','boyjameza04@gmail.com','0943211994',1,'https://coworkingspacebucket.s3.amazonaws.com/space/profileimgPoloYah.jpg','https://coworkingspacebucket.s3.amazonaws.com/space/idcardimgPoloYah.jpg'),(0002,'memiine','Chotisawatraksa','memiine','1234','memiinetest@hotmail.com','0943211995',2,'https://coworkingspacebucket.s3.amazonaws.com/space/profileimgmemiine.jpg','https://coworkingspacebucket.s3.amazonaws.com/space/idcardimgmemiine.jpg'),(0003,'teejuta','kaewtong','iamplaster','1234','iamplaster@hotmail.com','0943211996',2,'C:UsersAsusDocumentsNetBeansProjectsCoWorkingSpacewebimguser.png','Not verified'),(0004,'tester','naja','tester','12345678','abcd@gmail.com','0123456789',2,'C:UsersAsusDocumentsNetBeansProjectsCoWorkingSpacewebimguser.png','Not verified'),(0008,'trhstrhth','et5t5gw45g45','abcdefg','36985214','bcd@gmail.com','0963258741',2,'C:UsersAsusDocumentsNetBeansProjectsCoWorkingSpacewebimguser.png','Not verified'),(0009,'thitiphat','manitchalermchai','thiti','1234','thiti@hotmail.com','0999999999',2,'C:UsersAsusDocumentsNetBeansProjectsCoWorkingSpacewebimguser.png','Not verified'),(0010,'aum','aung','aa','1234','aumaung@hotmail.com','0966666666',2,'C:UsersAsusDocumentsNetBeansProjectsCoWorkingSpacewebimguser.png','Not verified'),(0011,'pokky','naja','pokky','1234','pokky@hotmail.com','0900011100',1,'C:UsersAsusDocumentsNetBeansProjectsCoWorkingSpacewebimguser.png','Not verified'),(0012,'teter','lolopa','sissterr','12345678','sister@gmail.com','0943211234',2,'https://coworkingspacebucket.s3.amazonaws.com/space/teter_lolopa.jpg','https://coworkingspacebucket.s3.amazonaws.com/space/sissterr_teter_lolopa.');
+INSERT INTO `member` VALUES (0001,'Vipuwat','Kumpalanon','PoloYah','boyjame55','boyjameza04@gmail.com','0943211994',1,'https://coworkingspacebucket.s3.amazonaws.com/space/profileimgPoloYah.jpg','https://coworkingspacebucket.s3.amazonaws.com/space/idcardimgPoloYah.jpg','Approved'),(0002,'Rujapa','Chotisawatraksa','memiine','1234','memiinetest@hotmail.com','0943211995',2,'https://coworkingspacebucket.s3.amazonaws.com/space/profileimgmemiine.jpg','https://coworkingspacebucket.s3.amazonaws.com/space/idcardimgmemiine.jpg','Approved'),(0003,'teejuta','kaewtong','iamplaster','1234','iamplaster@hotmail.com','0943211996',2,'C:UsersAsusDocumentsNetBeansProjectsCoWorkingSpacewebimguser.png','Not verified','Approved'),(0004,'tester','naja','tester','12345678','abcd@gmail.com','0123456789',2,'C:UsersAsusDocumentsNetBeansProjectsCoWorkingSpacewebimguser.png','Not verified','Approved'),(0008,'trhstrhth','et5t5gw45g45','abcdefg','36985214','bcd@gmail.com','0963258741',2,'C:UsersAsusDocumentsNetBeansProjectsCoWorkingSpacewebimguser.png','Not verified','Approved'),(0009,'thitiphat','manitchalermchai','thiti','1234','thiti@hotmail.com','0999999999',2,'C:UsersAsusDocumentsNetBeansProjectsCoWorkingSpacewebimguser.png','Not verified','Approved'),(0010,'aum','aung','aa','1234','aumaung@hotmail.com','0966666666',2,'C:UsersAsusDocumentsNetBeansProjectsCoWorkingSpacewebimguser.png','Not verified','Approved'),(0011,'pokky','naja','pokky','1234','pokky@hotmail.com','0900011100',1,'C:UsersAsusDocumentsNetBeansProjectsCoWorkingSpacewebimguser.png','Not verified','No Approve'),(0012,'teter','lolopa','sissterr','12345678','sister@gmail.com','0943211234',2,'https://coworkingspacebucket.s3.amazonaws.com/space/teter_lolopa.jpg','https://coworkingspacebucket.s3.amazonaws.com/space/sissterr_teter_lolopa.','Approved'),(0013,'apichar','manop','apichar','12345678','apichar@gmail.com','0987654320',1,'C:UsersAsusDocumentsNetBeansProjectsCoWorkingSpacewebimguser.png','https://coworkingspacebucket.s3.amazonaws.com/space/idcardimgapichar.jpg','No Approve'),(0014,'ptaew','temerak','taew','87654321','teaw@gmail.com','0987654123',1,'C:UsersAsusDocumentsNetBeansProjectsCoWorkingSpacewebimguser.png','Not verified','No Approve'),(0015,'Sehun','ohh','sehun','987654321','sehun@gmail.com','0963147852',2,'C:UsersAsusDocumentsNetBeansProjectsCoWorkingSpacewebimguser.png','Not verified','Approved');
 /*!40000 ALTER TABLE `member` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -187,7 +241,7 @@ CREATE TABLE `message` (
 
 LOCK TABLES `message` WRITE;
 /*!40000 ALTER TABLE `message` DISABLE KEYS */;
-INSERT INTO `message` VALUES (0001,'booking','คุณได้ทำการจอง Co-Working Space  กับทางเว็บไซต์แล้ว ขอบคุณค่ะ'),(0002,'cancel_booking','คุณได้ืทำการยกเลิกการจอง Co-Working Space แล้ว'),(0003,'cancel_userbooking','การจอง Co-Working Space ของคุณโดนยกเลิกโดยผู้ประกอบการ ต้องขออภัยมา ณ ที่นี้ด้วยค่ะ');
+INSERT INTO `message` VALUES (0001,'booking','คุณได้ทำการจอง Co-Working Space  กับทางเว็บไซต์แล้ว ขอบคุณค่ะ'),(0002,'cancel_booking','คุณได้ทำการยกเลิกการจอง Co-Working Space แล้ว'),(0003,'cancel_userbooking','การจอง Co-Working Space ของคุณโดนยกเลิกโดยผู้ประกอบการ ต้องขออภัยมา ณ ที่นี้ด้วยค่ะ');
 /*!40000 ALTER TABLE `message` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -275,4 +329,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-12-11 15:15:26
+-- Dump completed on 2017-12-11 23:21:07

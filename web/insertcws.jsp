@@ -32,7 +32,7 @@
             </div>
             <div class="collapse navbar-collapse" id="mynavbar">
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="menu-bar"><a href="index.jsp">Home</a></li>
+                    <li class="menu-bar"><a href="landing.jsp">Home</a></li>
                     <li class="menu-bar"><a href="insertcws.jsp">Add Space</a></li>
                     <li class="menu-bar"><a href="editspace.jsp">Edit Space</a></li>
                     <li class="menu-bar"><a href="BookingServlet">List Booking</a></li>
