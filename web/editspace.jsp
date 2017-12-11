@@ -70,27 +70,30 @@
     <div class="container-fluid">
         <div class="row content">
             <div class="col-md-12">
-                <form action="TakespaceServlet" method="POST">
-                    <select name="name">
-                        <c:forEach var="row" items="${all.rows}">
-                            <option value="${row.name}">${row.name}</option>
-                        </c:forEach>
-                    </select>
-                    <input type="submit" value="Edit" name="edit" />
-                </form>
-                <%int check_data = 0;
-                    if (request.getAttribute("check_data") != null) {
-                        check_data = (int) request.getAttribute("check_data");
-                    }%>
-                <%model.Space space = (model.Space) session.getAttribute("space");%>
-                <%if (check_data != 0) {%>
+                <div class="head-edit">
+                    Edit Space :D
+                </div><br>
+
                 <div class="row">
                     <div class="col-md-2">
                     </div>
                     <div class="col-md-6">
-                        <h3>
-                            Edit Space :D
-                        </h3><br>
+                        <div class="dropdown-pos-edite-page">
+                            <form action="TakespaceServlet" method="POST">
+                                <select name="name" id="edit-name-room">
+                                    <c:forEach var="row" items="${all.rows}">
+                                        <option value="${row.name}">${row.name}</option>
+                                    </c:forEach>
+                                </select>
+                                <input id="edit-name-room" type="submit" value="Edit" name="edit" />
+                            </form>
+                        </div>
+                        <%int check_data = 0;
+                            if (request.getAttribute("check_data") != null) {
+                                check_data = (int) request.getAttribute("check_data");
+                            }%>
+                        <%model.Space space = (model.Space) session.getAttribute("space");%>
+                        <%if (check_data != 0) {%>
                         <form action="EditspaceServlet" method="post" role="form" >
                             <div class="form-group">
                                 <label for="name" >
@@ -120,7 +123,16 @@
                                 <label for="typedesk">
                                     ประเภทโต๊ะ
                                 </label>
-                                <input type="text" class="form-control" id="typedesk" name="typedesk" placeholder="<%= space.getType_desk()%>"/>
+                                <div class="type-table-pos">
+                                    <%String type_desk = space.getType_desk();
+                                        if (type_desk.equals("Fix Desk")) {%>
+                                    <input type="radio" name="typedesk" value="1" checked="checked" /> Fix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="radio" name="typedesk" value="2"  /> Share
+                                    <%} else {%>
+                                    <input type="radio" name="typedesk" value="1"  /> Fix &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="radio" name="typedesk" value="2"  checked="checked"/> Share
+                                    <%}%>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="amountdesk">
@@ -132,7 +144,22 @@
                                 <label for="typeroom">
                                     ประเภทห้อง
                                 </label>
-                                <input type="text" class="form-control" id="typeroom" name="typeroom" placeholder="<%= space.getType_room()%>"/>
+                                <div class="type-table-pos">
+                                    <%String type_room = space.getType_room();
+                                        if (type_room.equals("Share Room")) {%>
+                                    <input type="radio" name="typeroom" value="1" checked="checked" /> Share Room &nbsp;
+                                    <input type="radio" name="typeroom" value="2"  /> Private Room &nbsp;
+                                    <input type="radio" name="typeroom" value="3"  /> Meeting Room
+                                    <%} else if(type_room.equals("Private Room")){%>
+                                    <input type="radio" name="typeroom" value="1" > Share Room &nbsp;
+                                    <input type="radio" name="typeroom" value="2" checked="checked" /> Private Room &nbsp;
+                                    <input type="radio" name="typeroom" value="3"  /> Meeting Room
+                                    <%} else if (type_room.equals("Meeting Room")){%>
+                                    <input type="radio" name="typeroom" value="1"  /> Share Room &nbsp;
+                                    <input type="radio" name="typeroom" value="2"  /> Private Room &nbsp;
+                                    <input type="radio" name="typeroom" value="3" checked="checked" /> Meeting Room
+                                    <%}%>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="open">
@@ -161,11 +188,11 @@
                             <div class="form-group">
                                 <label for="img">
                                     รูป
-                                </label>
+                                </label><br>
                                 <% int count = space.getImg().length;%>
                                 <% for (int j = 0; j < count; j++) {%>
-                                    <div class="item"><img src="<%=space.getImg()[j]%>" style="width:30%;"></div>
-                                <%}%>
+                                <img src="<%=space.getImg()[j]%>" style="width:35%;">
+                                    <%}%>
                             </div>
                             <div class="form-group">
                                 <label for="img">

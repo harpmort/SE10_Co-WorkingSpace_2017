@@ -67,8 +67,8 @@
                     <div class="row">
                         <div class="col-md-4">
                         </div>
-                        <div class="col-md-4 list-book">
-                            <h3 class="text-center">
+                        <div class="col-md-4">
+                            <h3 class="text-center booking-head">
                                 รายการ Co-Working Space ที่จอง
                             </h3>
                         </div>
@@ -78,23 +78,23 @@
                     <div class="row">
                         <div class="col-md-2">
                         </div>
-                        <div class="col-md-8 underline-head">
-                            <table class="table">
+                        <div class="col-md-8">
+                            <table class="table booking-center">
                                 <thead>
                                     <tr>
-                                        <th>ID_Booking</th>
-                                        <th>ชื่อสถานที่</th>
-                                        <th>ชื่อ</th>
-                                        <th>วันที่จอง</th>
-                                        <th>เวลาเริ่ม</th>
-                                        <th>เวลาจบ</th>
-                                        <th>จำนวนคนที่จอง</th>
-                                        <th>ยกเลิกการจอง</th>
+                                        <th id="booking-center">ID_Booking</th>
+                                        <th id="booking-center">ชื่อสถานที่</th>
+                                        <th id="booking-center">ชื่อ</th>
+                                        <th id="booking-center">วันที่จอง</th>
+                                        <th id="booking-center">เวลาเริ่ม</th>
+                                        <th id="booking-center">เวลาจบ</th>
+                                        <th id="booking-center">จำนวนโต๊ะที่จอง</th>
+                                        <th id="booking-center">ยกเลิกการจอง</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <c:forEach var="row" items="${sessionScope.viewbooking.lbooking}">
-                                        <tr class="success">
+                                        <tr class="booking-data">
                                             <td>${row.idbooking}</td>
                                             <td>${row.location_name}</td>
                                             <td>${row.username}</td>
@@ -103,7 +103,7 @@
                                             <td>${row.end_time}</td>
                                             <td>${row.desk_booking}</td>
                                     <form action="CancelbookingServlet" method="POST">
-                                        <td class="success">
+                                        <td class="booking-data">
                                             <button class="btn btn-sm btn-info" type="submit" name="idbooking" value="${row.idbooking}">
                                                 ยกเลิก
                                             </button>

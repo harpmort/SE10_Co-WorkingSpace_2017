@@ -323,6 +323,9 @@
     this.setDaysOfWeekDisabled(options.daysOfWeekDisabled || this.element.data('date-days-of-week-disabled'));
     this.setMinutesDisabled(options.minutesDisabled || this.element.data('date-minute-disabled'));
     this.setHoursDisabled(options.hoursDisabled || this.element.data('date-hour-disabled'));
+    this.setStartEndType(options.typeStartEnd || this.element.data('start-end-type'));
+    this.setRelationStart(options.relationStart || this.element.data('ralation-start'));
+    this.setTimeDisabledInterval(options.timeDisabledInterval || this.element.data('time-disabled-interval'));
     this.fillDow();
     this.fillMonths();
     this.update();
@@ -591,6 +594,20 @@
       this.update();
       this.updateNavArrows();
     },
+    setStartEndType: function(typeStartEnd){
+      this.typeStartEnd = typeStartEnd || "";
+    },
+    setRelationStart: function(relationStart){
+      this.relationStart = relationStart || "";
+      this.update();
+      this.updateNavArrows();
+    },
+
+    setTimeDisabledInterval: function(timeDisabledInterval){
+      this.timeDisabledInterval = timeDisabledInterval || [];
+      this.update();
+      this.updateNavArrows();
+    },
 
     place: function () {
       if (this.isInline) return;
@@ -825,6 +842,10 @@
       }
       this.picker.find('.datetimepicker-hours td').html(html.join(''));
 
+      var typeStartEnd = this.typeStartEnd || "";
+      var relationStart = this.relationStart || "";
+      var timeDisabledInterval = this.timeDisabledInterval || [];
+
       html = [];
       txt = '';
       meridian = '';
@@ -851,8 +872,42 @@
             html.push('</fieldset>');
           }
         } else {
+          var disabledState = "";
+          var thistime = (hours * 60) + i;
+          var starttimerelation = (parseInt(relationStart.split(":")[0]) * 60) + parseInt(relationStart.split(":")[1]);
+          if(typeStartEnd == "start"){
+            for(var j = 0; j < timeDisabledInterval.length; j++){
+              var eventstart = (parseInt(timeDisabledInterval[j].split("-")[0].split(":")[0])*60) + parseInt(timeDisabledInterval[j].split("-")[0].split(":")[1]);
+              var eventend = (parseInt(timeDisabledInterval[j].split("-")[1].split(":")[0])*60) + parseInt(timeDisabledInterval[j].split("-")[1].split(":")[1]);
+              if(thistime >= eventstart && thistime < eventend){
+                disabledState = "disabled";
+              }
+
+            }
+
+          }else if(typeStartEnd == "end"){
+            if(thistime < starttimerelation){
+              disabledState = "disabled";
+            }
+            for(var k = 0; k < timeDisabledInterval.length; k++){
+              var eventstart = (parseInt(timeDisabledInterval[k].split("-")[0].split(":")[0])*60) + parseInt(timeDisabledInterval[k].split("-")[0].split(":")[1]);
+              var eventend = (parseInt(timeDisabledInterval[k].split("-")[1].split(":")[0])*60) + parseInt(timeDisabledInterval[k].split("-")[1].split(":")[1]);
+              if(thistime >= eventstart && thistime < eventend){
+                disabledState = "disabled";
+                break;
+              }
+              if(eventstart > starttimerelation){
+                if(thistime > eventstart){
+                  disabledState = "disabled";
+                  break;
+                }
+              }
+
+            }
+
+          }
           txt = i + ':00';
-          html.push('<span class="' + classes.join(' ') + '">' + hours + ':' + (i < 10 ? '0' + i : i) + '</span>');
+          html.push('<span class="' + classes.join(' ') + ' ' + disabledState +'">' + hours + ':' + (i < 10 ? '0' + i : i) + '</span>');
         }
       }
       this.picker.find('.datetimepicker-minutes td').html(html.join(''));

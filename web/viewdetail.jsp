@@ -3,6 +3,7 @@
     Created on : Nov 15, 2017, 9:23:08 AM
     Author     : Asus
 --%>
+<%@page import="java.util.List"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -100,7 +101,16 @@
                 </div>
             </div>
         </nav>
-        <%model.Space space = (model.Space) session.getAttribute("space");%>
+        <%model.Space space = (model.Space) session.getAttribute("space");
+            List<String> takedslot = space.getTakedslot();
+            String takedslot_st = "";
+            for (int i = 0; i < takedslot.size(); i++) {
+                takedslot_st += takedslot.get(i);
+                if (i < takedslot.size() - 1) {
+                    takedslot_st += ",";
+                }
+            }
+        %>
         <form action="ReserServlet" method="POST">
             <h1 class="margin-left type-room-name"><%= space.getName()%></h1>
 
@@ -120,8 +130,8 @@
                     <!-- Wrapper for slides -->
                     <div class="carousel-inner">
                         <% for (int j = 0; j < count; j++) {
-                                if (j == 0) {%><div class="item active"><img src="<%=space.getImg()[j]%>" style="width:100%;"></div><%} else {%>
-                        <div class="item"><img src="<%=space.getImg()[j]%>" style="width:100%;"></div>
+                                if (j == 0) {%><div class="item active"><img class="img-detail-crop" src="<%=space.getImg()[j]%>" style="width:100%;"></div><%} else {%>
+                        <div class="item"><img class="img-blueprint-crop" src="<%=space.getImg()[j]%>" style="width:100%;"></div>
                             <%}
                                 }%>
                     </div>
@@ -212,12 +222,11 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="col-md-4">
-                                            <div class="text-edit">เวลาสิ้นสุด : </div>
                                             <div class="text-edit">จำนวนคน : </div>
+                                            <div class="text-edit">เวลาสิ้นสุด : </div>
                                         </div>
                                         <div class="col-md-7">
-                                            <input type="text" class="form-control form-control-edit" value=""  readonly="true" id="datetimepicker3" name="time_end">
-                                            <div class="input-group">
+                                            <div class="input-group form-control-edit">
                                                 <span class="input-group-btn">
                                                     <button class="btn btn-default" id="btn-minus" data-field="amount" type="button">
                                                         <i class="glyphicon glyphicon-minus"></i>
@@ -230,6 +239,7 @@
                                                     </button>
                                                 </span>
                                             </div>
+                                            <input type="text" data-toggle="endtimetooltip" title="กดเวลาเริ่มก่อนสิ!" class="form-control" value=""  readonly="true" id="datetimepicker3" name="time_end">
                                         </div>
                                     </div>
                                 </div>
@@ -609,6 +619,9 @@
             });
         </script>
         <script type="text/javascript">
+            var takedslot = new String("<%= takedslot_st%>");
+            console.log("takedslot: " + takedslot);
+
             $('#datetimepicker').datetimepicker({
                 format: 'dd-mm-yyyy',
                 weekStart: 1,
@@ -617,7 +630,8 @@
                 todayHighlight: 1,
                 startView: 2,
                 minView: 2,
-                forceParse: 0
+                forceParse: 0,
+                startDate: new Date()
             });
 
             $('#datetimepicker2').datetimepicker({
@@ -625,24 +639,66 @@
                 weekStart: 1,
                 todayBtn: 1,
                 autoclose: 1,
-                todayHighlight: 1,
+                todayHighlight: 0,
                 startView: 1,
                 minView: 0,
-                maxView: 1,
-                forceParse: 0
+                maxView: 0,
+                forceParse: 0,
+                formatViewType: 'time'
             });
 
+            $(document).ready(function () {
+                var dtp = $('#datetimepicker2');
+                var stat = false;
+                $('#datetimepicker2').click(function () {
+                    var takedslot_li = takedslot.split(",");
+                    var datepull = $('#datetimepicker').val().toString();
+                    var datepull_temp = datepull.split("-");
+                    var datepull_ok = datepull_temp.join("/");
+                    var slot_per_day = [];
+                    for (var i = 0; i < takedslot_li.length; i++) {
+                        var temp = takedslot_li[i].toString().split("-")[0];
+                        if (temp === datepull_ok) {
+                            var temp2 = takedslot_li[i].toString().split("-")[1].toString() + "-";
+                            var temp3 = takedslot_li[i].toString().split("-")[2].toString();
+                            slot_per_day.push(temp2 + temp3);
+                        }
+                    }
+                    $('#datetimepicker2').datetimepicker("setTimeDisabledInterval", slot_per_day);
+                    $('#datetimepicker3').datetimepicker("setTimeDisabledInterval", slot_per_day);
+                    $('[data-toggle="endtimetooltip"]').tooltip('disable');
+                });
+
+                $('#datetimepicker3').click(function () {
+                    if (dtp.val().length === 0) {
+                        stat = false;
+                        $('[data-toggle="endtimetooltip"]').tooltip('enable');
+                    } else {
+                        stat = true;
+                        $('[data-toggle="endtimetooltip"]').tooltip('disable');
+                        $('#datetimepicker3').datetimepicker("setRelationStart", dtp.val());
+                    }
+                    if (!stat) {
+                        $('#datetimepicker3').datetimepicker("hide");
+                    }
+                });
+            });
             $('#datetimepicker3').datetimepicker({
                 format: 'hh:ii',
                 weekStart: 1,
                 todayBtn: 1,
                 autoclose: 1,
-                todayHighlight: 1,
+                todayHighlight: 0,
                 startView: 1,
                 minView: 0,
-                maxView: 1,
-                forceParse: 0
+                maxView: 0,
+                forceParse: 0,
+                formatViewType: 'time'
             });
+            $('#datetimepicker3').datetimepicker("setStartEndType", "end");
+            $('#datetimepicker3').datetimepicker("hide");
+            $('#datetimepicker2').datetimepicker("setStartEndType", "start");
+
 
             $('#btn-minus').on('click', function () {
                 fieldName = $(this).attr('data-field');
