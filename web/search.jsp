@@ -118,7 +118,7 @@
                             <form action="ViewdetailspaceServlet" method="POST">
                             <div class="w3-card-4 card-margin">
                                 <div class="panel-thumbnail ">
-                                    <img src="${row.img[0]}" class="img-responsive" style="width: 100%">
+                                    <img src="${row.img[0]}" class="img-crop">
                                 </div>
                                 <div class="panel-body">
                                     <p class="lead" >${row.name} by ${row.username}</p>
@@ -141,16 +141,32 @@
                 
             </div>
 
-            <div class="col-md-1">
+            <div class="col-md-1"></div>
+            
+            <div class="row">
+                
+                <% String text = (String) session.getAttribute("text"); %>
+                
+                <form action="SearchServlet" method="POST">
+                    <% session.setAttribute("i", 0); %>
+                    <% session.setAttribute("pos", 11); %>
+                    <% session.setAttribute("space", session.getAttribute("space")); %>
+
+                    <button class="btn btn-default btn-search" type="submit" value="<%=text%>">
+                        Back
+                    </button>
+                </form>
+                
                 <form action="search.jsp" method="POST">
                     <% session.setAttribute("i", count); %>
                     <% session.setAttribute("pos", count*2); %>
                     <% session.setAttribute("space", session.getAttribute("space")); %>
-                    <% String text = (String) session.getAttribute("text"); %>
+                    
                     <button class="btn btn-default btn-search" type="submit" value="<%=text%>">
                         Next
                     </button>
                 </form>
+                        
             </div>
         
         <!-- Login Modal -->
