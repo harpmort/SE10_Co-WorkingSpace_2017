@@ -46,8 +46,9 @@
 
                 <div class="collapse navbar-collapse" id="mynavbar">
                     <% if (check == 1) {%>
-                    <%model.Member member = (model.Member) session.getAttribute("member");
-                        int type = (int) session.getAttribute("type");%>
+                    <%int type = (int) session.getAttribute("type");%>
+                    <%if (type != 3) {%>
+                    <%model.Member member = (model.Member) session.getAttribute("member");%>
                     <div class="collapse navbar-collapse" id="mynavbar">
                         <ul class="nav navbar-nav navbar-right">
                             <% if (type == 1) {%>
@@ -75,6 +76,23 @@
                         </ul>
 
                     </div>
+                    <%} else if (type == 3) {%>
+                    <%model.Admin admin = (model.Admin) session.getAttribute("admin");%>
+                    <div class="collapse navbar-collapse" id="mynavbar">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="menu-bar"><a href="landing.jsp">Home</a></li>
+                            <li class="menu-bar"><a href="#">Approve</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle menu-bar" data-toggle="dropdown"><%= admin.getUsername()%><strong class="caret"></strong></a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="LogoutServlet">Logout</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <%}%>
                     <%} else if (check != 1) {%>
                     <ul class="nav navbar-nav navbar-right">
                         <button type="button" class="btn btn-default navbar-btn"  data-toggle="modal" data-target="#registerModal">Sign up</button>
@@ -247,6 +265,7 @@
                 <div class="col-md-2"></div>
 
             </div>
+                            
         </form>
         <!-- Login Modal -->
         <div id="loginModal" class="modal fade" role="dialog">
