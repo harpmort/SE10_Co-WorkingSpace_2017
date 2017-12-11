@@ -105,6 +105,8 @@
                                     <form action="#" method="POST">
                                         <td class="his-data">
                                             <button class="btn btn-sm btn-info" type="submit" name="idbooking" value="${row.idbooking}">
+                                        <td class="success">
+                                            <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#ratingModal" type="submit" name="idbooking" value="${row.idbooking}">
                                                 Rating
                                             </button>
                                         </td>
@@ -120,5 +122,41 @@
                 </div>
             </div>
         </div>
+        <div id="ratingModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Login Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Rating</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" method="post">
+                            <div class="form-group">
+                                <input type="radio" name="rate" value="1" />
+                                <img class="" src="" style="width: 20px;"/><br>
+                                <input type="radio" name="rate" value="2" />
+                                <img class="" src="" style="width: 20px;"/><br>
+                                <input type="radio" name="rate" value="3" />
+                                <img class="" src="" style="width: 20px;"/><br>
+                                <input type="radio" name="rate" value="4" />
+                                <img class="" src="" style="width: 20px;"/><br>
+                                <input type="radio" name="rate" value="5" />
+                                <img class="" src="" style="width: 20px;"/>
+                            </div>
+                            <center><button type="Login" class="btn btn-default">Submit</button></center>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#ratingModal').modal('show');
+            });
+        </script>
     </body>
 </html>

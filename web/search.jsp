@@ -118,7 +118,7 @@
                             <form action="ViewdetailspaceServlet" method="POST">
                             <div class="w3-card-4 card-margin">
                                 <div class="panel-thumbnail ">
-                                    <img src="${row.img[0]}" class="img-responsive" style="width: 100%">
+                                    <img src="${row.img[0]}" class="img-crop">
                                 </div>
                                 <div class="panel-body">
                                     <p class="lead" >${row.name} by ${row.username}</p>
@@ -141,17 +141,35 @@
                 
             </div>
 
-            <div class="col-md-1">
-                <form action="search.jsp" method="POST">
+            <div class="col-md-1"></div>
+            
+
+                <div class="col-md-5"></div>
+                <div class="col-md-1">
+                    <% if(count >= i && i >= 11) { %>
+                        <form action="SearchServlet" method="POST">
+                    <div class="row input-group search-bar">
+                        <input name="search" type="text" class="opacity" style="width: 0%"/>
+                        <button class="btn btn-default btn-search" type="submit">Back</button>
+                    </div>
+                    </form>
+                    <% } %>
+                </div>
+                <div class="col-md-1">
+                    <% if(count > pos) { %>
+                    <form action="search.jsp" method="POST">
                     <% session.setAttribute("i", count); %>
-                    <% session.setAttribute("pos", count*2); %>
+                    <% session.setAttribute("pos", count+11); %>
                     <% session.setAttribute("space", session.getAttribute("space")); %>
                     <% String text = (String) session.getAttribute("text"); %>
                     <button class="btn btn-default btn-search" type="submit" value="<%=text%>">
                         Next
                     </button>
-                </form>
-            </div>
+                    </form>
+                    <% } %>
+                </div>
+                <div class="col-md-5"></div>   
+
         
         <!-- Login Modal -->
         <div id="loginModal" class="modal fade" role="dialog">

@@ -102,8 +102,8 @@
                     <!-- Wrapper for slides -->
                     <div class="carousel-inner">
                         <% for (int j = 0; j < count; j++) {
-                                if (j == 0) {%><div class="item active"><img src="<%=space.getImg()[j]%>" style="width:100%;"></div><%} else {%>
-                        <div class="item"><img src="<%=space.getImg()[j]%>" style="width:100%;"></div>
+                            if (j == 0) {%><div class="item active"><img class="img-detail-crop" src="<%=space.getImg()[j]%>" style="width:100%;"></div><%} else {%>
+                                <div class="item"><img class="img-blueprint-crop" src="<%=space.getImg()[j]%>" style="width:100%;"></div>
                             <%}
                                 }%>
                     </div>
@@ -198,7 +198,7 @@
                                             <div class="text-edit">จำนวนคน : </div>
                                         </div>
                                         <div class="col-md-7">
-                                            <input type="text" class="form-control form-control-edit" value=""  readonly="true" id="datetimepicker3" name="time_end">
+                                            <input type="text" data-toggle="endtimetooltip" title="กดเวลาเริ่มก่อนสิ!" class="form-control form-control-edit" value=""  readonly="true" id="datetimepicker3" name="time_end">
                                             <div class="input-group">
                                                 <span class="input-group-btn">
                                                     <button class="btn btn-default" id="btn-minus" data-field="amount" type="button">
@@ -613,6 +613,27 @@
                 forceParse: 0
             });
 
+            
+            $(document).ready(function(){
+                var dtp =  $('#datetimepicker2');
+                var stat = false;
+                $('#datetimepicker2').click(function(){
+                    $('[data-toggle="endtimetooltip"]').tooltip('disable');
+                });
+                
+                $('#datetimepicker3').click(function(){
+                    if(dtp.val().length === 0){
+                        stat = false;
+                        $('[data-toggle="endtimetooltip"]').tooltip('enable');
+                    }else{
+                        stat = true;
+                        $('[data-toggle="endtimetooltip"]').tooltip('disable');
+                    }
+                    if(!stat){
+                        $('#datetimepicker3').datetimepicker("hide");
+                    }
+                });
+            });
             $('#datetimepicker3').datetimepicker({
                 format: 'hh:ii',
                 weekStart: 1,
@@ -624,6 +645,14 @@
                 maxView: 1,
                 forceParse: 0
             });
+            $('#datetimepicker3').datetimepicker("setStartEndType", "end");
+            $('#datetimepicker3').datetimepicker("setTimeDisabledInterval", ["10:30-11:30", "15:30-17:30"]);
+            $('#datetimepicker3').datetimepicker("setRelationStart", "13:30");
+            $('#datetimepicker3').datetimepicker("hide"); 
+            $('#datetimepicker2').datetimepicker("setStartEndType", "start");
+            
+            $('#datetimepicker2').datetimepicker("setTimeDisabledInterval", ["10:30-11:30", "15:30-17:30"]);
+            
 
             $('#btn-minus').on('click', function () {
                 fieldName = $(this).attr('data-field');

@@ -281,6 +281,32 @@ body {
     text-align: center;
     margin-top: 60px;
 }
+
+.img-crop{
+    background-position: center center;
+    background-repeat: none;
+    object-fit: cover;
+    object-position: center;
+    width: 100%;
+    height: 260px;
+}
+.opacity{
+    opacity: 0;
+}
+.img-detail-crop{
+    background-position: center center;
+    background-repeat: none;
+    object-fit: cover;
+    object-position: center;
+    width: 100%;
+    height: 600px !important;
+}
+.img-blueprint-crop{
+    background-repeat: none;
+    object-fit: contain;
+    width: auto;
+    height: 600px !important;
+}
 .type-table-pos{
     padding-left: 40px;
 }
