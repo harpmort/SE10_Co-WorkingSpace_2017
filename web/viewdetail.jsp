@@ -472,12 +472,16 @@
                     </div>
                     <div class="modal-body">
 <<<<<<< HEAD
+<<<<<<< HEAD
                         <h2>All message</h2>
                         <ul class="list-group">
                             <a href="#" class="message-text-inside list-group-item"><img class="message-delete" src="img/error.png"><h3 class="message-header">ยืนยันการจองห้อง: </h3><p>จาก: Admin 11/12/2017 13:30</p> ขอแสดงความยินดี การจองห้องของคุณสำเร็จแล้ว</a>
                             <a href="#" class="message-text-inside list-group-item"><img class="message-delete" src="img/error.png"><h3 class="message-header">ยืนยันการจองห้อง: </h3><p>จาก: Admin 11/12/2017 13:30</p> ขอแสดงความยินดี การจองห้องของคุณสำเร็จแล้ว</a>
 
                         </ul>
+=======
+                        <div id="messagebody"></div>
+>>>>>>> 666bdef8c3a156d06d156bea4bd596130ade3993
 =======
                         <div id="messagebody"></div>
 >>>>>>> 666bdef8c3a156d06d156bea4bd596130ade3993
@@ -861,6 +865,9 @@
         <script type="text/javascript">
             $(document).ready(function () {
                 $('#messagediv').click(function () {
+                    $('#messageModal').modal('show');
+                });
+                $('#messagediv2').click(function(){
                     $('#messageModal').modal('show');
                 });
                 $('#messagediv2').click(function(){
