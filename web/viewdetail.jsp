@@ -73,16 +73,16 @@
                                     </li>
                                 </ul>
                             </li>
-                            <% if(true){ %>
-                        <li class="menu-bar"><div class="message-main">
-                                <div data-toggle="messagetooltip" data-placement="bottom" title="คุณมีข้อความแจ้งเตือน!"><img class="message-img" src="img/message.png"><div class="message-count">10</div></div>
-                            </div></li>
-                        <% }else{ %>
-                        <li class="menu-bar"><div class="message-main">
-                                <div data-toggle="nomessagetooltip" data-placement="bottom" title="คุณไม่มีข้อความ"><img class="message-img" src="img/message.png"></div>
-                            </div></li>
-                        
-                        <% } %>
+                            <% if (true) { %>
+                            <li class="menu-bar"><div class="message-main">
+                                    <div id="messagediv" data-toggle="messagetooltip" data-placement="bottom" title="คุณมีข้อความแจ้งเตือน!"><img class="message-img" src="img/message.png"><div class="message-count">10</div></div>
+                                </div></li>
+                                <% } else { %>
+                            <li class="menu-bar"><div class="message-main">
+                                    <div data-toggle="nomessagetooltip" data-placement="bottom" title="คุณไม่มีข้อความ"><img class="message-img" src="img/message.png"></div>
+                                </div></li>
+
+                            <% } %>
                         </ul>
 
                     </div>
@@ -100,16 +100,16 @@
                                     </li>
                                 </ul>
                             </li>
-                            <% if(true){ %>
-                        <li class="menu-bar"><div class="message-main">
-                                <div data-toggle="messagetooltip" data-placement="bottom" title="คุณมีข้อความแจ้งเตือน!"><img class="message-img" src="img/message.png"><div class="message-count">10</div></div>
-                            </div></li>
-                        <% }else{ %>
-                        <li class="menu-bar"><div class="message-main">
-                                <div data-toggle="nomessagetooltip" data-placement="bottom" title="คุณไม่มีข้อความ"><img class="message-img" src="img/message.png"></div>
-                            </div></li>
-                        
-                        <% } %>
+                            <% if (true) { %>
+                            <li class="menu-bar"><div class="message-main">
+                                    <div data-toggle="messagetooltip" data-placement="bottom" title="คุณมีข้อความแจ้งเตือน!"><img class="message-img" src="img/message.png"><div class="message-count">10</div></div>
+                                </div></li>
+                                <% } else { %>
+                            <li class="menu-bar"><div class="message-main">
+                                    <div data-toggle="nomessagetooltip" data-placement="bottom" title="คุณไม่มีข้อความ"><img class="message-img" src="img/message.png"></div>
+                                </div></li>
+
+                            <% } %>
                         </ul>
                     </div>
                     <%}%>
@@ -436,6 +436,31 @@
 
             </div>
         </div>
+        <!-- Modal Message -->
+        <div class="modal fade" id="messageModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Message Notification</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h2>All message</h2>
+                        <ul class="list-group">
+                            <a href="#" class="message-text-inside list-group-item"><img class="message-delete" src="img/error.png"><h3 class="message-header">ยืนยันการจองห้อง: </h3><p>จาก: Admin 11/12/2017 13:30</p> ขอแสดงความยินดี การจองห้องของคุณสำเร็จแล้ว</a>
+                            <a href="#" class="message-text-inside list-group-item"><img class="message-delete" src="img/error.png"><h3 class="message-header">ยืนยันการจองห้อง: </h3><p>จาก: Admin 11/12/2017 13:30</p> ขอแสดงความยินดี การจองห้องของคุณสำเร็จแล้ว</a>
+                            
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>                
 
         <% if (check == 2 || check == 3) { %>
         <script type="text/javascript">
@@ -751,25 +776,25 @@
                 fieldName = $(this).attr('data-field');
                 var input = $("input[name='" + fieldName + "']");
                 var currentVal = parseInt(input.val());
-                
+
                 var startTime = $('#datetimepicker2').val();
                 var endTime = $('#datetimepicker3').val();
-                
+
                 var start = startTime.split(':');
                 var end = endTime.split(':');
-                
+
                 var total = parseInt(start[0]) - parseInt(end[0]);
                 total = Math.abs(total);
-                
-                
-               
+
+
+
                 var min = (parseInt(start[1]) + 30) - 60;
                 min = Math.abs(min);
-                
+
                 if (min <= parseInt(end[1])) {
                     total++;
                 }
-                
+
                 if (currentVal > input.attr('min')) {
                     input.val(currentVal - 1).change();
                     currentVal = parseInt(input.val());
@@ -781,23 +806,23 @@
                 fieldName = $(this).attr('data-field');
                 var input = $("input[name='" + fieldName + "']");
                 var currentVal = parseInt(input.val());
-                
+
                 var startTime = $('#datetimepicker2').val();
                 var endTime = $('#datetimepicker3').val();
-                
+
                 var start = startTime.split(':');
                 var end = endTime.split(':');
-                
+
                 var total = parseInt(start[0]) - parseInt(end[0]);
                 total = Math.abs(total);
-               
+
                 var min = (parseInt(start[1]) + 30) - 60;
                 min = Math.abs(min);
-                
+
                 if (min <= parseInt(end[1])) {
                     total++;
                 }
-                
+
                 if (currentVal < input.attr('max')) {
                     input.val(currentVal + 1).change();
                     currentVal = parseInt(input.val());
@@ -805,6 +830,19 @@
                 }
             });
         </script>
+        <script script type="text/javascript">
+            $(document).ready(function(){
+                $('#messagediv').click(function(){
+                    $('#messageModal').modal('show');
+                });
+            });
+        </script> 
+        <script type="text/javascript">
+                    $(document).ready(function(){
+    $('[data-toggle="nomessagetooltip"]').tooltip();
+    $('[data-toggle="messagetooltip"]').tooltip();
+});
+                </script>
 
 
     </body>
