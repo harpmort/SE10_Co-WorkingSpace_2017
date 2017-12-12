@@ -80,77 +80,83 @@
                 </div>
             </div>
         </nav>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <h3 class="text-center head-pro">
-                        Edit Profile
-                    </h3>
-                    <div class="row">
-                        <div class="col-md-2"></div>
-                        <div class="col-md-2">
-                            <div class="img-pro"><img src="<%= member.getImg_user()%>" width="100%" /></div>
-                            <div class="name-pro" style="text-align: center"><h3>
-                                    <%= member.getUsername()%>
-                                </h3></div>
-                        </div>
-                        <div class="col-md-6">
-                            <form action="EditprofileServlet" method="post" role="form" >
-                                <div class="form-group">
-                                    <label for="firstname" >
-                                        ชื่อ : 
-                                    </label>
-                                    <input type="text" class="form-control" id="firstname" name="firstname" placeholder="<%= member.getFirstname()%>"/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="lastname" >
-                                        นามสุกล : 
-                                    </label>
-                                    <input type="text" class="form-control" id="lastname" name="lastname" placeholder="<%= member.getLastname()%>"/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="email" >
-                                        Email : 
-                                    </label>
-                                    <input type="text" class="form-control" id="email" name="email" placeholder="<%= member.getEmail()%>"/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="phone" >
-                                        เบอร์โทรศัพท์ : 
-                                    </label>
-                                    <input type="text" class="form-control" id="phone" name="phone" placeholder="<%= member.getPhone()%>"/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="img">
-                                        change image
-                                    </label>
-                                    <input type="file" name="profileimg"/>
-                                    <p class="help-block">
-                                        profile img name
-                                    </p>
-                                </div>
-                                <%String idcard = member.getIdcard();
-                                    if (idcard.equals("Not verified")) {%>
-                                <div class="form-group">
-                                    <label for="img">
-                                        ยืนยันตัวตนด้วย ID Card
-                                    </label>
-                                    <input type="file" name="idcardimg"/>
-                                    <p class="help-block">
-                                        idcard img name
-                                    </p>
-                                </div>
-                                <%}%>
-                                <button type="submit" class="btn btn-default center-block">
-                                    Confirm
-                                </button>
-                            </form>
-                        </div>
-                        <div class="col-md-2"></div>
+        <div class="">
+            <div class="col-md-12 bg-block">
+                <!--                    <h3 class="text-center head-pro">
+                                        Edit Profile
+                                    </h3>-->
+                <div class="col-md-12" style="text-align: center">
+                    <div class="image-cropper" >
+                        <img src="<%= member.getImg_user()%>" class="rounded" />
+                    </div>
+                    <div class="name-pro" style="text-align: center">
+                        <%= member.getUsername()%>
                     </div>
                 </div>
             </div>
+                    
+            <div class="row edit-margin-block">
+<!--                <div class="col-md-2"></div>-->
+                <div class="col-md-3">
+
+                </div>
+                <div class="col-md-6 content-block-pro">
+                    <form action="EditprofileServlet" method="post" role="form" >
+                        <div class="form-group">
+                            <label for="firstname" >
+                                ชื่อ : 
+                            </label>
+                            <input type="text" class="form-control" id="firstname" name="firstname" placeholder="<%= member.getFirstname()%>"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastname" >
+                                นามสุกล : 
+                            </label>
+                            <input type="text" class="form-control" id="lastname" name="lastname" placeholder="<%= member.getLastname()%>"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" >
+                                Email : 
+                            </label>
+                            <input type="text" class="form-control" id="email" name="email" placeholder="<%= member.getEmail()%>"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone" >
+                                เบอร์โทรศัพท์ : 
+                            </label>
+                            <input type="text" class="form-control" id="phone" name="phone" placeholder="<%= member.getPhone()%>"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="img">
+                                change image
+                            </label>
+                            <input type="file" name="profileimg"/>
+                            <p class="help-block">
+                                profile img name
+                            </p>
+                        </div>
+                        <%String idcard = member.getIdcard();
+                                if (idcard.equals("Not verified")) {%>
+                        <div class="form-group">
+                            <label for="img">
+                                ยืนยันตัวตนด้วย ID Card
+                            </label>
+                            <input type="file" name="idcardimg"/>
+                            <p class="help-block">
+                                idcard img name
+                            </p>
+                        </div>
+                        <%}%>
+                        <button type="submit" class="btn btn-default center-block btn-edit-pro">
+                            Confirm
+                        </button>
+                    </form>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+
         </div>
+
 
     </body>
 </html>

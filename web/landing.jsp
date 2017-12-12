@@ -12,12 +12,15 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-        
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-slider.css">
+
         <link rel="stylesheet" type="text/css" href="css/index.css">
         <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Prompt:300">
         <title>Co-Working-Space</title>
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
+        <script src="js/bootstrap-slider.js"></script>
+
     </head>
     <body>
         <% int type = (int) session.getAttribute("type");%>
@@ -60,15 +63,15 @@
                                 </li>
                             </ul>
                         </li>
-                        <% if(true){ %>
+                        <% if (true) { %>
                         <li class="menu-bar"><div class="message-main">
                                 <div data-toggle="messagetooltip" data-placement="bottom" title="คุณมีข้อความแจ้งเตือน!"><img class="message-img" src="img/message.png"><div class="message-count">10</div></div>
                             </div></li>
-                        <% }else{ %>
+                            <% } else { %>
                         <li class="menu-bar"><div class="message-main">
                                 <div data-toggle="nomessagetooltip" data-placement="bottom" title="คุณไม่มีข้อความ"><img class="message-img" src="img/message.png"></div>
                             </div></li>
-                        
+
                         <% } %>
                     </ul>
                 </div>
@@ -86,15 +89,15 @@
                                 </li>
                             </ul>
                         </li>
-                        <% if(true){ %>
+                        <% if (true) { %>
                         <li class="menu-bar"><div class="message-main">
                                 <div data-toggle="messagetooltip" data-placement="bottom" title="คุณมีข้อความแจ้งเตือน!"><img class="message-img" src="img/message.png"><div class="message-count">10</div></div>
                             </div></li>
-                        <% }else{ %>
+                            <% } else { %>
                         <li class="menu-bar"><div class="message-main">
                                 <div data-toggle="nomessagetooltip" data-placement="bottom" title="คุณไม่มีข้อความ"><img class="message-img" src="img/message.png"></div>
                             </div></li>
-                        
+
                         <% } %>
                     </ul>
                 </div>
@@ -117,15 +120,49 @@
                                     </span></div>
                             </form>
                         </div>
+                        <a id="advanceSearch">Advance Search</a>
+                        <div id="searchPad" style="display:none" class="search-filter">
+                            Type Room :
+                            <input type="radio" name="typeRoom" value="1" /> Share Room
+                            <input type="radio" name="typeRoom" value="2" /> Private Room<br>
+                            <input type="radio" name="typeRoom" value="3" /> Meeting Room<br>
+                            Type Desk : 
+                            <input type="radio" name="typeDesk" value="2" /> Share Desk
+                            <input type="radio" name="typeDesk" value="1" /> Fix Desk<br>
+                            Price : 
+                            <b class="margin-slider-right">$ 0</b>
+                            <input id="ex2" type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="10" data-slider-value="[0,1000]"/>
+                            <b class="margin-slider-left">$ 1000</b><br>
+                            <form id="formViewAll" action="SearchServlet" method="POST">
+                                <a id="viewAll" type="submit">View all place.</a>
+                            </form>
+                        </div>
                     </div>
                 </center>
             </div>
         </div>
-                <script type="text/javascript">
-                    $(document).ready(function(){
-    $('[data-toggle="nomessagetooltip"]').tooltip();
-    $('[data-toggle="messagetooltip"]').tooltip();
-});
-                </script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('[data-toggle="nomessagetooltip"]').tooltip();
+                $('[data-toggle="messagetooltip"]').tooltip();
+            });
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#advanceSearch").click(function () {
+                    $('#searchPad').fadeToggle();
+                });
+            });
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#ex2").slider({});
+            });
+        </script>
+        <script type="text/javascript">
+            document.getElementById("viewAll").onclick = function() {
+                document.getElementById("formViewAll").submit();
+            };
+        </script>
     </body>
 </html>
