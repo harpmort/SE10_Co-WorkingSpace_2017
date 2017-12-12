@@ -9,6 +9,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -101,12 +104,15 @@ public class Rental extends Member {
     public void reserSpace(String date, String time_start, String time_end, String amount, String s_name, String username) {
         try {
             Statement stmt = conn.createStatement();
-            String sql = "SELECT idspace\n"
+            String sql = "SELECT idspace,m.username\n"
                     + "FROM co_working_space c\n"
-                    + "where name = '" + s_name + "';";
+                    + "join member m\n"
+                    + "on c.fk_idmember = m.idmember\n"
+                    + "where name = '"+ s_name +"';";
             ResultSet rs = stmt.executeQuery(sql);
             rs.next();
             String idspace = rs.getString("idspace");
+            String username_lessor = rs.getString("m.username");
 
             Statement stmt_user = conn.createStatement();
             String sql_user = "SELECT idmember\n"
@@ -128,6 +134,18 @@ public class Rental extends Member {
             String sql_reser = "INSERT INTO db_coworkingspace.booking(date, begin_time, end_time, desk_booking, fk_idmember, fk_idspace) \n"
                     + "	VALUES ('" + date_reverse + "', '" + time_start + "', '" + time_end + "', '" + amount + "', '" + idmember + "', '" + idspace + "');";
             stmt_reser.executeUpdate(sql_reser);
+
+            DateFormat dateFormat_date = new SimpleDateFormat("dd/MM/yyyy");
+            DateFormat dateFormat_time = new SimpleDateFormat("HH:mm");
+            Date date_today = new Date();
+            Message message = new Message();
+            message.setDate(dateFormat_date.format(date_today));
+            message.setTime(dateFormat_time.format(date_today));
+            message.setSender(username);
+            message.setReceiver(username_lessor);
+            message.setMessage("รายการทำการจองพื้นที่: " + username + " ได้ทำการจองพื้นที่ "+s_name+"ในวันที่ "+date_reverse+" เวลา "+time_start+"-"+time_end+" จำนวน "+amount+"คน");
+            Member sentmessage = new Member();
+            sentmessage.sentMessage(message);
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -171,7 +189,7 @@ public class Rental extends Member {
             String sql = "select idspace,rating,num_of_review,state_review from co_working_space join history on fk_idspace = idspace where idhistory = '" + idhistory + "';";
             ResultSet rs = stmt.executeQuery(sql);
             rs.next();
-             String idspace = rs.getString("idspace");
+            String idspace = rs.getString("idspace");
             int rating = Integer.parseInt(rs.getString("rating"));
             int num_of_review = Integer.parseInt(rs.getString("num_of_review"));
             num_of_review += 1;
@@ -181,19 +199,18 @@ public class Rental extends Member {
                     + "SET rating = '" + rating + "'\n"
                     + "WHERE idspace = '" + idspace + "';";
             stmt.executeUpdate(sql);
-            
+
             sql = "UPDATE co_working_space\n"
                     + "SET num_of_review = '" + num_of_review + "'\n"
                     + "WHERE idspace = '" + idspace + "';";
             stmt.executeUpdate(sql);
-            
+
             sql = "UPDATE history\n"
                     + "SET state_review = 0\n"
                     + "WHERE idhistory = '" + idhistory + "';";
             stmt.executeUpdate(sql);
-            
+
             check_rate = 1;
-            
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -271,7 +288,5 @@ public class Rental extends Member {
     public void setState_review(int state_review) {
         this.state_review = state_review;
     }
-    
-    
 
 }

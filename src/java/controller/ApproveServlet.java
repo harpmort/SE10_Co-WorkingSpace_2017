@@ -8,6 +8,9 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,6 +19,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Admin;
+import model.Member;
+import model.Message;
 
 /**
  *
@@ -45,6 +50,17 @@ public class ApproveServlet extends HttpServlet {
             Connection conn = (Connection) ctx.getAttribute("connection");
             Admin approved = new Admin(conn);
             approved.apporvedLessor(username);
+            DateFormat dateFormat_date = new SimpleDateFormat("dd/MM/yyyy");
+            DateFormat dateFormat_time = new SimpleDateFormat("HH:mm");
+            Date date = new Date();
+            Message message = new Message();
+            message.setDate(dateFormat_date.format(date));
+            message.setTime(dateFormat_time.format(date));
+            message.setSender("Admin");
+            message.setReceiver(username);
+            message.setMessage("Adminทำการยืนยันข้อมูลแล้ว: " + username + " ได้รับการยืนยันตนตนจาก Admin แล้ว");
+            Member sentmessage = new Member();
+            sentmessage.sentMessage(message);
             response.sendRedirect("ViewapproveServlet");
 
         }
