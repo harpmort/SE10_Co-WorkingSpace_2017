@@ -101,6 +101,54 @@ public class Rental extends Member {
         }
     }
 
+    public void autodeleteBooking() {
+        try {
+            Statement stmt = conn.createStatement();
+            String sql = "select * from booking;";
+            ResultSet rs = stmt.executeQuery(sql);
+            DateFormat dateFormat_date = new SimpleDateFormat("dd/MM/yyyy");
+            DateFormat dateFormat_time = new SimpleDateFormat("HH:mm");
+            Date date_td = new Date();
+            String date_today = dateFormat_date.format(date_td);
+            String[] list_date = date_today.split("/");
+            String time_today = dateFormat_time.format(date_td);
+            String[] list_time = time_today.split(":");
+            Statement stmt_d = conn.createStatement();
+            while (rs.next()) {
+                date = rs.getString("date");
+                String[] date_list = date.split("-");
+                end_time = rs.getString("end_time");
+                String[] time_list = end_time.split(":");
+                String sql_d;
+                if (Integer.parseInt(date_list[0]) <= Integer.parseInt(list_date[2])) {
+                    if (Integer.parseInt(date_list[1]) <= Integer.parseInt(list_date[1])) {
+                        if (Integer.parseInt(date_list[2]) < Integer.parseInt(list_date[0])) {
+                            sql_d = "DELETE FROM db_coworkingspace.booking WHERE idbooking = '" + rs.getString("idbooking") + "';";
+                            stmt_d.executeUpdate(sql_d);
+                        } else if (Integer.parseInt(date_list[2]) == Integer.parseInt(list_date[0])) {
+                            if (Integer.parseInt(time_list[0]) < Integer.parseInt(list_time[0])) {
+                                sql_d = "DELETE FROM db_coworkingspace.booking WHERE idbooking = '" + rs.getString("idbooking") + "';";
+                                stmt_d.executeUpdate(sql_d);
+                            } else if (Integer.parseInt(time_list[0]) == Integer.parseInt(list_time[0])) {
+                                if (Integer.parseInt(time_list[1]) <= Integer.parseInt(list_time[1])) {
+                                    sql_d = "DELETE FROM db_coworkingspace.booking WHERE idbooking = '" + rs.getString("idbooking") + "';";
+                                    stmt_d.executeUpdate(sql_d);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            String id_b = rs.getString("idbooking");
+            Statement stmt_id_b = conn.createStatement();
+            String sql_id_b = "DELETE FROM db_coworkingspace.booking WHERE idbooking = '" + id_b + "';";
+            stmt_id_b.executeUpdate(sql_id_b);
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
     public void reserSpace(String date, String time_start, String time_end, String amount, String s_name, String username) {
         try {
             Statement stmt = conn.createStatement();
@@ -108,7 +156,7 @@ public class Rental extends Member {
                     + "FROM co_working_space c\n"
                     + "join member m\n"
                     + "on c.fk_idmember = m.idmember\n"
-                    + "where name = '"+ s_name +"';";
+                    + "where name = '" + s_name + "';";
             ResultSet rs = stmt.executeQuery(sql);
             rs.next();
             String idspace = rs.getString("idspace");
@@ -143,7 +191,7 @@ public class Rental extends Member {
             message.setTime(dateFormat_time.format(date_today));
             message.setSender(username);
             message.setReceiver(username_lessor);
-            message.setMessage("รายการทำการจองพื้นที่: " + username + " ได้ทำการจองพื้นที่ "+s_name+"ในวันที่ "+date_reverse+" เวลา "+time_start+"-"+time_end+" จำนวน "+amount+"คน");
+            message.setMessage("รายการทำการจองพื้นที่: " + username + " ได้ทำการจองพื้นที่ " + s_name + "ในวันที่ " + date_reverse + " เวลา " + time_start + "-" + time_end + " จำนวน " + amount + "คน");
             Member sentmessage = new Member();
             sentmessage.sentMessage(message);
 
