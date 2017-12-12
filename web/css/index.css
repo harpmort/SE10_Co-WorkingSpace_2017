@@ -317,8 +317,46 @@ body {
     margin-bottom: 30px;
 }
 
+<<<<<<< HEAD
 .search-filter{
     height: 120px;
     background-color: #e0e0e0;
     width: 400px;
+=======
+/*MESSAGE DECORATION*/
+.message-main{
+	padding-right: 20px;
+	height: 10px;
+
+}
+.message-img{
+	margin-top: 10px;
+	width: 30px;
+	height: 30px;
+
+}
+.message-count{
+	position: relative;
+	background: #f44336;
+	border-radius: 50%;
+	width: 18px;
+	height: 18px;
+	text-align: center;
+	font-size: 70%;
+	padding: 3px 0;
+	left: 20px;
+	top: -15px;
+}
+.message-text-inside{
+	color: #111111 !important;
+}
+.message-delete{
+	position: absolute;
+	right: 16px;
+	width: 30px;
+	height: 30px;
+}
+.message-header{
+	margin-top: -1px;
+>>>>>>> 8920937eacac38d4ad2e343c4be285b624d4fdd6
 }

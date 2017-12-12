@@ -44,6 +44,16 @@
                                 </li>
                             </ul>
                         </li>
+                        <% if(true){ %>
+                        <li class="menu-bar"><div class="message-main">
+                                <div data-toggle="messagetooltip" data-placement="bottom" title="คุณมีข้อความแจ้งเตือน!"><img class="message-img" src="img/message.png"><div class="message-count">10</div></div>
+                            </div></li>
+                        <% }else{ %>
+                        <li class="menu-bar"><div class="message-main">
+                                <div data-toggle="nomessagetooltip" data-placement="bottom" title="คุณไม่มีข้อความ"><img class="message-img" src="img/message.png"></div>
+                            </div></li>
+                        
+                        <% } %>
                     </ul>
                 </div>
             </div>
@@ -80,7 +90,13 @@
                                         <tr class="success">
                                             <td>${row.username}</td>
                                             <td>${row.firstname}</td>
-                                            <td><a href="${row.idcard}">กดเพื่อดู Id Card ผู้ประกอบการ</a></td>
+                                            <c:if test="${row.idcard == 'Not verified'}" >
+                                                <td>ยังไม่ได้ส่งรูป ID CARD</td>
+                                            </c:if>
+                                            <c:if test="${row.idcard != 'Not verified'}" >
+                                                <td><a href="${row.idcard}">กดเพื่อดู Id Card ผู้ประกอบการ</a></td>
+                                            </c:if>
+                                            
 
                                     <form action="ApproveServlet" method="POST">
                                         <td class="success">

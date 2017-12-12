@@ -57,10 +57,21 @@
                                 </li>
                             </ul>
                         </li>
+                        <% if(true){ %>
+                        <li class="menu-bar"><div class="message-main">
+                                <div data-toggle="messagetooltip" data-placement="bottom" title="คุณมีข้อความแจ้งเตือน!"><img class="message-img" src="img/message.png"><div class="message-count">10</div></div>
+                            </div></li>
+                        <% }else{ %>
+                        <li class="menu-bar"><div class="message-main">
+                                <div data-toggle="nomessagetooltip" data-placement="bottom" title="คุณไม่มีข้อความ"><img class="message-img" src="img/message.png"></div>
+                            </div></li>
+                        
+                        <% } %>
                     </ul>
                 </div>
             </div>
         </nav>
+
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
@@ -89,11 +100,13 @@
                                         <th id="his-center">เวลาเริ่ม</th>
                                         <th id="his-center">เวลาจบ</th>
                                         <th id=2"his-center">จำนวนคนที่จอง</th>
+                                            <%if (type == 2) {%>
                                         <th id="his-center">Rating</th>
+                                            <%}%>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach var="row" items="${sessionScope.viewhistory.lhistory}">
+                                    <c:forEach var="row" items="${sessionScope.viewhistory.lhistory}">
                                         <tr class="his-data">
                                             <td>${row.idhistory}</td>
                                             <td>${row.location_name}</td>
@@ -102,50 +115,58 @@
                                             <td>${row.begin_time}</td>
                                             <td>${row.end_time}</td>
                                             <td>${row.desk_booking}</td>
-                                        <td class="his-data">
-                                            <button id="rateButton" class="btn btn-sm btn-info" data-toggle="modal" data-target="#ratingModal" type="submit" name="idbooking" value="${row.idbooking}">
-                                            Rating
-                                            </button>
-                                            </td>
-        
-                                    </tr>
+                                            <%if (type == 2) {%>
+                                            <c:if test="${row.state_review == 1}">
+                                                <td class="his-data">
+                                                    <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#${row.idhistory}">
+                                                        Rating
+                                                    </button>
+                                                </td>
+                                            </c:if>
+                                            <c:if  test="${row.state_review == 0}">
+                                                <td>ให้คะแนนแล้ว</td>
+                                            </c:if>
+                                            <%}%>
+
+                                        </tr>
+                                    <div id="${row.idhistory}" class="modal fade" role="dialog" >
+                                        <div class="modal-dialog">
+                                            <!-- Rating Modal content-->
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    <h4 class="modal-title">Rating for ${row.location_name} </h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form action="RatingServlet" method="POST">
+                                                        <div class="form-group">
+                                                            <input type="radio" name="rate" value="1" />
+                                                            <img class="" src="img/1.png" style="height: 20px;"/><br>
+                                                            <input type="radio" name="rate" value="2" />
+                                                            <img class="" src="img/2.png" style="height: 20px;"/><br>
+                                                            <input type="radio" name="rate" value="3" />
+                                                            <img class="" src="img/3.png" style="height: 20px;"/><br>
+                                                            <input type="radio" name="rate" value="4" />
+                                                            <img class="" src="img/4.png" style="height: 20px;"/><br>
+                                                            <input type="radio" name="rate" value="5" />
+                                                            <img class="" src="img/5.png" style="height: 20px;"/>
+                                                        </div>
+                                                        <center><button type="submit" class="btn btn-default" name="idhistory" value="${row.idhistory}">Submit</button></center>
+                                                    </form>
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </c:forEach>
                                 </tbody>
                             </table>
                         </div>
                         <div class="col-md-2">
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="ratingModal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-                <!-- Login Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Rating</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form action="" method="post">
-                            <div class="form-group">
-                                <input type="radio" name="rate" value="1" />
-                                <img class="" src="img/1.png" style="height: 20px;"/><br>
-                                <input type="radio" name="rate" value="2" />
-                                <img class="" src="img/2.png" style="height: 20px;"/><br>
-                                <input type="radio" name="rate" value="3" />
-                                <img class="" src="img/3.png" style="height: 20px;"/><br>
-                                <input type="radio" name="rate" value="4" />
-                                <img class="" src="img/4.png" style="height: 20px;"/><br>
-                                <input type="radio" name="rate" value="5" />
-                                <img class="" src="img/5.png" style="height: 20px;"/>
-                            </div>
-                            <center><button type="Login" class="btn btn-default">Submit</button></center>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
