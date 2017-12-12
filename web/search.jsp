@@ -119,6 +119,19 @@
                                     </span></div>
                             </form>
                         </div>
+                        <a id="advanceSearch">Advance Search</a>
+                        <div id="searchPad" style="display:none" class="search-filter">
+                            Type Room :
+                            <input type="radio" name="typeRoom" value="" /> Share Room
+                            <input type="radio" name="typeRoom" value="" /> Private Room<br>
+                            Type Desk : 
+                            <input type="radio" name="typeDesk" value="" /> Share Desk
+                            <input type="radio" name="typeDesk" value="" /><br>
+                            ราคา : 
+                            <b>$ 100</b>
+                            <input id="ex2" type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="10" data-slider-value="[250,750]"/>
+                            <b>$ 1000</b>
+                        </div>
                     </div>
                 </center>
             </div>
@@ -576,6 +589,18 @@
                     $(".register-modal-step1").delay(1000).show(0);
                     $(".register-modal-step2").delay(1000).hide(0);
                 });
+            });
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $("#advanceSearch").click(function(){
+                    $('#searchPad').fadeToggle();
+                });
+            });
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $("#ex2").slider({});
             });
         </script>
     </body>
