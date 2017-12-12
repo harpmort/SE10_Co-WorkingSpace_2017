@@ -37,6 +37,9 @@ public class Space {
     private String username;
     private String[] img;
     private int check_search;
+    private int rating;
+    private int num_review;
+    private String approve_status;
 
     Connection conn;
 
@@ -136,7 +139,7 @@ public class Space {
         try {
             Statement stmt = conn.createStatement();
             String sql = "select name,c.location,r.type_room,d.type_desk,c.total_desk,c.amount_desk,c.description\n"
-                    + ",c.size_room,c.open_time,c.close_time,c.amount_people,c.price,m.username,c.img\n"
+                    + ",c.size_room,c.open_time,c.close_time,c.amount_people,c.price,m.username,c.img,num_of_review,rating,approve_status\n"
                     + "from co_working_space c\n"
                     + "join member m \n"
                     + "on c.fk_idmember = m.idmember\n"
@@ -144,7 +147,7 @@ public class Space {
                     + "on c.idtype_desk = d.idtype_desk\n"
                     + "join type_room r\n"
                     + "on c.idtype_room = r.idtype_room\n"
-                    + "where name = '" + name + "';";
+                    + "where name = '"+ name +"';";
             ResultSet rs = stmt.executeQuery(sql);
             if (rs.next()) {
                 setName(rs.getString("name"));
@@ -161,6 +164,9 @@ public class Space {
                 setPrice(rs.getString("c.price"));
                 setUsername(rs.getString("m.username"));
                 setImg(rs.getString("img").split(","));
+                setRating(Integer.parseInt(rs.getString("rating")));
+                setNum_review(Integer.parseInt(rs.getString("num_of_review")));
+                setApprove_status(rs.getString("approve_status"));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -185,7 +191,7 @@ public class Space {
             }
             Order order = new Order();
             setTakedslot((ArrayList) order.orderMePlease(takedslot));
-            System.out.println("takedslot real :"+getTakedslot());
+            System.out.println("takedslot real :" + getTakedslot());
             System.out.println("return order :" + order.orderMePlease(takedslot));
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -204,11 +210,10 @@ public class Space {
                 System.out.println("rs next na ja");
                 idspace = rs.getString("idspace");
                 pic = rs.getString("img");
-                if(pic.equals("NO IMAGE")){
+                if (pic.equals("NO IMAGE")) {
                     pic = "";
-                }
-                else{
-                    pic+=",";
+                } else {
+                    pic += ",";
                 }
             }
 
@@ -435,9 +440,30 @@ public class Space {
     public int getCheck_search() {
         return check_search;
     }
-    
-    
-    
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    public int getNum_review() {
+        return num_review;
+    }
+
+    public void setNum_review(int num_review) {
+        this.num_review = num_review;
+    }
+
+    public String getApprove_status() {
+        return approve_status;
+    }
+
+    public void setApprove_status(String approve_status) {
+        this.approve_status = approve_status;
+    }
     
 
 }

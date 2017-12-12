@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Lessor;
-import model.Member;
 import model.Rental;
 
 /**
@@ -57,6 +56,11 @@ public class HistoryServlet extends HttpServlet {
                 viewhistory.viewListhistory(rental.getUsername());
                 session.setAttribute("viewhistory", viewhistory);
             }
+            int check_rate = 0;
+            if(session.getAttribute("check_rate") != null){
+                check_rate = (int) session.getAttribute("check_rate");
+            }
+            session.setAttribute("check_rate", check_rate);
             RequestDispatcher pg = request.getRequestDispatcher("History.jsp");
             pg.forward(request, response);
 
