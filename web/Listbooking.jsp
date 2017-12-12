@@ -130,6 +130,46 @@
                 </div>
             </div>
         </div>
+        <!-- Cancel success Modal -->
+        <div id="cancelSuccessModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Cancel Success!</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="messagebody">
+                            <p>Your booking has been canceled.</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Unsuccess Modal -->
+        <div id="unsuccessModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Something went wrong!</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="messagebody">
+                            <p>Your request unavailable. You can cancel before appointment 3 days or more.</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Modal Message -->
         <div class="modal fade" id="messageModal" role="dialog">
             <div class="modal-dialog">
