@@ -74,9 +74,9 @@
                                     </li>
                                 </ul>
                             </li>
-                            <% if (member.getUnReadMessage() != 0) { %>
+                            <% if (member.getUnReadMessage() != 0) {%>
                             <li class="menu-bar"><div class="message-main">
-                                    <div id="messagediv" data-toggle="messagetooltip" data-placement="bottom" title="คุณมีข้อความแจ้งเตือน!"><img class="message-img" src="img/message.png"><div class="message-count"><%= member.getUnReadMessage() %></div></div>
+                                    <div id="messagediv" data-toggle="messagetooltip" data-placement="bottom" title="คุณมีข้อความแจ้งเตือน!"><img class="message-img" src="img/message.png"><div class="message-count"><%= member.getUnReadMessage()%></div></div>
                                 </div></li>
                                 <% } else { %>
                             <li class="menu-bar"><div class="message-main">
@@ -127,7 +127,7 @@
             String takedslot_st = "";
             String takedamount_st = "";
             List<String> takedamount = space.getTakedamount();
-            if(space.getType_room().equals("Share Room")){
+            if (space.getType_room().equals("Share Room")) {
                 takedslot = new ReFormDisabledTime().toSharedRoomDisabled(takedamount);
             }
             for (int i = 0; i < takedslot.size(); i++) {
@@ -148,21 +148,22 @@
                 <h1><%= space.getName()%></h1>
                 <h3>by <%= space.getUsername()%></h3>
                 <%String approve_status = space.getApprove_status();
-                if (approve_status.equals("Approved")) {%>
+                    if (approve_status.equals("Approved")) {%>
                 <%int rating = space.getRating();
-                if( rating == 0){%>
-                    <img class="" src="img/0.png" style="height: 20px;"/> จากผู้ให้เช่า <%= space.getNum_review()%> คน
-                <%}else if(rating == 1){%>
-                    <img class="" src="img/1.png" style="height: 20px;"/> จากผู้ให้เช่า <%= space.getNum_review()%> คน
-                <%}else if(rating == 2){%>
-                    <img class="" src="img/2.png" style="height: 20px;"/> จากผู้ให้เช่า <%= space.getNum_review()%> คน
-                <%}else if(rating == 3){%>
-                    <img class="" src="img/3.png" style="height: 20px;"/> จากผู้ให้เช่า <%= space.getNum_review()%> คน
-                <%}else if(rating == 4){%>
-                    <img class="" src="img/4.png" style="height: 20px;"/> จากผู้ให้เช่า <%= space.getNum_review()%> คน
-                <%}else if(rating == 5){%>
-                    <img class="" src="img/5.png" style="height: 20px;"/> จากผู้ให้เช่า <%= space.getNum_review()%> คน
-                <%}}else{%>
+                    if (rating == 0) {%>
+                <img class="" src="img/0.png" style="height: 20px;"/> จากผู้ให้เช่า <%= space.getNum_review()%> คน
+                <%} else if (rating == 1) {%>
+                <img class="" src="img/1.png" style="height: 20px;"/> จากผู้ให้เช่า <%= space.getNum_review()%> คน
+                <%} else if (rating == 2) {%>
+                <img class="" src="img/2.png" style="height: 20px;"/> จากผู้ให้เช่า <%= space.getNum_review()%> คน
+                <%} else if (rating == 3) {%>
+                <img class="" src="img/3.png" style="height: 20px;"/> จากผู้ให้เช่า <%= space.getNum_review()%> คน
+                <%} else if (rating == 4) {%>
+                <img class="" src="img/4.png" style="height: 20px;"/> จากผู้ให้เช่า <%= space.getNum_review()%> คน
+                <%} else if (rating == 5) {%>
+                <img class="" src="img/5.png" style="height: 20px;"/> จากผู้ให้เช่า <%= space.getNum_review()%> คน
+                <%}
+                } else {%>
                 <h6>ผู้ให้เช่าคนนี้ยังไม่ได้ทำการยืนยันตัวตน</h6>
                 <%}%>
             </div>
@@ -861,69 +862,59 @@
             });
         </script>
         <script type="text/javascript">
-            $(document).ready(function(){
-                $('#messagediv').click(function(){
+            $(document).ready(function () {
+                $('#messagediv').click(function () {
                     $('#messageModal').modal('show');
                 });
-                $('#messagediv2').click(function(){
+                $('#messagediv2').click(function () {
                     $('#messageModal').modal('show');
                 });
             });
         </script> 
         <script type="text/javascript">
-                    $(document).ready(function(){
-    $('[data-toggle="nomessagetooltip"]').tooltip();
-    $('[data-toggle="messagetooltip"]').tooltip();
-});
-                </script>
-                <script type="text/javascript">
-                    $(document).ready(function(){
-                        $('#messagebody').load('message.jsp');
-                    });
-                    function delMessage(id){
-                        $('#messagebody').load('message.jsp?delete=yes&id='+id);
-                    }
-                </script>
-                <script type="text/javascript">
-                    var takedamount = new String("<%= takedamount_st %>");
-                    console.log("getlist: " + takedamount);
+            $(document).ready(function () {
+                $('[data-toggle="nomessagetooltip"]').tooltip();
+                $('[data-toggle="messagetooltip"]').tooltip();
+            });
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#messagebody').load('message.jsp');
+            });
+            function delMessage(id) {
+                $('#messagebody').load('message.jsp?delete=yes&id=' + id);
+            }
+        </script>
+        <script type="text/javascript">
+                    var takedamount = new String("<%= takedamount_st%>");
                     takedamount = takedamount.split(",");
                     var maxamount = 10;
-                 function mainSetMaxAmount(){
-                     console.log("hey!");
-                     var myday = $('#datetimepicker').val();
-                     var mystart = $('#datetimepicker2').val();
-                     var myend = $('#datetimepicker3').val();
-                     var myday_temp = myday.toString().split("-");
-                     myday = myday_temp[0] + "/" + myday_temp[1] + "/" + myday_temp[2];
-                     if(myday.length !== 0 && mystart.length !== 0 && myend.length !== 0){
-                         console.log("hey2!");
-                         setMaxAmount(myday, mystart, myend);
-                         console.log("maxamount: " + maxamount);
-                         document.getElementById("available").innerHTML = new String(maxamount);
-                         document.getElementById('input_people').setAttribute('max', maxamount);
-                     }          
-                 }
-                 function setMaxAmount(day, start, end){
-                     console.log("inthis!");
-                     for(var i = 0; i < takedamount.length; i++){
-                         console.log("split0: " + takedamount[i].split("-")[0]);
-                         console.log("day: " + day);
-                         if(takedamount[i].split("-")[0] === day){
-                             console.log("hey3!");
-                             if(takedamount[i].split("-")[1] === start){
-                                 console.log("hey4!");
-                                 if(takedamount[i].split("-")[2] === end){
-                                     console.log("hey5!");
-                                     maxamount = takedamount[i].split("-")[3];
-                                 }
-                             }
-                         }
-                     }
-                     
-                 }
-                </script>
-                
+                    function mainSetMaxAmount() {
+                        var myday = $('#datetimepicker').val();
+                        var mystart = $('#datetimepicker2').val();
+                        var myend = $('#datetimepicker3').val();
+                        var myday_temp = myday.toString().split("-");
+                        myday = myday_temp[0] + "/" + myday_temp[1] + "/" + myday_temp[2];
+                        if (myday.length !== 0 && mystart.length !== 0 && myend.length !== 0) {
+                            setMaxAmount(myday, mystart, myend);
+                            document.getElementById("available").innerHTML = new String(maxamount);
+                            document.getElementById('input_people').setAttribute('max', maxamount);
+                        }
+                    }
+                    function setMaxAmount(day, start, end) {
+                        for (var i = 0; i < takedamount.length; i++) {
+                            if (takedamount[i].split("-")[0] === day) {
+                                if (takedamount[i].split("-")[1] === start) {
+                                    if (takedamount[i].split("-")[2] === end) {
+                                        maxamount = takedamount[i].split("-")[3];
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+        </script>
+
 
 
     </body>
