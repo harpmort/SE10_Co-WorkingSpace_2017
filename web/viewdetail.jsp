@@ -205,11 +205,7 @@
                             <div class="book-bg margin-top book-margin">
                                 <div class="book-title">
                                     <center>
-<<<<<<< HEAD
                                         <div class="price"><p id="totalPrice">Price : <%= space.getPrice()%></p></div>
-=======
-                                        <div class="price"><p>Price : <%= space.getPrice()%></p><p>จำนวนคนที่รองรับได้ : <%= space.getAmount_desk()%></p></div>
->>>>>>> dad0eb20525d4a9e702f6617f5ea37daf008aef4
                                     </center>
                                 </div>
                                 <div class="row text-pos">
@@ -745,14 +741,12 @@
                 var total = parseInt(start[0]) - parseInt(end[0]);
                 total = Math.abs(total);
                 
+                
                
-               (parseInt(start[0]) * 60) + parseInt(start[1])
-               (parseInt(end[0]) * 60) + parseInt(end[1])
-               
-                var min = parseInt(start[1]) - parseInt(end[1]);
+                var min = (parseInt(start[1]) + 30) - 60;
                 min = Math.abs(min);
                 
-                if (min >= 30) {
+                if (min <= parseInt(end[1])) {
                     total++;
                 }
                 
@@ -777,9 +771,10 @@
                 var total = parseInt(start[0]) - parseInt(end[0]);
                 total = Math.abs(total);
                
-                var min = parseInt(start[1]) - parseInt(end[1]);
+                var min = (parseInt(start[1]) + 30) - 60;
+                min = Math.abs(min);
                 
-                if (min >= 30) {
+                if (min <= parseInt(end[1])) {
                     total++;
                 }
                 
