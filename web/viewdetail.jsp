@@ -125,13 +125,21 @@
         <%model.Space space = (model.Space) session.getAttribute("space");
             List<String> takedslot = space.getTakedslot();
             String takedslot_st = "";
+            String takedamount_st = "";
+            List<String> takedamount = space.getTakedamount();
             if(space.getType_room().equals("Share Room")){
-                takedslot = new ReFormDisabledTime().toSharedRoomDisabled(space.getTakedamount());
+                takedslot = new ReFormDisabledTime().toSharedRoomDisabled(takedamount);
             }
             for (int i = 0; i < takedslot.size(); i++) {
                 takedslot_st += takedslot.get(i);
                 if (i < takedslot.size() - 1) {
                     takedslot_st += ",";
+                }
+            }
+            for (int i = 0; i < takedamount.size(); i++) {
+                takedamount_st += takedamount.get(i);
+                if (i < takedamount.size() - 1) {
+                    takedamount_st += ",";
                 }
             }
         %>
@@ -252,7 +260,7 @@
                             <div class="book-bg margin-top book-margin">
                                 <div class="book-title">
                                     <center>
-                                        <div class="price"><p id="totalPrice">Price : <%= space.getPrice()%></p></div>
+                                        <div class="price"><p id="totalPrice">Price: <%= space.getPrice()%></p> <p>Available: <span id="available">จองต่อรอบได้สูงสุด 10 คน (เลือกวันและเวลาอีกครั้งเพื่อตรวจสอบ)</span> person</p></div>
                                     </center>
                                 </div>
                                 <div class="row text-pos">
@@ -263,8 +271,8 @@
                                         </div>
                                         <div class="col-md-7">
 
-                                            <input type="text" class="form-control form-control-edit" readonly="true" value="" id="datetimepicker" name="date">
-                                            <input type="text" class="form-control form-control-edit" readonly="true" id="datetimepicker2" name="time_start">
+                                            <input onchange="mainSetMaxAmount()" type="text" class="form-control form-control-edit" readonly="true" value="" id="datetimepicker" name="date">
+                                            <input onchange="mainSetMaxAmount()" type="text" class="form-control form-control-edit" readonly="true" id="datetimepicker2" name="time_start">
                                         </div>
                                     </div>
                                     <% String type_room = space.getType_room();
@@ -281,14 +289,14 @@
                                                         <i class="glyphicon glyphicon-minus"></i>
                                                     </button>
                                                 </span>
-                                                <input class="form-control input-number input-number-pos form-control-edit" type="text" min="1" max="10" value="1" name="amount">
+                                                <input id="input_people" class="form-control input-number input-number-pos form-control-edit" type="text" min="1" max="10" value="1" name="amount">
                                                 <span class="input-group-btn">
                                                     <button class="btn btn-default" id="btn-plus" data-field="amount" type="button">
                                                         <i class="glyphicon glyphicon-plus"></i>
                                                     </button>
                                                 </span>
                                             </div>
-                                            <input type="text" data-toggle="endtimetooltip" title="กดเวลาเริ่มก่อนสิ!" class="form-control" value=""  readonly="true" id="datetimepicker3" name="time_end">
+                                            <input onchange="mainSetMaxAmount()" type="text" data-toggle="endtimetooltip" title="กดเวลาเริ่มก่อนสิ!" class="form-control" value=""  readonly="true" id="datetimepicker3" name="time_end">
                                         </div>
                                     </div>
                                     <%} else {%>
@@ -877,7 +885,43 @@
                     }
                 </script>
                 <script type="text/javascript">
-
+                    var takedamount = new String("<%= takedamount_st %>");
+                    console.log("getlist: " + takedamount);
+                    takedamount = takedamount.split(",");
+                    var maxamount = 10;
+                 function mainSetMaxAmount(){
+                     console.log("hey!");
+                     var myday = $('#datetimepicker').val();
+                     var mystart = $('#datetimepicker2').val();
+                     var myend = $('#datetimepicker3').val();
+                     var myday_temp = myday.toString().split("-");
+                     myday = myday_temp[0] + "/" + myday_temp[1] + "/" + myday_temp[2];
+                     if(myday.length !== 0 && mystart.length !== 0 && myend.length !== 0){
+                         console.log("hey2!");
+                         setMaxAmount(myday, mystart, myend);
+                         console.log("maxamount: " + maxamount);
+                         document.getElementById("available").innerHTML = new String(maxamount);
+                         document.getElementById('input_people').setAttribute('max', maxamount);
+                     }          
+                 }
+                 function setMaxAmount(day, start, end){
+                     console.log("inthis!");
+                     for(var i = 0; i < takedamount.length; i++){
+                         console.log("split0: " + takedamount[i].split("-")[0]);
+                         console.log("day: " + day);
+                         if(takedamount[i].split("-")[0] === day){
+                             console.log("hey3!");
+                             if(takedamount[i].split("-")[1] === start){
+                                 console.log("hey4!");
+                                 if(takedamount[i].split("-")[2] === end){
+                                     console.log("hey5!");
+                                     maxamount = takedamount[i].split("-")[3];
+                                 }
+                             }
+                         }
+                     }
+                     
+                 }
                 </script>
                 
 
