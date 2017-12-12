@@ -133,9 +133,9 @@
         %>
         <form action="ReserServlet" method="POST">
             <div class="margin-left type-room-name">
-                <h1><%= space.getName()%></h1>
-                <h3>by <%= space.getUsername()%></h3>
-                <%String approve_status = space.getApprove_status();
+                <span style="font-size:40px"><%= space.getName()%></span>
+                <span style="font-size:20px">&nbsp;&nbsp;by <%= space.getUsername()%></span>
+                <div><%String approve_status = space.getApprove_status();
                 if (approve_status.equals("Approved")) {%>
                 <%int rating = space.getRating();
                 if( rating == 0){%>
@@ -153,6 +153,7 @@
                 <%}}else{%>
                 <h6>ผู้ให้เช่าคนนี้ยังไม่ได้ทำการยืนยันตัวตน</h6>
                 <%}%>
+                </div>
             </div>
 
 
@@ -289,7 +290,7 @@
                                     </div>
                                     <%} else {%>
                                     <div class="col-md-6">
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 res-detail">
                                             <div class="text-edit">จำนวนคน : </div>
                                             <div class="text-edit">เวลาสิ้นสุด : </div>
                                         </div>
