@@ -104,7 +104,7 @@ public class Rental extends Member {
     public void autodeleteBooking() {
         try {
             Statement stmt = conn.createStatement();
-            String sql = "select * from booking;";
+            String sql = "select * from booking b join co_working_space c on b.fk_idspace = c.idspace;";
             ResultSet rs = stmt.executeQuery(sql);
             DateFormat dateFormat_date = new SimpleDateFormat("dd/MM/yyyy");
             DateFormat dateFormat_time = new SimpleDateFormat("HH:mm");
@@ -114,25 +114,47 @@ public class Rental extends Member {
             String time_today = dateFormat_time.format(date_td);
             String[] list_time = time_today.split(":");
             Statement stmt_d = conn.createStatement();
+            DateFormat df_date = new SimpleDateFormat("dd/MM/yyyy");
+            DateFormat df_time = new SimpleDateFormat("HH:mm");
+            Date dt = new Date();
+            Message message = new Message();
+            Member sentmessage = new Member();
             while (rs.next()) {
                 date = rs.getString("date");
                 String[] date_list = date.split("-");
                 end_time = rs.getString("end_time");
                 String[] time_list = end_time.split(":");
                 String sql_d;
+                message.setDate(df_date.format(dt));
+                message.setTime(df_time.format(dt));
+                message.setSender("Admin");
+                message.setReceiver(getUsername());
+                message.setMessage("กรุณาให้ Rating แก่พื้นที่ที่ท่านเคยใช้บริการ: ท่านทำการใช้บริการพื้นที่ทำงาน "+rs.getString("name")+" อย่าลืมให้คะแนนความพึงพอใจนะคะ");
                 if (Integer.parseInt(date_list[0]) <= Integer.parseInt(list_date[2])) {
                     if (Integer.parseInt(date_list[1]) <= Integer.parseInt(list_date[1])) {
                         if (Integer.parseInt(date_list[2]) < Integer.parseInt(list_date[0])) {
                             sql_d = "DELETE FROM db_coworkingspace.booking WHERE idbooking = '" + rs.getString("idbooking") + "';";
                             stmt_d.executeUpdate(sql_d);
+                            sql_d = "INSERT INTO `db_coworkingspace`.`history` (`date`, `begin_time`, `end_time`, `desk_booking`, `fk_idmember`, `fk_idspace`) "
+                                    + "VALUES ('" + date + "', '" + rs.getString("begin_time") + "', '" + end_time + "', '" + rs.getString("desk_booking") + "', '" + rs.getString("fk_idmember") + "', '" + rs.getString("fk_idspace") + "');";
+                            stmt_d.executeUpdate(sql_d);
+                            sentmessage.sentMessage(message);
                         } else if (Integer.parseInt(date_list[2]) == Integer.parseInt(list_date[0])) {
                             if (Integer.parseInt(time_list[0]) < Integer.parseInt(list_time[0])) {
                                 sql_d = "DELETE FROM db_coworkingspace.booking WHERE idbooking = '" + rs.getString("idbooking") + "';";
                                 stmt_d.executeUpdate(sql_d);
+                                sql_d = "INSERT INTO `db_coworkingspace`.`history` (`date`, `begin_time`, `end_time`, `desk_booking`, `fk_idmember`, `fk_idspace`) "
+                                        + "VALUES ('" + date + "', '" + rs.getString("begin_time") + "', '" + end_time + "', '" + rs.getString("desk_booking") + "', '" + rs.getString("fk_idmember") + "', '" + rs.getString("fk_idspace") + "');";
+                                stmt_d.executeUpdate(sql_d);
+                                sentmessage.sentMessage(message);
                             } else if (Integer.parseInt(time_list[0]) == Integer.parseInt(list_time[0])) {
                                 if (Integer.parseInt(time_list[1]) <= Integer.parseInt(list_time[1])) {
                                     sql_d = "DELETE FROM db_coworkingspace.booking WHERE idbooking = '" + rs.getString("idbooking") + "';";
                                     stmt_d.executeUpdate(sql_d);
+                                    sql_d = "INSERT INTO `db_coworkingspace`.`history` (`date`, `begin_time`, `end_time`, `desk_booking`, `fk_idmember`, `fk_idspace`) "
+                                            + "VALUES ('" + date + "', '" + rs.getString("begin_time") + "', '" + end_time + "', '" + rs.getString("desk_booking") + "', '" + rs.getString("fk_idmember") + "', '" + rs.getString("fk_idspace") + "');";
+                                    stmt_d.executeUpdate(sql_d);
+                                    sentmessage.sentMessage(message);
                                 }
                             }
                         }

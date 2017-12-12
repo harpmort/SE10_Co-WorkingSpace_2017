@@ -206,7 +206,7 @@ public class Member {
         }
         try {
             Statement message_statement = conn.createStatement();
-            String message_sql = "select * from message where username = '"+ username +"';";
+            String message_sql = "select * from message where receiver = '"+ username +"';";
             ResultSet mrs = message_statement.executeQuery(message_sql);
             while (mrs.next()) {
                 temp.setId(mrs.getInt("idmessage"));

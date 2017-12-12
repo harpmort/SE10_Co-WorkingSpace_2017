@@ -80,7 +80,7 @@ public class Lessor extends Member {
             ex.printStackTrace();
         }
     }
-    
+
     public void autodeleteBooking() {
         try {
             Statement stmt = conn.createStatement();
@@ -105,13 +105,22 @@ public class Lessor extends Member {
                         if (Integer.parseInt(date_list[2]) < Integer.parseInt(list_date[0])) {
                             sql_d = "DELETE FROM db_coworkingspace.booking WHERE idbooking = '" + rs.getString("idbooking") + "';";
                             stmt_d.executeUpdate(sql_d);
+                            sql_d = "INSERT INTO `db_coworkingspace`.`history` (`date`, `begin_time`, `end_time`, `desk_booking`, `fk_idmember`, `fk_idspace`) "
+                                    + "VALUES ('" + date + "', '" + rs.getString("begin_time") + "', '" + end_time + "', '" + rs.getString("desk_booking") + "', '" + rs.getString("fk_idmember") + "', '" + rs.getString("fk_idspace") + "');";
+                            stmt_d.executeUpdate(sql_d);
                         } else if (Integer.parseInt(date_list[2]) == Integer.parseInt(list_date[0])) {
                             if (Integer.parseInt(time_list[0]) < Integer.parseInt(list_time[0])) {
                                 sql_d = "DELETE FROM db_coworkingspace.booking WHERE idbooking = '" + rs.getString("idbooking") + "';";
                                 stmt_d.executeUpdate(sql_d);
+                                sql_d = "INSERT INTO `db_coworkingspace`.`history` (`date`, `begin_time`, `end_time`, `desk_booking`, `fk_idmember`, `fk_idspace`) "
+                                        + "VALUES ('" + date + "', '" + rs.getString("begin_time") + "', '" + end_time + "', '" + rs.getString("desk_booking") + "', '" + rs.getString("fk_idmember") + "', '" + rs.getString("fk_idspace") + "');";
+                                stmt_d.executeUpdate(sql_d);
                             } else if (Integer.parseInt(time_list[0]) == Integer.parseInt(list_time[0])) {
                                 if (Integer.parseInt(time_list[1]) <= Integer.parseInt(list_time[1])) {
                                     sql_d = "DELETE FROM db_coworkingspace.booking WHERE idbooking = '" + rs.getString("idbooking") + "';";
+                                    stmt_d.executeUpdate(sql_d);
+                                    sql_d = "INSERT INTO `db_coworkingspace`.`history` (`date`, `begin_time`, `end_time`, `desk_booking`, `fk_idmember`, `fk_idspace`) "
+                                            + "VALUES ('" + date + "', '" + rs.getString("begin_time") + "', '" + end_time + "', '" + rs.getString("desk_booking") + "', '" + rs.getString("fk_idmember") + "', '" + rs.getString("fk_idspace") + "');";
                                     stmt_d.executeUpdate(sql_d);
                                 }
                             }
@@ -140,7 +149,7 @@ public class Lessor extends Member {
                     + "on h.fk_idspace = c.idspace\n"
                     + "join member ml\n"
                     + "on c.fk_idmember = ml.idmember\n"
-                    + "where ml.username like '"+ username +"';";
+                    + "where ml.username like '" + username + "';";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 Rental lh = new Rental();
