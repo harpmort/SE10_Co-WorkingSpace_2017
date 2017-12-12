@@ -107,7 +107,7 @@
                                 </div></li>
                                 <% } else { %>
                             <li class="menu-bar"><div class="message-main">
-                                    <div data-toggle="nomessagetooltip" data-placement="bottom" title="คุณไม่มีข้อความ"><img class="message-img" src="img/message.png"></div>
+                                    <div data-toggle="nomessagetooltip" data-placement="bottom" title="คุณไม่มีข้อความใหม่"><img class="message-img" src="img/message.png"></div>
                                 </div></li>
 
                             <% } %>
