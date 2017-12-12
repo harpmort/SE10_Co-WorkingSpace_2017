@@ -78,16 +78,16 @@
                                     </li>
                                 </ul>
                             </li>
-                            <% if(true){ %>
-                        <li class="menu-bar"><div class="message-main">
-                                <div data-toggle="messagetooltip" data-placement="bottom" title="คุณมีข้อความแจ้งเตือน!"><img class="message-img" src="img/message.png"><div class="message-count">10</div></div>
-                            </div></li>
-                        <% }else{ %>
-                        <li class="menu-bar"><div class="message-main">
-                                <div data-toggle="nomessagetooltip" data-placement="bottom" title="คุณไม่มีข้อความ"><img class="message-img" src="img/message.png"></div>
-                            </div></li>
-                        
-                        <% } %>
+                            <% if (true) { %>
+                            <li class="menu-bar"><div class="message-main">
+                                    <div data-toggle="messagetooltip" data-placement="bottom" title="คุณมีข้อความแจ้งเตือน!"><img class="message-img" src="img/message.png"><div class="message-count">10</div></div>
+                                </div></li>
+                                <% } else { %>
+                            <li class="menu-bar"><div class="message-main">
+                                    <div data-toggle="nomessagetooltip" data-placement="bottom" title="คุณไม่มีข้อความ"><img class="message-img" src="img/message.png"></div>
+                                </div></li>
+
+                            <% } %>
                         </ul>
 
                     </div>
@@ -105,16 +105,16 @@
                                     </li>
                                 </ul>
                             </li>
-                            <% if(true){ %>
-                        <li class="menu-bar"><div class="message-main">
-                                <div data-toggle="messagetooltip" data-placement="bottom" title="คุณมีข้อความแจ้งเตือน!"><img class="message-img" src="img/message.png"><div class="message-count">10</div></div>
-                            </div></li>
-                        <% }else{ %>
-                        <li class="menu-bar"><div class="message-main">
-                                <div data-toggle="nomessagetooltip" data-placement="bottom" title="คุณไม่มีข้อความ"><img class="message-img" src="img/message.png"></div>
-                            </div></li>
-                        
-                        <% } %>
+                            <% if (true) { %>
+                            <li class="menu-bar"><div class="message-main">
+                                    <div data-toggle="messagetooltip" data-placement="bottom" title="คุณมีข้อความแจ้งเตือน!"><img class="message-img" src="img/message.png"><div class="message-count">10</div></div>
+                                </div></li>
+                                <% } else { %>
+                            <li class="menu-bar"><div class="message-main">
+                                    <div data-toggle="nomessagetooltip" data-placement="bottom" title="คุณไม่มีข้อความ"><img class="message-img" src="img/message.png"></div>
+                                </div></li>
+
+                            <% } %>
                         </ul>
                     </div>
                     <%}%>
@@ -144,15 +144,15 @@
                         <a id="advanceSearch">Advance Search</a>
                         <div id="searchPad" style="display:none" class="search-filter">
                             Type Room :
-                            <input type="radio" name="typeRoom" value="" /> Share Room
-                            <input type="radio" name="typeRoom" value="" /> Private Room<br>
-                            <input type="radio" name="typeRoom" value="" /> Meeting Room<br>
+                            <input type="radio" name="typeRoom" value="1" /> Share Room
+                            <input type="radio" name="typeRoom" value="2" /> Private Room<br>
+                            <input type="radio" name="typeRoom" value="3" /> Meeting Room<br>
                             Type Desk : 
-                            <input type="radio" name="typeDesk" value="" /> Share Desk
-                            <input type="radio" name="typeDesk" value="" /> Fixed Desk<br>
+                            <input type="radio" name="typeDesk" value="2" /> Share Desk
+                            <input type="radio" name="typeDesk" value="1" /> Fix Desk<br>
                             Price : 
-                            <b class="margin-slider-right">$ 100</b>
-                            <input id="ex2" type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="10" data-slider-value="[250,750]"/>
+                            <b class="margin-slider-right">$ 0</b>
+                            <input id="ex2" type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="10" data-slider-value="[0,1000]"/>
                             <b class="margin-slider-left">$ 1000</b>
                         </div>
                     </div>
@@ -166,7 +166,7 @@
 
             <% int count = 0; %>
             <% int check_search = (int) session.getAttribute("check_search");%>
-            
+
             <c:forEach var="row" items="${sessionScope.space.detail_space}">
                 <% if (count >= i && count <= pos) { %>
                 <div class="col-md-4">
@@ -615,14 +615,14 @@
             });
         </script>
         <script type="text/javascript">
-            $(document).ready(function(){
-                $("#advanceSearch").click(function(){
+            $(document).ready(function () {
+                $("#advanceSearch").click(function () {
                     $('#searchPad').fadeToggle();
                 });
             });
         </script>
         <script type="text/javascript">
-            $(document).ready(function(){
+            $(document).ready(function () {
                 $("#ex2").slider({});
             });
         </script>

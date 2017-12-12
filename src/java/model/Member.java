@@ -177,67 +177,68 @@ public class Member {
             ex.printStackTrace();
         }
     }
-    
-    public void markAsRead(int id){
+
+    public void markAsRead(int id) {
         try {
             Statement mr_statement = conn.createStatement();
-            String mr_sql = "E-BOY PLEASE EDIT HERE";
+            String mr_sql = "UPDATE message SET status = 1 WHERE idmessage = '"+ id +"';";
             mr_statement.executeUpdate(mr_sql);
         } catch (SQLException ex) {
             Logger.getLogger(Member.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public int getUnReadMessage(){
+
+    public int getUnReadMessage() {
         pullMessage();
         int unread = 0;
-        for(int i = 0; i < getMessages().size(); i++){
-            if(getMessages().get(i).getStatus() == 0){
-                unread ++;
+        for (int i = 0; i < getMessages().size(); i++) {
+            if (getMessages().get(i).getStatus() == 0) {
+                unread++;
             }
         }
         return unread;
     }
-    
-    public void pullMessage(){
+
+    public void pullMessage() {
         Message temp = new Message();
-        if(messages.size() != 0){
+        if (messages.size() != 0) {
             messages.clear();
         }
         try {
             Statement message_statement = conn.createStatement();
-            String message_sql = "E-BOY PLEASE EDIT HERE";
+            String message_sql = "select * from message where username = '"+ username +"';";
             ResultSet mrs = message_statement.executeQuery(message_sql);
-            while(mrs.next()){
-                temp.setId(mrs.getInt("ID PLEASE"));
-                temp.setSender(mrs.getString("POORUB PLEASE"));
-                temp.setReceiver(mrs.getString("POOSONG PLEASE"));
-                temp.setDate(mrs.getString("WANTEE PLEASE"));
-                temp.setTime(mrs.getString("WELAR PLEASE"));
-                temp.setMessage(mrs.getString("KOR KWARM PLEASE"));
-                temp.setStatus(mrs.getInt("ARN ROU YOUNG PLEASE"));
+            while (mrs.next()) {
+                temp.setId(mrs.getInt("idmessage"));
+                temp.setSender(mrs.getString("sender"));
+                temp.setReceiver(mrs.getString("receiver"));
+                temp.setDate(mrs.getString("date"));
+                temp.setTime(mrs.getString("time"));
+                temp.setMessage(mrs.getString("content"));
+                temp.setStatus(mrs.getInt("status"));
                 messages.add(temp);
             }
         } catch (SQLException ex) {
             Logger.getLogger(Member.class.getName()).log(Level.SEVERE, null, ex);
-        }   
+        }
     }
-    
-    public void sentMessage(Message message){
+
+    public void sentMessage(Message message) {
         try {
             Statement sm_statement = conn.createStatement();
-            String sm_sql = "E-BOY PLEASE EDIT HERE";
+            String sm_sql = "INSERT INTO `db_coworkingspace`.`message` (`date`, `time`, `sender`, `receiver`, `content`) "
+                            + "VALUES ('"+ message.getDate() +"', '"+ message.getTime()+"', '"+ message.getSender()+"', '"+ message.getReceiver()+"', '"+ message.getMessage()+"');";
             sm_statement.executeUpdate(sm_sql);
         } catch (SQLException ex) {
             Logger.getLogger(Member.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
     
     public void deleteMessage (int id){
         try {
             Statement del_statement = conn.createStatement();
-            String del_sql = "E-BOY EDIT HERE";
+            String del_sql = "DELETE FROM db_coworkingspace.message WHERE idmessage = '" + id + "';";
             del_statement.executeUpdate(del_sql);
         } catch (SQLException ex) {
             Logger.getLogger(Member.class.getName()).log(Level.SEVERE, null, ex);
