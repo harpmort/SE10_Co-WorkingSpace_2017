@@ -63,13 +63,13 @@
                                 </li>
                             </ul>
                         </li>
-                        <% if (true) { %>
+                        <% if (member.getUnReadMessage() != 0) {%>
                         <li class="menu-bar"><div class="message-main">
-                                <div data-toggle="messagetooltip" data-placement="bottom" title="คุณมีข้อความแจ้งเตือน!"><img class="message-img" src="img/message.png"><div class="message-count">10</div></div>
+                                <div id="messagediv" data-toggle="messagetooltip" data-placement="bottom" title="คุณมีข้อความแจ้งเตือน!"><img class="message-img" src="img/message.png"><div class="message-count"><%= member.getUnReadMessage()%></div></div>
                             </div></li>
                             <% } else { %>
                         <li class="menu-bar"><div class="message-main">
-                                <div data-toggle="nomessagetooltip" data-placement="bottom" title="คุณไม่มีข้อความ"><img class="message-img" src="img/message.png"></div>
+                                <div id="messagediv2" data-toggle="nomessagetooltip" data-placement="bottom" title="คุณไม่มีข้อความใหม่"><img class="message-img" src="img/message.png"></div>
                             </div></li>
 
                         <% } %>
@@ -89,13 +89,13 @@
                                 </li>
                             </ul>
                         </li>
-                        <% if (true) { %>
+                        <% if (admin.getUnReadMessage() != 0) {%>
                         <li class="menu-bar"><div class="message-main">
-                                <div data-toggle="messagetooltip" data-placement="bottom" title="คุณมีข้อความแจ้งเตือน!"><img class="message-img" src="img/message.png"><div class="message-count">10</div></div>
+                                <div id="messagediv" data-toggle="messagetooltip" data-placement="bottom" title="คุณมีข้อความแจ้งเตือน!"><img class="message-img" src="img/message.png"><div class="message-count"><%= admin.getUnReadMessage()%></div></div>
                             </div></li>
                             <% } else { %>
                         <li class="menu-bar"><div class="message-main">
-                                <div data-toggle="nomessagetooltip" data-placement="bottom" title="คุณไม่มีข้อความ"><img class="message-img" src="img/message.png"></div>
+                                <div id="messagediv2" data-toggle="nomessagetooltip" data-placement="bottom" title="คุณไม่มีข้อความใหม่"><img class="message-img" src="img/message.png"></div>
                             </div></li>
 
                         <% } %>
@@ -123,27 +123,67 @@
                         <a id="advanceSearch">Advance Search</a>
                         <div id="searchPad" style="display:none" class="search-filter">
                             Type Room :
-                            <input type="radio" name="typeRoom" value="shareRoom" /> Share Room
-                            <input type="radio" name="typeRoom" value="privateRoom" /> Private Room<br>
-                            <input type="radio" name="typeRoom" value="" /> Meeting Room<br>
-
+                            <input type="radio" name="typeRoom" value="1" /> Share Room
+                            <input type="radio" name="typeRoom" value="2" /> Private Room<br>
+                            <input type="radio" name="typeRoom" value="3" /> Meeting Room<br>
                             Type Desk : 
-                            <input type="radio" name="typeDesk" value="shareDesk" /> Share Desk
-                            <input type="radio" name="typeDesk" value="fixDesk" /> Fix Desk<br>
+                            <input type="radio" name="typeDesk" value="2" /> Share Desk
+                            <input type="radio" name="typeDesk" value="1" /> Fix Desk<br>
                             Price : 
-                            <b class="margin-slider-right">$ 100</b>
-                            <input id="ex2" type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="10" data-slider-value="[250,750]"/>
-                            <b class="margin-slider-left">$ 1000</b>
+                            <b class="margin-slider-right">$ 0</b>
+                            <input id="ex2" type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="10" data-slider-value="[0,1000]"/>
+                            <b class="margin-slider-left">$ 1000</b><br>
+                            <form id="formViewAll" action="SearchServlet" method="POST">
+                                <a id="viewAll" type="submit">View all place.</a>
+                            </form>
                         </div>
                     </div>
                 </center>
             </div>
         </div>
+        <!-- Modal Message -->
+        <div class="modal fade" id="messageModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Message Notification</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="messagebody"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>        
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#messagediv').click(function () {
+                    $('#messageModal').modal('show');
+                });
+                $('#messagediv2').click(function () {
+                    $('#messageModal').modal('show');
+                });
+            });
+        </script> 
         <script type="text/javascript">
             $(document).ready(function () {
                 $('[data-toggle="nomessagetooltip"]').tooltip();
                 $('[data-toggle="messagetooltip"]').tooltip();
             });
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#messagebody').load('message.jsp');
+            });
+            function delMessage(id) {
+                $('#messagebody').load('message.jsp?delete=yes&id=' + id);
+            }
         </script>
         <script type="text/javascript">
             $(document).ready(function () {
@@ -156,6 +196,11 @@
             $(document).ready(function () {
                 $("#ex2").slider({});
             });
+        </script>
+        <script type="text/javascript">
+            document.getElementById("viewAll").onclick = function() {
+                document.getElementById("formViewAll").submit();
+            };
         </script>
     </body>
 </html>

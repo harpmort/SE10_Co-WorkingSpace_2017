@@ -48,11 +48,13 @@ public class BookingServlet extends HttpServlet {
             if (type == 1) {
                 Lessor lessor = (Lessor) session.getAttribute("member");
                 Lessor viewbooking = new Lessor(conn);
+                viewbooking.autodeleteBooking();
                 viewbooking.viewListbooking(lessor.getUsername());
                 session.setAttribute("viewbooking", viewbooking);
             } else {
                 Rental rental = (Rental) session.getAttribute("member");
                 Rental viewbooking = new Rental(conn);
+                viewbooking.autodeleteBooking();
                 viewbooking.viewListbooking(rental.getUsername());
                 session.setAttribute("viewbooking", viewbooking);
             }

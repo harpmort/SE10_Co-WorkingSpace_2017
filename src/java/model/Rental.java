@@ -30,6 +30,7 @@ public class Rental extends Member {
     private String desk_booking;
     private int state_review;
     private int check_rate = 0;
+    private int cancelStatus = 0;
 
     List<Member> lhistory;
     private String idhistory;
@@ -90,11 +91,35 @@ public class Rental extends Member {
                     + "FROM booking b\n"
                     + "where idbooking = '" + id_booking + "';";
             ResultSet rs = stmt.executeQuery(sql);
-            rs.next();
-            String id_b = rs.getString("idbooking");
-            Statement stmt_id_b = conn.createStatement();
-            String sql_id_b = "DELETE FROM db_coworkingspace.booking WHERE idbooking = '" + id_b + "';";
-            stmt_id_b.executeUpdate(sql_id_b);
+//            rs.next();
+//            String id_b = rs.getString("idbooking");
+//            Statement stmt_id_b = conn.createStatement();
+//            String sql_id_b = "DELETE FROM db_coworkingspace.booking WHERE idbooking = '" + id_b + "';";
+//            stmt_id_b.executeUpdate(sql_id_b);
+            
+            DateFormat dateFormat_date = new SimpleDateFormat("dd/MM/yyyy");
+            DateFormat dateFormat_time = new SimpleDateFormat("HH:mm");
+            Date date_td = new Date();
+            String date_today = dateFormat_date.format(date_td);
+            String[] list_date = date_today.split("/");
+            while(rs.next()) {
+                date = rs.getString("date");
+                String[] date_list = date.split("-");
+                if(Integer.parseInt(date_list[0]) <= Integer.parseInt(list_date[2])) {
+                    if(Integer.parseInt(date_list[1]) <= Integer.parseInt(list_date[1])) {
+                        if(Integer.parseInt(date_list[2]) - Integer.parseInt(list_date[0]) <= -3) {
+                            String id_b = rs.getString("idbooking");
+                            Statement stmt_id_b = conn.createStatement();
+                            String sql_id_b = "DELETE FROM db_coworkingspace.booking WHERE idbooking = '" + id_b + "';";
+                            stmt_id_b.executeUpdate(sql_id_b);
+                            
+                            cancelStatus = 1;
+                        } else {
+                            cancelStatus = 0;
+                        }
+                    } 
+                }
+            }
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -104,7 +129,7 @@ public class Rental extends Member {
     public void autodeleteBooking() {
         try {
             Statement stmt = conn.createStatement();
-            String sql = "select * from booking;";
+            String sql = "select * from booking b join co_working_space c on b.fk_idspace = c.idspace;";
             ResultSet rs = stmt.executeQuery(sql);
             DateFormat dateFormat_date = new SimpleDateFormat("dd/MM/yyyy");
             DateFormat dateFormat_time = new SimpleDateFormat("HH:mm");
@@ -114,25 +139,47 @@ public class Rental extends Member {
             String time_today = dateFormat_time.format(date_td);
             String[] list_time = time_today.split(":");
             Statement stmt_d = conn.createStatement();
+            DateFormat df_date = new SimpleDateFormat("dd/MM/yyyy");
+            DateFormat df_time = new SimpleDateFormat("HH:mm");
+            Date dt = new Date();
+            Message message = new Message();
+            Member sentmessage = new Member(conn);
             while (rs.next()) {
                 date = rs.getString("date");
                 String[] date_list = date.split("-");
                 end_time = rs.getString("end_time");
                 String[] time_list = end_time.split(":");
                 String sql_d;
+                message.setDate(df_date.format(dt));
+                message.setTime(df_time.format(dt));
+                message.setSender("Admin");
+                message.setReceiver(getUsername());
+                message.setMessage("กรุณาให้ Rating แก่พื้นที่ที่ท่านเคยใช้บริการ: ท่านทำการใช้บริการพื้นที่ทำงาน " + rs.getString("name") + " อย่าลืมให้คะแนนความพึงพอใจนะคะ");
                 if (Integer.parseInt(date_list[0]) <= Integer.parseInt(list_date[2])) {
                     if (Integer.parseInt(date_list[1]) <= Integer.parseInt(list_date[1])) {
                         if (Integer.parseInt(date_list[2]) < Integer.parseInt(list_date[0])) {
                             sql_d = "DELETE FROM db_coworkingspace.booking WHERE idbooking = '" + rs.getString("idbooking") + "';";
                             stmt_d.executeUpdate(sql_d);
+                            sql_d = "INSERT INTO `db_coworkingspace`.`history` (`date`, `begin_time`, `end_time`, `desk_booking`, `fk_idmember`, `fk_idspace`) "
+                                    + "VALUES ('" + date + "', '" + rs.getString("begin_time") + "', '" + end_time + "', '" + rs.getString("desk_booking") + "', '" + rs.getString("fk_idmember") + "', '" + rs.getString("fk_idspace") + "');";
+                            stmt_d.executeUpdate(sql_d);
+                            sentmessage.sentMessage(message);
                         } else if (Integer.parseInt(date_list[2]) == Integer.parseInt(list_date[0])) {
                             if (Integer.parseInt(time_list[0]) < Integer.parseInt(list_time[0])) {
                                 sql_d = "DELETE FROM db_coworkingspace.booking WHERE idbooking = '" + rs.getString("idbooking") + "';";
                                 stmt_d.executeUpdate(sql_d);
+                                sql_d = "INSERT INTO `db_coworkingspace`.`history` (`date`, `begin_time`, `end_time`, `desk_booking`, `fk_idmember`, `fk_idspace`) "
+                                        + "VALUES ('" + date + "', '" + rs.getString("begin_time") + "', '" + end_time + "', '" + rs.getString("desk_booking") + "', '" + rs.getString("fk_idmember") + "', '" + rs.getString("fk_idspace") + "');";
+                                stmt_d.executeUpdate(sql_d);
+                                sentmessage.sentMessage(message);
                             } else if (Integer.parseInt(time_list[0]) == Integer.parseInt(list_time[0])) {
                                 if (Integer.parseInt(time_list[1]) <= Integer.parseInt(list_time[1])) {
                                     sql_d = "DELETE FROM db_coworkingspace.booking WHERE idbooking = '" + rs.getString("idbooking") + "';";
                                     stmt_d.executeUpdate(sql_d);
+                                    sql_d = "INSERT INTO `db_coworkingspace`.`history` (`date`, `begin_time`, `end_time`, `desk_booking`, `fk_idmember`, `fk_idspace`) "
+                                            + "VALUES ('" + date + "', '" + rs.getString("begin_time") + "', '" + end_time + "', '" + rs.getString("desk_booking") + "', '" + rs.getString("fk_idmember") + "', '" + rs.getString("fk_idspace") + "');";
+                                    stmt_d.executeUpdate(sql_d);
+                                    sentmessage.sentMessage(message);
                                 }
                             }
                         }
@@ -152,15 +199,16 @@ public class Rental extends Member {
     public void reserSpace(String date, String time_start, String time_end, String amount, String s_name, String username) {
         try {
             Statement stmt = conn.createStatement();
-            String sql = "SELECT idspace,m.username\n"
+            String sql = "SELECT idspace,m.username,c.amount_desk\n"
                     + "FROM co_working_space c\n"
                     + "join member m\n"
                     + "on c.fk_idmember = m.idmember\n"
-                    + "where name = '" + s_name + "';";
+                    + "where name = '"+ s_name +"';";
             ResultSet rs = stmt.executeQuery(sql);
             rs.next();
             String idspace = rs.getString("idspace");
             String username_lessor = rs.getString("m.username");
+            int amount_desk = Integer.parseInt(rs.getString("c.amount_desk"));
 
             Statement stmt_user = conn.createStatement();
             String sql_user = "SELECT idmember\n"
@@ -177,11 +225,18 @@ public class Rental extends Member {
                 date_reverse += date_split[count_split - 1];
                 date_reverse += "-";
             }
+            amount_desk -= Integer.parseInt(amount);
+            sql = "UPDATE co_working_space\n"
+                    + "SET amount_desk = '" + amount_desk + "'\n"
+                    + "WHERE idspace = '" + idspace + "';";
+            stmt.executeUpdate(sql);
 
             Statement stmt_reser = conn.createStatement();
             String sql_reser = "INSERT INTO db_coworkingspace.booking(date, begin_time, end_time, desk_booking, fk_idmember, fk_idspace) \n"
                     + "	VALUES ('" + date_reverse + "', '" + time_start + "', '" + time_end + "', '" + amount + "', '" + idmember + "', '" + idspace + "');";
             stmt_reser.executeUpdate(sql_reser);
+            
+            
 
             DateFormat dateFormat_date = new SimpleDateFormat("dd/MM/yyyy");
             DateFormat dateFormat_time = new SimpleDateFormat("HH:mm");
@@ -192,7 +247,7 @@ public class Rental extends Member {
             message.setSender(username);
             message.setReceiver(username_lessor);
             message.setMessage("รายการทำการจองพื้นที่: " + username + " ได้ทำการจองพื้นที่ " + s_name + "ในวันที่ " + date_reverse + " เวลา " + time_start + "-" + time_end + " จำนวน " + amount + "คน");
-            Member sentmessage = new Member();
+            Member sentmessage = new Member(conn);
             sentmessage.sentMessage(message);
 
         } catch (SQLException ex) {
@@ -336,5 +391,15 @@ public class Rental extends Member {
     public void setState_review(int state_review) {
         this.state_review = state_review;
     }
+
+    public int getCancelStatus() {
+        return cancelStatus;
+    }
+
+    public void setCancelStatus(int cancelStatus) {
+        this.cancelStatus = cancelStatus;
+    }
+    
+    
 
 }

@@ -59,7 +59,7 @@ public class ApproveServlet extends HttpServlet {
             message.setSender("Admin");
             message.setReceiver(username);
             message.setMessage("Adminทำการยืนยันข้อมูลแล้ว: " + username + " ได้รับการยืนยันตนตนจาก Admin แล้ว");
-            Member sentmessage = new Member();
+            Member sentmessage = new Member(conn);
             sentmessage.sentMessage(message);
             response.sendRedirect("ViewapproveServlet");
 

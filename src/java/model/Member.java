@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -32,7 +33,7 @@ public class Member {
     private String img_user;
     private String idcard;
     private String status_approve;
-    private List<Message> messages;
+    private List<Message> messages = new ArrayList<>();
 
     Connection conn;
 
@@ -191,8 +192,8 @@ public class Member {
     public int getUnReadMessage() {
         pullMessage();
         int unread = 0;
-        for (int i = 0; i < getMessages().size(); i++) {
-            if (getMessages().get(i).getStatus() == 0) {
+        for (int i = 0; i < messages.size(); i++) {
+            if (messages.get(i).getStatus() == 0) {
                 unread++;
             }
         }
@@ -206,7 +207,7 @@ public class Member {
         }
         try {
             Statement message_statement = conn.createStatement();
-            String message_sql = "select * from message where username = '"+ username +"';";
+            String message_sql = "select * from message where receiver = '"+ username +"';";
             ResultSet mrs = message_statement.executeQuery(message_sql);
             while (mrs.next()) {
                 temp.setId(mrs.getInt("idmessage"));

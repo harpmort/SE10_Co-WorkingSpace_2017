@@ -47,7 +47,7 @@ public class CancelbookingServlet extends HttpServlet {
             cancel.cancelBooking(idbooking);
             session.setAttribute("cancel", cancel);
             response.sendRedirect("BookingServlet");
-
+            
         }
     }
 
