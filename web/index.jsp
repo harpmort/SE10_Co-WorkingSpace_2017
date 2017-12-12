@@ -63,15 +63,17 @@
                         <a id="advanceSearch">Advance Search</a>
                         <div id="searchPad" style="display:none" class="search-filter">
                             Type Room :
-                            <input type="radio" name="typeRoom" value="" /> Share Room
-                            <input type="radio" name="typeRoom" value="" /> Private Room<br>
+                            <input type="radio" name="typeRoom" value="shareRoom" /> Share Room
+                            <input type="radio" name="typeRoom" value="privateRoom" /> Private Room<br>
+                            <input type="radio" name="typeRoom" value="" /> Meeting Room<br>
+
                             Type Desk : 
-                            <input type="radio" name="typeDesk" value="" /> Share Desk
-                            <input type="radio" name="typeDesk" value="" /><br>
-                            ราคา : 
-                            <b>$ 100</b>
+                            <input type="radio" name="typeDesk" value="shareDesk" /> Share Desk
+                            <input type="radio" name="typeDesk" value="fixedDesk" /> Fixed Desk<br>
+                            Price : 
+                            <b class="margin-slider-right">$ 100</b>
                             <input id="ex2" type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="10" data-slider-value="[250,750]"/>
-                            <b>$ 1000</b>
+                            <b class="margin-slider-left">$ 1000</b>
                         </div>
                     </div>
                     

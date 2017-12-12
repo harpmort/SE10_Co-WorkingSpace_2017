@@ -25,6 +25,7 @@
 .margin-bott-nextbtn{
 	margin-bottom: 20px;
 }
+
 .align-center {
 	margin-top: 35px;
 	padding: 180px;
@@ -325,6 +326,13 @@ body {
     height: 120px;
     background-color: #e0e0e0;
     width: 400px;
+    padding-top: 18px;
+}
+.margin-slider-right{
+	margin-right: 10px;
+}
+.margin-slider-left{
+	margin-left: 10px;
 }
 /*MESSAGE DECORATION*/
 .message-main{
