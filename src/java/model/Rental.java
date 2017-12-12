@@ -25,6 +25,8 @@ public class Rental extends Member {
     private String begin_time;
     private String end_time;
     private String desk_booking;
+    private int state_review;
+    private int check_rate = 0;
 
     List<Member> lhistory;
     private String idhistory;
@@ -117,17 +119,15 @@ public class Rental extends Member {
             String[] date_split = date.split("-");
             int count_split = date_split.length;
             String date_reverse = "";
-            for(int i =0;count_split-1>=i;count_split--){
-                date_reverse += date_split[count_split-1];
+            for (int i = 0; count_split - 1 >= i; count_split--) {
+                date_reverse += date_split[count_split - 1];
                 date_reverse += "-";
             }
-            
+
             Statement stmt_reser = conn.createStatement();
             String sql_reser = "INSERT INTO db_coworkingspace.booking(date, begin_time, end_time, desk_booking, fk_idmember, fk_idspace) \n"
                     + "	VALUES ('" + date_reverse + "', '" + time_start + "', '" + time_end + "', '" + amount + "', '" + idmember + "', '" + idspace + "');";
             stmt_reser.executeUpdate(sql_reser);
-
-            
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -137,7 +137,7 @@ public class Rental extends Member {
     public void viewListhistory(String username) {
         try {
             Statement stmt = conn.createStatement();
-            String sql = "SELECT h.idhistory,c.name,h.date,h.begin_time,h.end_time,h.desk_booking,ml.username\n"
+            String sql = "SELECT h.idhistory,c.name,h.date,h.begin_time,h.end_time,h.desk_booking,ml.username,h.state_review\n"
                     + "FROM history h\n"
                     + "join member m \n"
                     + "on h.fk_idmember = m.idmember\n"
@@ -156,8 +156,44 @@ public class Rental extends Member {
                 lh.setBegin_time(rs.getString("h.begin_time"));
                 lh.setEnd_time(rs.getString("h.end_time"));
                 lh.setDesk_booking(rs.getString("h.desk_booking"));
+                lh.setState_review(Integer.parseInt(rs.getString("h.state_review")));
                 lhistory.add(lh);
             }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void rating(String rate, String idhistory) {
+        try {
+            Statement stmt = conn.createStatement();
+            String sql = "select idspace,rating,num_of_review,state_review from co_working_space join history on fk_idspace = idspace where idhistory = '" + idhistory + "';";
+            ResultSet rs = stmt.executeQuery(sql);
+            rs.next();
+             String idspace = rs.getString("idspace");
+            int rating = Integer.parseInt(rs.getString("rating"));
+            int num_of_review = Integer.parseInt(rs.getString("num_of_review"));
+            num_of_review += 1;
+            rating = (rating + Integer.parseInt(rate)) / num_of_review;
+
+            sql = "UPDATE co_working_space\n"
+                    + "SET rating = '" + rating + "'\n"
+                    + "WHERE idspace = '" + idspace + "';";
+            stmt.executeUpdate(sql);
+            
+            sql = "UPDATE co_working_space\n"
+                    + "SET num_of_review = '" + num_of_review + "'\n"
+                    + "WHERE idspace = '" + idspace + "';";
+            stmt.executeUpdate(sql);
+            
+            sql = "UPDATE history\n"
+                    + "SET state_review = 0\n"
+                    + "WHERE idhistory = '" + idhistory + "';";
+            stmt.executeUpdate(sql);
+            
+            check_rate = 1;
+            
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -219,5 +255,23 @@ public class Rental extends Member {
     public void setIdhistory(String idhistory) {
         this.idhistory = idhistory;
     }
+
+    public int getCheck_rate() {
+        return check_rate;
+    }
+
+    public void setCheck_rate(int check_rate) {
+        this.check_rate = check_rate;
+    }
+
+    public int getState_review() {
+        return state_review;
+    }
+
+    public void setState_review(int state_review) {
+        this.state_review = state_review;
+    }
+    
+    
 
 }

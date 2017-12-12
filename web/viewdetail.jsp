@@ -132,7 +132,29 @@
             }
         %>
         <form action="ReserServlet" method="POST">
-            <h1 class="margin-left type-room-name"><%= space.getName()%></h1>
+            <div class="margin-left type-room-name">
+                <h1><%= space.getName()%></h1>
+                <h3>by <%= space.getUsername()%></h3>
+                <%String approve_status = space.getApprove_status();
+                if (approve_status.equals("Approved")) {%>
+                <%int rating = space.getRating();
+                if( rating == 0){%>
+                    <img class="" src="img/0.png" style="height: 20px;"/> จากผู้ให้เช่า <%= space.getNum_review()%> คน
+                <%}else if(rating == 1){%>
+                    <img class="" src="img/1.png" style="height: 20px;"/> จากผู้ให้เช่า <%= space.getNum_review()%> คน
+                <%}else if(rating == 2){%>
+                    <img class="" src="img/2.png" style="height: 20px;"/> จากผู้ให้เช่า <%= space.getNum_review()%> คน
+                <%}else if(rating == 3){%>
+                    <img class="" src="img/3.png" style="height: 20px;"/> จากผู้ให้เช่า <%= space.getNum_review()%> คน
+                <%}else if(rating == 4){%>
+                    <img class="" src="img/4.png" style="height: 20px;"/> จากผู้ให้เช่า <%= space.getNum_review()%> คน
+                <%}else if(rating == 5){%>
+                    <img class="" src="img/5.png" style="height: 20px;"/> จากผู้ให้เช่า <%= space.getNum_review()%> คน
+                <%}}else{%>
+                <h6>ผู้ให้เช่าคนนี้ยังไม่ได้ทำการยืนยันตัวตน</h6>
+                <%}%>
+            </div>
+
 
             <div class="container zero-gap" style="width: 80%">
                 <div id="myCarousel" class="carousel slide" data-ride="carousel">

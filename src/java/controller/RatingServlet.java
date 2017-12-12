@@ -16,15 +16,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.Member;
-import model.Space;
+import model.Lessor;
+import model.Rental;
 
 /**
  *
  * @author Asus
  */
-@WebServlet(name = "ViewprofileServlet", urlPatterns = {"/ViewprofileServlet"})
-public class ViewprofileServlet extends HttpServlet {
+@WebServlet(name = "RatingServlet", urlPatterns = {"/RatingServlet"})
+public class RatingServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,12 +41,18 @@ public class ViewprofileServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String text = request.getParameter("search");
+            String rate = request.getParameter("rate");
+            String idhistory = request.getParameter("idhistory");
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
             HttpSession session = request.getSession();
-            Member member = (Member) session.getAttribute("member");
-            RequestDispatcher pg = request.getRequestDispatcher("Profile.jsp");
+            
+            Rental rating = new Rental(conn);
+            rating.rating(rate, idhistory);
+            int check_rate = rating.getCheck_rate();
+            session.setAttribute("check_rate", check_rate);
+            
+            RequestDispatcher pg = request.getRequestDispatcher("HistoryServlet");
             pg.forward(request, response);
 
         }

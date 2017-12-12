@@ -90,7 +90,13 @@
                                         <tr class="success">
                                             <td>${row.username}</td>
                                             <td>${row.firstname}</td>
-                                            <td><a href="${row.idcard}">กดเพื่อดู Id Card ผู้ประกอบการ</a></td>
+                                            <c:if test="${row.idcard == 'Not verified'}" >
+                                                <td>ยังไม่ได้ส่งรูป ID CARD</td>
+                                            </c:if>
+                                            <c:if test="${row.idcard != 'Not verified'}" >
+                                                <td><a href="${row.idcard}">กดเพื่อดู Id Card ผู้ประกอบการ</a></td>
+                                            </c:if>
+                                            
 
                                     <form action="ApproveServlet" method="POST">
                                         <td class="success">
