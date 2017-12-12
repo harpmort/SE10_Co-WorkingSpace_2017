@@ -73,6 +73,16 @@
                                     </li>
                                 </ul>
                             </li>
+                            <% if(true){ %>
+                        <li class="menu-bar"><div class="message-main">
+                                <div data-toggle="messagetooltip" data-placement="bottom" title="คุณมีข้อความแจ้งเตือน!"><img class="message-img" src="img/message.png"><div class="message-count">10</div></div>
+                            </div></li>
+                        <% }else{ %>
+                        <li class="menu-bar"><div class="message-main">
+                                <div data-toggle="nomessagetooltip" data-placement="bottom" title="คุณไม่มีข้อความ"><img class="message-img" src="img/message.png"></div>
+                            </div></li>
+                        
+                        <% } %>
                         </ul>
 
                     </div>
@@ -90,6 +100,16 @@
                                     </li>
                                 </ul>
                             </li>
+                            <% if(true){ %>
+                        <li class="menu-bar"><div class="message-main">
+                                <div data-toggle="messagetooltip" data-placement="bottom" title="คุณมีข้อความแจ้งเตือน!"><img class="message-img" src="img/message.png"><div class="message-count">10</div></div>
+                            </div></li>
+                        <% }else{ %>
+                        <li class="menu-bar"><div class="message-main">
+                                <div data-toggle="nomessagetooltip" data-placement="bottom" title="คุณไม่มีข้อความ"><img class="message-img" src="img/message.png"></div>
+                            </div></li>
+                        
+                        <% } %>
                         </ul>
                     </div>
                     <%}%>
@@ -227,7 +247,7 @@
                             <div class="book-bg margin-top book-margin">
                                 <div class="book-title">
                                     <center>
-                                        <div class="price"><p>Price : <%= space.getPrice()%></p></div>
+                                        <div class="price"><p id="totalPrice">Price : <%= space.getPrice()%></p></div>
                                     </center>
                                 </div>
                                 <div class="row text-pos">
@@ -753,8 +773,29 @@
                 fieldName = $(this).attr('data-field');
                 var input = $("input[name='" + fieldName + "']");
                 var currentVal = parseInt(input.val());
+                
+                var startTime = $('#datetimepicker2').val();
+                var endTime = $('#datetimepicker3').val();
+                
+                var start = startTime.split(':');
+                var end = endTime.split(':');
+                
+                var total = parseInt(start[0]) - parseInt(end[0]);
+                total = Math.abs(total);
+                
+                
+               
+                var min = (parseInt(start[1]) + 30) - 60;
+                min = Math.abs(min);
+                
+                if (min <= parseInt(end[1])) {
+                    total++;
+                }
+                
                 if (currentVal > input.attr('min')) {
                     input.val(currentVal - 1).change();
+                    currentVal = parseInt(input.val());
+                    $('#totalPrice').text('Price : ' + (<%= space.getPrice()%> * currentVal) * total);
                 }
             });
 
@@ -762,8 +803,27 @@
                 fieldName = $(this).attr('data-field');
                 var input = $("input[name='" + fieldName + "']");
                 var currentVal = parseInt(input.val());
+                
+                var startTime = $('#datetimepicker2').val();
+                var endTime = $('#datetimepicker3').val();
+                
+                var start = startTime.split(':');
+                var end = endTime.split(':');
+                
+                var total = parseInt(start[0]) - parseInt(end[0]);
+                total = Math.abs(total);
+               
+                var min = (parseInt(start[1]) + 30) - 60;
+                min = Math.abs(min);
+                
+                if (min <= parseInt(end[1])) {
+                    total++;
+                }
+                
                 if (currentVal < input.attr('max')) {
                     input.val(currentVal + 1).change();
+                    currentVal = parseInt(input.val());
+                    $('#totalPrice').text('Price : ' + (<%= space.getPrice()%> * currentVal) * total);
                 }
             });
         </script>

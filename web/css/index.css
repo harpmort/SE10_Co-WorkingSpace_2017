@@ -316,3 +316,28 @@ body {
 .btn-confirm{
     margin-bottom: 30px;
 }
+
+/*MESSAGE DECORATION*/
+.message-main{
+	padding-right: 20px;
+	height: 10px;
+
+}
+.message-img{
+	margin-top: 10px;
+	width: 30px;
+	height: 30px;
+
+}
+.message-count{
+	position: relative;
+	background: #f44336;
+	border-radius: 50%;
+	width: 18px;
+	height: 18px;
+	text-align: center;
+	font-size: 70%;
+	padding: 3px 0;
+	left: 20px;
+	top: -15px;
+}

@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -30,6 +32,7 @@ public class Member {
     private String img_user;
     private String idcard;
     private String status_approve;
+    private List<Message> messages;
 
     Connection conn;
 
@@ -174,6 +177,63 @@ public class Member {
             ex.printStackTrace();
         }
     }
+    
+    public void markAsRead(int id){
+        try {
+            Statement mr_statement = conn.createStatement();
+            String mr_sql = "E-BOY PLEASE EDIT HERE";
+            mr_statement.executeUpdate(mr_sql);
+        } catch (SQLException ex) {
+            Logger.getLogger(Member.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public int getUnReadMessage(){
+        pullMessage();
+        int unread = 0;
+        for(int i = 0; i < getMessages().size(); i++){
+            if(getMessages().get(i).getStatus() == 0){
+                unread ++;
+            }
+        }
+        return unread;
+    }
+    
+    public void pullMessage(){
+        Message temp = new Message();
+        if(messages.size() != 0){
+            messages.clear();
+        }
+        try {
+            Statement message_statement = conn.createStatement();
+            String message_sql = "E-BOY PLEASE EDIT HERE";
+            ResultSet mrs = message_statement.executeQuery(message_sql);
+            while(mrs.next()){
+                temp.setId(mrs.getInt("ID PLEASE"));
+                temp.setSender(mrs.getString("POORUB PLEASE"));
+                temp.setReceiver(mrs.getString("POOSONG PLEASE"));
+                temp.setDate(mrs.getString("WANTEE PLEASE"));
+                temp.setTime(mrs.getString("WELAR PLEASE"));
+                temp.setMessage(mrs.getString("KOR KWARM PLEASE"));
+                temp.setStatus(mrs.getInt("ARN ROU YOUNG PLEASE"));
+                messages.add(temp);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Member.class.getName()).log(Level.SEVERE, null, ex);
+        }   
+    }
+    
+    public void sentMessage(Message message){
+        try {
+            Statement sm_statement = conn.createStatement();
+            String sm_sql = "E-BOY PLEASE EDIT HERE";
+            sm_statement.executeUpdate(sm_sql);
+        } catch (SQLException ex) {
+            Logger.getLogger(Member.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    
 
     public int getIdmember() {
         return idmember;
@@ -270,6 +330,16 @@ public class Member {
     public void setStatus_approve(String status_approve) {
         this.status_approve = status_approve;
     }
+
+    public List<Message> getMessages() {
+        pullMessage();
+        return messages;
+    }
+
+    public void setMessages(List<Message> messages) {
+        this.messages = messages;
+    }
+    
     
     
 
