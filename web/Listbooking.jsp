@@ -150,7 +150,7 @@
 
             </div>
         </div>               
-        <script script type="text/javascript">
+        <script type="text/javascript">
             $(document).ready(function () {
                 $('#messagediv').click(function () {
                     $('#messageModal').modal('show');

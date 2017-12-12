@@ -660,7 +660,8 @@
             document.getElementById("viewAll").onclick = function () {
                 document.getElementById("formViewAll").submit();
             };
-        <script script type="text/javascript">
+            </script>
+        <script type="text/javascript">
             $(document).ready(function () {
                 $('#messagediv').click(function () {
                     $('#messageModal').modal('show');
