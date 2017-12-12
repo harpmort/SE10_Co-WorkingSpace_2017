@@ -123,17 +123,19 @@
                         <a id="advanceSearch">Advance Search</a>
                         <div id="searchPad" style="display:none" class="search-filter">
                             Type Room :
-                            <input type="radio" name="typeRoom" value="shareRoom" /> Share Room
-                            <input type="radio" name="typeRoom" value="privateRoom" /> Private Room<br>
-                            <input type="radio" name="typeRoom" value="" /> Meeting Room<br>
-
+                            <input type="radio" name="typeRoom" value="1" /> Share Room
+                            <input type="radio" name="typeRoom" value="2" /> Private Room<br>
+                            <input type="radio" name="typeRoom" value="3" /> Meeting Room<br>
                             Type Desk : 
-                            <input type="radio" name="typeDesk" value="shareDesk" /> Share Desk
-                            <input type="radio" name="typeDesk" value="fixDesk" /> Fix Desk<br>
+                            <input type="radio" name="typeDesk" value="2" /> Share Desk
+                            <input type="radio" name="typeDesk" value="1" /> Fix Desk<br>
                             Price : 
-                            <b class="margin-slider-right">$ 100</b>
-                            <input id="ex2" type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="10" data-slider-value="[250,750]"/>
-                            <b class="margin-slider-left">$ 1000</b>
+                            <b class="margin-slider-right">$ 0</b>
+                            <input id="ex2" type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="10" data-slider-value="[0,1000]"/>
+                            <b class="margin-slider-left">$ 1000</b><br>
+                            <form id="formViewAll" action="SearchServlet" method="POST">
+                                <a id="viewAll" type="submit">View all place.</a>
+                            </form>
                         </div>
                     </div>
                 </center>
@@ -156,6 +158,11 @@
             $(document).ready(function () {
                 $("#ex2").slider({});
             });
+        </script>
+        <script type="text/javascript">
+            document.getElementById("viewAll").onclick = function() {
+                document.getElementById("formViewAll").submit();
+            };
         </script>
     </body>
 </html>
