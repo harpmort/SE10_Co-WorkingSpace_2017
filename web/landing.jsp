@@ -60,6 +60,16 @@
                                 </li>
                             </ul>
                         </li>
+                        <% if(true){ %>
+                        <li class="menu-bar"><div class="message-main">
+                                <div data-toggle="messagetooltip" data-placement="bottom" title="คุณมีข้อความแจ้งเตือน!"><img class="message-img" src="img/message.png"><div class="message-count">10</div></div>
+                            </div></li>
+                        <% }else{ %>
+                        <li class="menu-bar"><div class="message-main">
+                                <div data-toggle="nomessagetooltip" data-placement="bottom" title="คุณไม่มีข้อความ"><img class="message-img" src="img/message.png"></div>
+                            </div></li>
+                        
+                        <% } %>
                     </ul>
                 </div>
                 <%} else if (type == 3) {%>
@@ -76,6 +86,16 @@
                                 </li>
                             </ul>
                         </li>
+                        <% if(true){ %>
+                        <li class="menu-bar"><div class="message-main">
+                                <div data-toggle="messagetooltip" data-placement="bottom" title="คุณมีข้อความแจ้งเตือน!"><img class="message-img" src="img/message.png"><div class="message-count">10</div></div>
+                            </div></li>
+                        <% }else{ %>
+                        <li class="menu-bar"><div class="message-main">
+                                <div data-toggle="nomessagetooltip" data-placement="bottom" title="คุณไม่มีข้อความ"><img class="message-img" src="img/message.png"></div>
+                            </div></li>
+                        
+                        <% } %>
                     </ul>
                 </div>
                 <%}%>
@@ -101,5 +121,11 @@
                 </center>
             </div>
         </div>
+                <script type="text/javascript">
+                    $(document).ready(function(){
+    $('[data-toggle="nomessagetooltip"]').tooltip();
+    $('[data-toggle="messagetooltip"]').tooltip();
+});
+                </script>
     </body>
 </html>
