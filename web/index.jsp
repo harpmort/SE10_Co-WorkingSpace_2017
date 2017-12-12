@@ -64,15 +64,15 @@
                         <div id="searchPad" style="display:none" class="search-filter">
                             Type Room :
                             <input type="radio" name="typeRoom" value="1" /> Share Room
-                            <input type="radio" name="typeRoom" value="2" /> Private Room
+                            <input type="radio" name="typeRoom" value="2" /> Private Room<br>
                             <input type="radio" name="typeRoom" value="3" /> Meeting Room<br>
                             Type Desk : 
                             <input type="radio" name="typeDesk" value="2" /> Share Desk
                             <input type="radio" name="typeDesk" value="1" /> Fix Desk<br>
-                            ราคา : 
-                            <b>$ 0</b>
+                            Price : 
+                            <b class="margin-slider-right">$ 0</b>
                             <input id="ex2" type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="10" data-slider-value="[0,1000]"/>
-                            <b>$ 1000</b>
+                            <b class="margin-slider-left">$ 1000</b>
                         </div>
                     </div>
                     

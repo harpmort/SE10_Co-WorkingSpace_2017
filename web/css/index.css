@@ -22,6 +22,10 @@
 	margin-left: 0px;
 	margin-right: 10px;
 }
+.margin-bott-nextbtn{
+	margin-bottom: 20px;
+}
+
 .align-center {
 	margin-top: 35px;
 	padding: 180px;
@@ -281,7 +285,7 @@ body {
     text-align: center;
     margin-top: 60px;
 }
-
+/*Crop Img*/
 .img-crop{
     background-position: center center;
     background-repeat: none;
@@ -293,6 +297,7 @@ body {
 .opacity{
     opacity: 0;
 }
+
 .img-detail-crop{
     background-position: center center;
     background-repeat: none;
@@ -316,12 +321,18 @@ body {
 .btn-confirm{
     margin-bottom: 30px;
 }
-
-
+/*Advance Search Box*/
 .search-filter{
     height: 120px;
     background-color: #e0e0e0;
     width: 400px;
+    padding-top: 18px;
+}
+.margin-slider-right{
+	margin-right: 10px;
+}
+.margin-slider-left{
+	margin-left: 10px;
 }
 /*MESSAGE DECORATION*/
 .message-main{

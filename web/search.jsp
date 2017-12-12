@@ -12,11 +12,13 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-slider.css">
         <link rel="stylesheet" type="text/css" href="css/index.css">
         <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Prompt:300">
         <title>Co-Working-Space</title>
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
+        <script src="js/bootstrap-slider.js"></script>
     </head>
     <body>
         <% int check = 0;
@@ -143,15 +145,15 @@
                         <div id="searchPad" style="display:none" class="search-filter">
                             Type Room :
                             <input type="radio" name="typeRoom" value="1" /> Share Room
-                            <input type="radio" name="typeRoom" value="2" /> Private Room
+                            <input type="radio" name="typeRoom" value="2" /> Private Room<br>
                             <input type="radio" name="typeRoom" value="3" /> Meeting Room<br>
                             Type Desk : 
                             <input type="radio" name="typeDesk" value="2" /> Share Desk
                             <input type="radio" name="typeDesk" value="1" /> Fix Desk<br>
-                            ราคา : 
-                            <b>$ 0</b>
+                            Price : 
+                            <b class="margin-slider-right">$ 0</b>
                             <input id="ex2" type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="10" data-slider-value="[0,1000]"/>
-                            <b>$ 1000</b>
+                            <b class="margin-slider-left">$ 1000</b>
                         </div>
                     </div>
                 </center>
@@ -199,7 +201,7 @@
 
 
         <div class="col-md-5"></div>
-        <div class="col-md-1">
+        <div class="col-md-1 margin-bott-nextbtn">
             <% if (count >= i && i >= 11) { %>
             <form action="SearchServlet" method="POST">
                 <div class="row input-group search-bar">
@@ -209,7 +211,7 @@
             </form>
             <% } %>
         </div>
-        <div class="col-md-1">
+        <div class="col-md-1 margin-bott-nextbtn">
             <% if (count > pos) { %>
             <form action="search.jsp" method="POST">
                 <% session.setAttribute("i", count); %>
