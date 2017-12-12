@@ -41,11 +41,24 @@ public class SearchServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
             String text = request.getParameter("search");
+            String typeroom = request.getParameter("typeRoom");
+            String typedesk = request.getParameter("typeDesk");
+            String price = request.getParameter("price");
+            String all = request.getParameter("all");
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
             HttpSession session = request.getSession();
             Space space = new Space(conn);
-            space.search(text);
+            System.out.println("text : "+text);
+            System.out.println("tr : "+typeroom);
+            System.out.println("td : "+typedesk);
+            System.out.println("p : "+price);
+            System.out.println("a : "+all);
+            if(all != null){
+                space.searchAll();
+            }else{
+                space.search(text);
+            }
             int type = 0;
             if (session.getAttribute("type") != null) {
                 type = (int) session.getAttribute("type");
