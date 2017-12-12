@@ -74,9 +74,9 @@
                                     </li>
                                 </ul>
                             </li>
-                            <% if (member.getUnReadMessage() != 0) { %>
+                            <% if (member.getUnReadMessage() != 0) {%>
                             <li class="menu-bar"><div class="message-main">
-                                    <div id="messagediv" data-toggle="messagetooltip" data-placement="bottom" title="คุณมีข้อความแจ้งเตือน!"><img class="message-img" src="img/message.png"><div class="message-count"><%= member.getUnReadMessage() %></div></div>
+                                    <div id="messagediv" data-toggle="messagetooltip" data-placement="bottom" title="คุณมีข้อความแจ้งเตือน!"><img class="message-img" src="img/message.png"><div class="message-count"><%= member.getUnReadMessage()%></div></div>
                                 </div></li>
                                 <% } else { %>
                             <li class="menu-bar"><div class="message-main">
@@ -125,8 +125,10 @@
         <%model.Space space = (model.Space) session.getAttribute("space");
             List<String> takedslot = space.getTakedslot();
             String takedslot_st = "";
-            if(space.getType_room().equals("Share Room")){
-                takedslot = new ReFormDisabledTime().toSharedRoomDisabled(space.getTakedamount());
+            String takedamount_st = "";
+            List<String> takedamount = space.getTakedamount();
+            if (space.getType_room().equals("Share Room")) {
+                takedslot = new ReFormDisabledTime().toSharedRoomDisabled(takedamount);
             }
             for (int i = 0; i < takedslot.size(); i++) {
                 takedslot_st += takedslot.get(i);
@@ -134,29 +136,37 @@
                     takedslot_st += ",";
                 }
             }
+            for (int i = 0; i < takedamount.size(); i++) {
+                takedamount_st += takedamount.get(i);
+                if (i < takedamount.size() - 1) {
+                    takedamount_st += ",";
+                }
+            }
         %>
         <form action="ReserServlet" method="POST">
             <div class="margin-left type-room-name">
-                <h1><%= space.getName()%></h1>
-                <h3>by <%= space.getUsername()%></h3>
-                <%String approve_status = space.getApprove_status();
+                <span style="font-size:40px"><%= space.getName()%></span>
+                <span style="font-size:20px">&nbsp;&nbsp;by <%= space.getUsername()%></span>
+                <div><%String approve_status = space.getApprove_status();
                 if (approve_status.equals("Approved")) {%>
                 <%int rating = space.getRating();
-                if( rating == 0){%>
-                    <img class="" src="img/0.png" style="height: 20px;"/> จากผู้ให้เช่า <%= space.getNum_review()%> คน
-                <%}else if(rating == 1){%>
-                    <img class="" src="img/1.png" style="height: 20px;"/> จากผู้ให้เช่า <%= space.getNum_review()%> คน
-                <%}else if(rating == 2){%>
-                    <img class="" src="img/2.png" style="height: 20px;"/> จากผู้ให้เช่า <%= space.getNum_review()%> คน
-                <%}else if(rating == 3){%>
-                    <img class="" src="img/3.png" style="height: 20px;"/> จากผู้ให้เช่า <%= space.getNum_review()%> คน
-                <%}else if(rating == 4){%>
-                    <img class="" src="img/4.png" style="height: 20px;"/> จากผู้ให้เช่า <%= space.getNum_review()%> คน
-                <%}else if(rating == 5){%>
-                    <img class="" src="img/5.png" style="height: 20px;"/> จากผู้ให้เช่า <%= space.getNum_review()%> คน
-                <%}}else{%>
+                    if (rating == 0) {%>
+                <img class="" src="img/0.png" style="height: 20px;"/> จากผู้ให้เช่า <%= space.getNum_review()%> คน
+                <%} else if (rating == 1) {%>
+                <img class="" src="img/1.png" style="height: 20px;"/> จากผู้ให้เช่า <%= space.getNum_review()%> คน
+                <%} else if (rating == 2) {%>
+                <img class="" src="img/2.png" style="height: 20px;"/> จากผู้ให้เช่า <%= space.getNum_review()%> คน
+                <%} else if (rating == 3) {%>
+                <img class="" src="img/3.png" style="height: 20px;"/> จากผู้ให้เช่า <%= space.getNum_review()%> คน
+                <%} else if (rating == 4) {%>
+                <img class="" src="img/4.png" style="height: 20px;"/> จากผู้ให้เช่า <%= space.getNum_review()%> คน
+                <%} else if (rating == 5) {%>
+                <img class="" src="img/5.png" style="height: 20px;"/> จากผู้ให้เช่า <%= space.getNum_review()%> คน
+                <%}
+                } else {%>
                 <h6>ผู้ให้เช่าคนนี้ยังไม่ได้ทำการยืนยันตัวตน</h6>
                 <%}%>
+                </div>
             </div>
 
 
@@ -252,7 +262,7 @@
                             <div class="book-bg margin-top book-margin">
                                 <div class="book-title">
                                     <center>
-                                        <div class="price"><p id="totalPrice">Price : <%= space.getPrice()%></p></div>
+                                        <div class="price"><p id="totalPrice">Price: <%= space.getPrice()%></p> <p>Available: <span id="available">จองต่อรอบได้สูงสุด 10 คน (เลือกวันและเวลาอีกครั้งเพื่อตรวจสอบ)</span> person</p></div>
                                     </center>
                                 </div>
                                 <div class="row text-pos">
@@ -263,8 +273,8 @@
                                         </div>
                                         <div class="col-md-7">
 
-                                            <input type="text" class="form-control form-control-edit" readonly="true" value="" id="datetimepicker" name="date">
-                                            <input type="text" class="form-control form-control-edit" readonly="true" id="datetimepicker2" name="time_start">
+                                            <input onchange="mainSetMaxAmount()" type="text" class="form-control form-control-edit" readonly="true" value="" id="datetimepicker" name="date">
+                                            <input onchange="mainSetMaxAmount()" type="text" class="form-control form-control-edit" readonly="true" id="datetimepicker2" name="time_start">
                                         </div>
                                     </div>
                                     <% String type_room = space.getType_room();
@@ -281,19 +291,19 @@
                                                         <i class="glyphicon glyphicon-minus"></i>
                                                     </button>
                                                 </span>
-                                                <input class="form-control input-number input-number-pos form-control-edit" type="text" min="1" max="10" value="1" name="amount">
+                                                <input id="input_people" class="form-control input-number input-number-pos form-control-edit" type="text" min="1" max="10" value="1" name="amount">
                                                 <span class="input-group-btn">
                                                     <button class="btn btn-default" id="btn-plus" data-field="amount" type="button">
                                                         <i class="glyphicon glyphicon-plus"></i>
                                                     </button>
                                                 </span>
                                             </div>
-                                            <input type="text" data-toggle="endtimetooltip" title="กดเวลาเริ่มก่อนสิ!" class="form-control" value=""  readonly="true" id="datetimepicker3" name="time_end">
+                                            <input onchange="mainSetMaxAmount()" type="text" data-toggle="endtimetooltip" title="กดเวลาเริ่มก่อนสิ!" class="form-control" value=""  readonly="true" id="datetimepicker3" name="time_end">
                                         </div>
                                     </div>
                                     <%} else {%>
                                     <div class="col-md-6">
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 res-detail">
                                             <div class="text-edit">จำนวนคน : </div>
                                             <div class="text-edit">เวลาสิ้นสุด : </div>
                                         </div>
@@ -853,33 +863,59 @@
             });
         </script>
         <script type="text/javascript">
-            $(document).ready(function(){
-                $('#messagediv').click(function(){
+            $(document).ready(function () {
+                $('#messagediv').click(function () {
                     $('#messageModal').modal('show');
                 });
-                $('#messagediv2').click(function(){
+                $('#messagediv2').click(function () {
                     $('#messageModal').modal('show');
                 });
             });
         </script> 
         <script type="text/javascript">
-                    $(document).ready(function(){
-    $('[data-toggle="nomessagetooltip"]').tooltip();
-    $('[data-toggle="messagetooltip"]').tooltip();
-});
-                </script>
-                <script type="text/javascript">
-                    $(document).ready(function(){
-                        $('#messagebody').load('message.jsp');
-                    });
-                    function delMessage(id){
-                        $('#messagebody').load('message.jsp?delete=yes&id='+id);
+            $(document).ready(function () {
+                $('[data-toggle="nomessagetooltip"]').tooltip();
+                $('[data-toggle="messagetooltip"]').tooltip();
+            });
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#messagebody').load('message.jsp');
+            });
+            function delMessage(id) {
+                $('#messagebody').load('message.jsp?delete=yes&id=' + id);
+            }
+        </script>
+        <script type="text/javascript">
+                    var takedamount = new String("<%= takedamount_st%>");
+                    takedamount = takedamount.split(",");
+                    var maxamount = 10;
+                    function mainSetMaxAmount() {
+                        var myday = $('#datetimepicker').val();
+                        var mystart = $('#datetimepicker2').val();
+                        var myend = $('#datetimepicker3').val();
+                        var myday_temp = myday.toString().split("-");
+                        myday = myday_temp[0] + "/" + myday_temp[1] + "/" + myday_temp[2];
+                        if (myday.length !== 0 && mystart.length !== 0 && myend.length !== 0) {
+                            setMaxAmount(myday, mystart, myend);
+                            document.getElementById("available").innerHTML = new String(maxamount);
+                            document.getElementById('input_people').setAttribute('max', maxamount);
+                        }
                     }
-                </script>
-                <script type="text/javascript">
+                    function setMaxAmount(day, start, end) {
+                        for (var i = 0; i < takedamount.length; i++) {
+                            if (takedamount[i].split("-")[0] === day) {
+                                if (takedamount[i].split("-")[1] === start) {
+                                    if (takedamount[i].split("-")[2] === end) {
+                                        maxamount = takedamount[i].split("-")[3];
+                                    }
+                                }
+                            }
+                        }
 
-                </script>
-                
+                    }
+        </script>
+
 
 
     </body>

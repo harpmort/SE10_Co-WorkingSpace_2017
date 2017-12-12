@@ -23,7 +23,7 @@
     margin-right: 10px;
 }
 .margin-bott-nextbtn{
-	margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 .align-center {
@@ -210,6 +210,7 @@ body {
 .get-des{
     font-size: 20px;
     padding-left: 60px;
+    width: 800px;
 }
 
 /*booking page*/
@@ -318,7 +319,7 @@ body {
 .image-cropper img{
     width: auto;
     height: 100%;
-    
+
 }
 
 .bg-block{
@@ -377,44 +378,49 @@ body {
     padding-top: 18px;
 }
 .margin-slider-right{
-	margin-right: 10px;
+    margin-right: 10px;
 }
 .margin-slider-left{
-	margin-left: 10px;
+    margin-left: 10px;
 }
 /*MESSAGE DECORATION*/
 .message-main{
-	padding-right: 20px;
-	height: 10px;
+    padding-right: 20px;
+    height: 10px;
 
 }
 .message-img{
-	margin-top: 10px;
-	width: 30px;
-	height: 30px;
+    margin-top: 10px;
+    width: 30px;
+    height: 30px;
 
 }
 .message-count{
-	position: relative;
-	background: #f44336;
-	border-radius: 50%;
-	width: 18px;
-	height: 18px;
-	text-align: center;
-	font-size: 70%;
-	padding: 3px 0;
-	left: 20px;
-	top: -15px;
+    position: relative;
+    background: #f44336;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    text-align: center;
+    font-size: 70%;
+    padding: 3px 0;
+    left: 20px;
+    top: -15px;
 }
 .message-text-inside{
-	color: #111111 !important;
+    color: #111111 !important;
 }
 .message-delete{
-	position: absolute;
-	right: 16px;
-	width: 30px;
-	height: 30px;
+    position: absolute;
+    right: 16px;
+    width: 30px;
+    height: 30px;
 }
 .message-header{
-	margin-top: -1px;
+    margin-top: -1px;
+}
+@media (min-width:992px){
+    .magin-book {
+         margin-left: 2px; 
+    }
 }
