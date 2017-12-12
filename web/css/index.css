@@ -1,42 +1,42 @@
 
 .head-bg-cover{
-	background-repeat: no-repeat;
-	min-height: 720px;
+    background-repeat: no-repeat;
+    min-height: 720px;
     padding-bottom: 0px;
     background-image: linear-gradient(0deg,rgba(0,0,0,0),transparent),url('../img/img-slide2.jpg');
     background-position: 0 0,50% 50%;
     background-size: auto,cover;
     position: relative;
     opacity: .8;
-    
+
 }
 .navbar-edit{
-	min-height: 50px !important;
-	margin-bottom: 0px;
-	
+    min-height: 50px !important;
+    margin-bottom: 0px;
+
 }
 .brand-edit{
-/*	padding: 0px;*/
+    /*	padding: 0px;*/
 }
 .margin-3px{
-	margin-left: 0px;
-	margin-right: 10px;
+    margin-left: 0px;
+    margin-right: 10px;
 }
 .align-center {
-	margin-top: 35px;
-	padding: 180px;
-	position: absolute;
-	opacity: 0.8;
-	width: 80%;
-	background-color: white;
-	margin-left: 10%;
-	margin-right: 10%;
-	border-radius: 10px;
+    margin-top: 35px;
+    padding: 180px;
+    position: absolute;
+    opacity: 0.8;
+    width: 80%;
+    background-color: white;
+    margin-left: 10%;
+    margin-right: 10%;
+    border-radius: 10px;
 
 }
 .head-name{
-	font-family: 'Prompt';
-	font-size: 70px !important;
+    font-family: 'Prompt';
+    font-size: 70px !important;
 
 }
 
@@ -49,46 +49,46 @@
 
 /*Radiobutton Who Selector */
 .who-selector-register{
-	list-style-type: none;
-	margin: 0 0 10px 0;
-	padding: 0;
+    list-style-type: none;
+    margin: 0 0 10px 0;
+    padding: 0;
 }
 .who-selector-register li{
-	float: left;
-	margin: 0 5px 0 0;
-	width: 100px;
-	height: 40px;
-	position: relative;
+    float: left;
+    margin: 0 5px 0 0;
+    width: 100px;
+    height: 40px;
+    position: relative;
 }
 .who-selector-register label, .who-selector-register input{
-	display: block;
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-        text-align: center;
-        padding-top: 7px;
-        border: #DDD 1px solid;
-        border-radius: 5px;
-        
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    text-align: center;
+    padding-top: 7px;
+    border: #DDD 1px solid;
+    border-radius: 5px;
+
 }
 .who-selector-register input[type="radio"]{
-	opacity: 0.011;
-	z-index: 100;
+    opacity: 0.011;
+    z-index: 100;
 }
 
 .who-selector-register input[type="radio"]:checked + label {
-	background: #03a9f4;
+    background: #03a9f4;
 }
 .who-selector-register lable{
-	padding: 5px;
-	border: 1px solid #333333;
-	cursor: pointer;
-	z-index: 90;
+    padding: 5px;
+    border: 1px solid #333333;
+    cursor: pointer;
+    z-index: 90;
 }
 .who-selector-register lable:hover{
-	background: #DDD;
+    background: #DDD;
 }
 
 /*Register Other*/
@@ -103,99 +103,110 @@
 
 /*--------------------Others----------------------*/
 .btn-edit{
-	position: relative;
-	left: 30px;
+    position: relative;
+    left: 30px;
 }
 .card-margin {
-	margin-top: 50px;
-	margin-bottom: 50px;
+    margin-top: 50px;
+    margin-bottom: 50px;
 }
 .margin-top {
-	margin-top: 50px;
-  }
+    margin-top: 50px;
+}
 
- .w3-card,.w3-card-2{
- 	box-shadow:0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)
- }
+.w3-card,.w3-card-2{
+    box-shadow:0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)
+}
 .w3-card-4,.w3-hover-shadow:hover{
-	box-shadow:0 4px 10px 0 rgba(0,0,0,0.2),0 4px 20px 0 rgba(0,0,0,0.19)
+    box-shadow:0 4px 10px 0 rgba(0,0,0,0.2),0 4px 20px 0 rgba(0,0,0,0.19)
 }
 
 /*-----------------*/
 .zero-gap {
-	padding-left: 0px;
-	padding-right: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
 }
 .book-title {
-	background: #9cb1bb;
-	border-radius: 3px;
-	padding: 5px;
+    background: #9cb1bb;
+    border-radius: 3px;
+    padding: 5px;
 }
 .book-bg {
-	background: #edf2f5;
-	padding-bottom: 10px;
+    background: #edf2f5;
+    padding-bottom: 10px;
 }
 .book-margin {
-	margin-right: 10%;
-	margin-left: 10%;
+    margin-right: 10%;
+    margin-left: 10%;
 }
 .padding-top {
-	padding-top: 50px;
+    padding-top: 50px;
 }
 .btn-margin {
-	margin: 10px;
+    margin: 10px;
 }
 .margin-left{
-	margin-left: 10%;
+    margin-left: 10%;
 }
 .bg-column {
-	background-color: white;
+    background-color: white;
 }
 .title-margin-top {
-	margin-top: 60px;
+    margin-top: 60px;
 }
 .nav-fixed-top {
-	position: fixed;
+    position: fixed;
 }
 body {
-	font-family: 'Prompt', sans-serif !important;
-	
+    font-family: 'Prompt', sans-serif !important;
+
 }
 /*detail.html*/
 .icon-room-detail{
-	margin: auto;
-	padding: 10px;
+    margin: auto;
+    padding: 10px;
 }
 .input-number-pos{
-	text-align: center;	
+    text-align: center;	
 }
 .type-room-name{
-	margin-top: 3%;
-	margin-bottom: 2%;
+    margin-top: 3%;
+    margin-bottom: 2%;
 
 }
 .form-control-edit{
-	margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 .text-pos{
-	margin-top: 30px;
+    margin-top: 30px;
 }
 .magin-book{
-	margin-left: 25px;
+    margin-left: 25px;
 }
 .text-edit{
-	margin-top: 10px;
-	margin-bottom: 20px;
+    margin-top: 10px;
+    margin-bottom: 20px;
 }
 .detail-des{
-	background-color: #edf2f5;
+    background-color: #edf2f5;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    margin-bottom: 20px;
 }
 
 
 .menu-bar{
     font-size: 15px;
 }
-
+.descript-edit{
+    padding-left: 25px;
+    font-size: 30px;
+    padding-bottom: 10px;
+}
+.get-des{
+    font-size: 20px;
+    padding-left: 60px;
+}
 
 /*booking page*/
 .list-book{
@@ -250,7 +261,7 @@ body {
 /*editspace page*/
 .dropdown-pos-edite-page{
     margin-bottom: 20px;
-    
+
 }
 #edit-name-room{
     padding: 5px 10px 5px 10px;
@@ -265,22 +276,59 @@ body {
 }
 
 /*profile page*/
-.head-pro{
-    font-size: 50px;
-    padding: 30px;
+.edit-margin-block{
+    margin-right: 0;
+    margin-left: 0;
 }
 .show-pro{
     font-size: 25px;
     line-height: 60px;
-    padding-left: 20px;
+    padding-left: 30px;
+}
+.name-pro{
+    font-size: 40px;
+    color: #333;
+    margin-bottom: 30px;
+    margin-top: 20px;
+}
+.content-block-pro{
+    margin-top: 40px;
+}
+.btn-edit-pro{
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 8px 15px 8px 15px;
+    font-size: 15px;
 }
 
-.btn-edit-pro{
-    font-size: 15px;
-    padding: 5px;
-    text-align: center;
-    margin-top: 60px;
+.image-cropper{
+    margin-top: 70px;
+    display: inline-block;
+    position: relative;
+    width: 250px;
+    height: 250px;
+    overflow: hidden;
+    border-radius: 50%;
 }
+.image-cropper img{
+    width: auto;
+    height: 100%;
+    
+}
+
+.bg-block{
+    background-image:linear-gradient(0deg,rgba(30,30,30,.1),transparent), url('../img/img-slide3.jpg');
+    background-repeat: no-repeat;
+    background-position: 85% 60%;    
+
+}
+.bg-content-pro{
+
+}
+
+
+/*-----------------------------------*/
 
 .img-crop{
     background-position: center center;

@@ -18,10 +18,10 @@
         <script src="js/bootstrap.min.js"></script>
     </head>
     <body>
-         <% int check = 0;
+        <% int check = 0;
             if (session.getAttribute("check") != null) {
                 check = (int) session.getAttribute("check");
-            }%>
+             }%>
         <nav class="navbar navbar-default navbar-edit navbar-static-top">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -70,64 +70,65 @@
                 </div>
             </div>
         </nav>
-        
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-<!--                    <h3 class="text-center head-pro">
-                        Profile
-                    </h3>-->
-                    <div class="row">
-                        <div class="col-md-2">
-                        </div>
-                        <div class="col-md-2">
-                            <div class="img-pro"><img src="<%= member.getImg_user()%>" width="100%" /></div>
-                            <div class="name-pro" style="text-align: center"><h3>
-                                    <%= member.getUsername()%>
-                                </h3></div>
-                            <form action="editprofile.jsp" met hod="POST">
-                                <div class="btn-edit-pro">
-                                    <button type="submit" class="btn btn-default" >
-                                        edit profile
-                                    </button>
-                                </div>
-                            </form>
 
+            <div class="">
+                <div class="col-md-12 bg-block">
+                    
+                    <div class="col-md-12" style="text-align: center">
+                        <div class="image-cropper" >
+                            <img src="<%= member.getImg_user()%>" class="rounded"/>
                         </div>
-                        <div class="col-md-6">
-                            <div class="show-pro">ชื่อ : <%= member.getFirstname()%></div>
-                            <div class="show-pro">นามสกุล : <%= member.getLastname()%></div>
-                            <div class="show-pro">Email : <%= member.getEmail()%></div>
-                            <div class="show-pro">เบอร์โทรศัพท์ : <%= member.getPhone()%></div>
-                            <%int type = member.getType();
-                                String type_mem;
-                                if (type == 1) {
-                                    type_mem = "Lessor(ผู้ให้เช่า)";
-                                } else {
-                                    type_mem = "Rental(ผู้เช่า)";
-                                }
-                            %>
-                            <div class="show-pro">ประเภทผู้ใช้งาน : <%= type_mem%></div>
-                            <%if(type == 1){%>
-                            <%String status = member.getStatus_approve();
-                              String idcard = member.getIdcard();
-                                String approve;
-                                if (status.equals("No Approve") && idcard.equals("Not verified")) {
-                                    approve = "ยังไม่ได้ยืนยันตัวตน";
-                                } else if(status.equals("No Approve") && !idcard.equals("Not verified")){
-                                    approve = "รอการยืนยันตัวตน";
-                                }else {
-                                    approve = "ยืนยันตัวตนแล้ว";
-                                }
-                            %>
-                            <div class="show-pro">สถานะยืนยันตัวตน : <%= approve%></div>
-                            <%}%>
+                        <div class="name-pro" id="image" style="text-align: center">
+                            <%= member.getUsername()%>
                         </div>
-                        <div class="col-md-2">
-                        </div>
+
+                    </div>   
+                </div>
+                <div class="row edit-margin-block">
+                    <div class="col-md-2">
+                    </div>
+                    <div class="col-md-2">
+                    </div>
+                    <div class="col-md-6 content-block-pro">
+                        <div class="show-pro">ชื่อ : <%= member.getFirstname()%></div>
+                        <div class="show-pro">นามสกุล : <%= member.getLastname()%></div>
+                        <div class="show-pro">Email : <%= member.getEmail()%></div>
+                        <div class="show-pro">เบอร์โทรศัพท์ : <%= member.getPhone()%></div>
+                        <%int type = member.getType();
+                            String type_mem;
+                            if (type == 1) {
+                                type_mem = "Lessor(ผู้ให้เช่า)";
+                            } else {
+                                type_mem = "Rental(ผู้เช่า)";
+                            }
+                        %>
+                        <div class="show-pro">ประเภทผู้ใช้งาน : <%= type_mem%></div>
+                        <%if (type == 1) {%>
+                        <%String status = member.getStatus_approve();
+                            String idcard = member.getIdcard();
+                            String approve;
+                            if (status.equals("No Approve") && idcard.equals("Not verified")) {
+                                approve = "ยังไม่ได้ยืนยันตัวตน";
+                            } else if (status.equals("No Approve") && !idcard.equals("Not verified")) {
+                                approve = "รอการยืนยันตัวตน";
+                            } else {
+                                approve = "ยืนยันตัวตนแล้ว";
+                            }
+                        %>
+                        <div class="show-pro">สถานะยืนยันตัวตน : <%= approve%></div>
+                        <%}%>
+                    </div>
+                    <div class="col-md-2">
                     </div>
                 </div>
+                <form action="editprofile.jsp" met hod="POST">
+                    <div class="btn-edit-pro">
+                        <button type="submit" class="btn btn-default btn-edit-pro" >
+                            edit profile
+                        </button>
+                    </div>
+                </form>
+
             </div>
-        </div>
     </body>
 </html>

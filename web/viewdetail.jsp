@@ -153,7 +153,8 @@
                 <div class="col-md-8">
                     <!-- //Icon & Room Detail -->
                     <div class="row icon-room-detail">
-                        <div class="col-md-6">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-5">
                             <div class="row">
                                 <div class="col-md-2">
                                     <img src="img/actions.png" style="width: 32px">
@@ -252,10 +253,10 @@
                         </div>
 
 
-                        <div class="jumbotron margin-top detail-des">
+                        <div class="margin-top detail-des">
                             <div class="container">
-                                <h3>Description</h3>
-                                <p><%= space.getDescription()%></p>
+                                <div class="descript-edit">Description</div>
+                                <div class="get-des" ><%= space.getDescription()%></div>
                             </div>
                         </div>
 
