@@ -73,13 +73,13 @@
                                     </li>
                                 </ul>
                             </li>
-                            <% if (true) { %>
+                            <% if (member.getUnReadMessage() != 0) { %>
                             <li class="menu-bar"><div class="message-main">
-                                    <div id="messagediv" data-toggle="messagetooltip" data-placement="bottom" title="คุณมีข้อความแจ้งเตือน!"><img class="message-img" src="img/message.png"><div class="message-count">10</div></div>
+                                    <div id="messagediv" data-toggle="messagetooltip" data-placement="bottom" title="คุณมีข้อความแจ้งเตือน!"><img class="message-img" src="img/message.png"><div class="message-count"><%= member.getUnReadMessage() %></div></div>
                                 </div></li>
                                 <% } else { %>
                             <li class="menu-bar"><div class="message-main">
-                                    <div data-toggle="nomessagetooltip" data-placement="bottom" title="คุณไม่มีข้อความ"><img class="message-img" src="img/message.png"></div>
+                                    <div id="messagediv2" data-toggle="nomessagetooltip" data-placement="bottom" title="คุณไม่มีข้อความใหม่"><img class="message-img" src="img/message.png"></div>
                                 </div></li>
 
                             <% } %>
@@ -100,7 +100,7 @@
                                     </li>
                                 </ul>
                             </li>
-                            <% if (true) { %>
+                            <% if (admin.getUnReadMessage() != 0) { %>
                             <li class="menu-bar"><div class="message-main">
                                     <div data-toggle="messagetooltip" data-placement="bottom" title="คุณมีข้อความแจ้งเตือน!"><img class="message-img" src="img/message.png"><div class="message-count">10</div></div>
                                 </div></li>
@@ -469,12 +469,7 @@
                         <h4 class="modal-title">Message Notification</h4>
                     </div>
                     <div class="modal-body">
-                        <h2>All message</h2>
-                        <ul class="list-group">
-                            <a href="#" class="message-text-inside list-group-item"><img class="message-delete" src="img/error.png"><h3 class="message-header">ยืนยันการจองห้อง: </h3><p>จาก: Admin 11/12/2017 13:30</p> ขอแสดงความยินดี การจองห้องของคุณสำเร็จแล้ว</a>
-                            <a href="#" class="message-text-inside list-group-item"><img class="message-delete" src="img/error.png"><h3 class="message-header">ยืนยันการจองห้อง: </h3><p>จาก: Admin 11/12/2017 13:30</p> ขอแสดงความยินดี การจองห้องของคุณสำเร็จแล้ว</a>
-                            
-                        </ul>
+                        <div id="messagebody"></div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -857,6 +852,9 @@
                 $('#messagediv').click(function(){
                     $('#messageModal').modal('show');
                 });
+                $('#messagediv2').click(function(){
+                    $('#messageModal').modal('show');
+                });
             });
         </script> 
         <script type="text/javascript">
@@ -864,6 +862,14 @@
     $('[data-toggle="nomessagetooltip"]').tooltip();
     $('[data-toggle="messagetooltip"]').tooltip();
 });
+                </script>
+                <script type="text/javascript">
+                    $(document).ready(function(){
+                        $('#messagebody').load('message.jsp');
+                    });
+                    function delMessage(id){
+                        $('#messagebody').load('message.jsp?delete=yes&id='+id);
+                    }
                 </script>
 
 

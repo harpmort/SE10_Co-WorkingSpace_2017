@@ -67,13 +67,8 @@
                             <input type="radio" name="typeRoom" value="2" /> Private Room<br>
                             <input type="radio" name="typeRoom" value="3" /> Meeting Room<br>
                             Type Desk : 
-<<<<<<< HEAD
-                            <input type="radio" name="typeDesk" value="shareDesk" /> Share Desk
-                            <input type="radio" name="typeDesk" value="fixDesk" /> Fix Desk<br>
-=======
                             <input type="radio" name="typeDesk" value="2" /> Share Desk
                             <input type="radio" name="typeDesk" value="1" /> Fix Desk<br>
->>>>>>> 92f006e8c0ac5848d450799a74c45821cd518cbf
                             Price : 
                             <b class="margin-slider-right">$ 0</b>
                             <input id="ex2" type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="10" data-slider-value="[0,1000]"/>
