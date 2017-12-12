@@ -1,6 +1,6 @@
 <%-- 
-    Document   : Listbooking
-    Created on : Nov 3, 2017, 4:29:52 PM
+    Document   : Approvelessor
+    Created on : Dec 11, 2017, 5:20:25 PM
     Author     : Asus
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -18,7 +18,6 @@
         <script src="js/bootstrap.min.js"></script>
     </head>
     <body>
-        <% int type = (int) session.getAttribute("type");%>
         <nav class="navbar navbar-default navbar-edit navbar-static-top">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -32,26 +31,14 @@
                         <span class="icon-bar-color icon-bar"></span> 
                     </button>
                 </div>
-                <%model.Member member = (model.Member) session.getAttribute("member");%>
+                <%model.Admin admin = (model.Admin) session.getAttribute("admin");%>
                 <div class="collapse navbar-collapse" id="mynavbar">
                     <ul class="nav navbar-nav navbar-right">
-                        <% if (type == 1) {%>
                         <li class="menu-bar"><a href="landing.jsp">Home</a></li>
-                        <li class="menu-bar"><a href="insertcws.jsp">Add Space</a></li>
-                        <li class="menu-bar"><a href="editspace.jsp">Edit Space</a></li>
-                        <li class="menu-bar"><a href="BookingServlet">List Booking</a></li>
-                        <li class="menu-bar"><a href="HistoryServlet">History</a></li>
-                            <%} else if (type == 2) {%>
-                        <li class="menu-bar"><a href="landing.jsp">Home</a></li>
-                        <li class="menu-bar"><a href="BookingServlet">List Booking</a></li>
-                        <li class="menu-bar"><a href="HistoryServlet">History</a></li>
-                            <%}%>
+                        <li class="menu-bar"><a href="ViewapproveServlet">Approve Lessor</a></li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle menu-bar" data-toggle="dropdown"><%= member.getUsername()%><strong class="caret"></strong></a>
+                            <a href="#" class="dropdown-toggle menu-bar" data-toggle="dropdown"><%= admin.getUsername()%><strong class="caret"></strong></a>
                             <ul class="dropdown-menu">
-                                <li>
-                                    <a href="Profile.jsp">View Profile</a>
-                                </li>
                                 <li>
                                     <a href="LogoutServlet">Logout</a>
                                 </li>
@@ -67,9 +54,9 @@
                     <div class="row">
                         <div class="col-md-4">
                         </div>
-                        <div class="col-md-4">
-                            <h3 class="text-center booking-head">
-                                รายการ Co-Working Space ที่จอง
+                        <div class="col-md-4 list-book">
+                            <h3 class="text-center">
+                                คำร้องการยืนยันตัวตนของผู้ประกอบการ
                             </h3>
                         </div>
                         <div class="col-md-4">
@@ -78,34 +65,27 @@
                     <div class="row">
                         <div class="col-md-2">
                         </div>
-                        <div class="col-md-8">
-                            <table class="table booking-center">
+                        <div class="col-md-8 underline-head">
+                            <table class="table">
                                 <thead>
                                     <tr>
-                                        <th id="booking-center">ID_Booking</th>
-                                        <th id="booking-center">ชื่อสถานที่</th>
-                                        <th id="booking-center">ชื่อ</th>
-                                        <th id="booking-center">วันที่จอง</th>
-                                        <th id="booking-center">เวลาเริ่ม</th>
-                                        <th id="booking-center">เวลาจบ</th>
-                                        <th id="booking-center">จำนวนคนที่จอง</th>
-                                        <th id="booking-center">ยกเลิกการจอง</th>
+                                        <th>Username</th>
+                                        <th>ชื่อผู้ประกอบการ</th>
+                                        <th>Link Id Card</th>
+                                        <th>ยันยืนผู้ประกอบการ</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <c:forEach var="row" items="${sessionScope.viewbooking.lbooking}">
-                                        <tr class="booking-data">
-                                            <td>${row.idbooking}</td>
-                                            <td>${row.location_name}</td>
+                                    <c:forEach var="row" items="${sessionScope.viewapporve.lapprove}">
+                                        <tr class="success">
                                             <td>${row.username}</td>
-                                            <td>${row.date}</td>
-                                            <td>${row.begin_time}</td>
-                                            <td>${row.end_time}</td>
-                                            <td>${row.desk_booking}</td>
-                                    <form action="CancelbookingServlet" method="POST">
-                                        <td class="booking-data">
-                                            <button class="btn btn-sm btn-info" type="submit" name="idbooking" value="${row.idbooking}">
-                                                ยกเลิก
+                                            <td>${row.firstname}</td>
+                                            <td><a href="${row.idcard}">กดเพื่อดู Id Card ผู้ประกอบการ</a></td>
+
+                                    <form action="ApproveServlet" method="POST">
+                                        <td class="success">
+                                            <button class="btn btn-sm btn-info" type="submit" name="username" value="${row.username}">
+                                                ยืนยัน
                                             </button>
                                         </td>
                                     </form>

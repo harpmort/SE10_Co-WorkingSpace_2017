@@ -49,11 +49,15 @@ public class ViewdetailspaceServlet extends HttpServlet {
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
             HttpSession session = request.getSession();
-
+            int type = 0;
+            if(session.getAttribute("type") != null){
+                type = (int) session.getAttribute("type");
+            }
+            session.setAttribute("type", type);
             Space space = new Space(conn);
             space.showSpace(name);
             session.setAttribute("space", space);
-           
+
             RequestDispatcher pg = request.getRequestDispatcher("viewdetail.jsp");
             pg.forward(request, response);
 

@@ -88,7 +88,7 @@
                                         <th id="his-center">วันที่จอง</th>
                                         <th id="his-center">เวลาเริ่ม</th>
                                         <th id="his-center">เวลาจบ</th>
-                                        <th id="his-center">จำนวนโต๊ะที่จอง</th>
+                                        <th id=2"his-center">จำนวนคนที่จอง</th>
                                         <th id="his-center">Rating</th>
                                     </tr>
                                 </thead>

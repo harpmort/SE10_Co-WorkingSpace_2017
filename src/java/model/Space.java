@@ -36,6 +36,7 @@ public class Space {
     private String price;
     private String username;
     private String[] img;
+    private int check_search;
 
     Connection conn;
 
@@ -71,6 +72,7 @@ public class Space {
                     + "where name like \"%" + text + "%\"\n"
                     + "or c.location like \"" + text + "%\";";
             ResultSet rs = stmt.executeQuery(sql);
+            check_search = 0;
             while (rs.next()) {
                 Space space = new Space();
                 space.setName(rs.getString("name"));
@@ -92,6 +94,7 @@ public class Space {
                     System.out.println("img :" + space.getImg()[0]);
                 }
                 detail_space.add(space);
+                check_search = 1;
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -428,6 +431,12 @@ public class Space {
     public void setTakedslot(ArrayList takedslot) {
         this.takedslot = takedslot;
     }
+
+    public int getCheck_search() {
+        return check_search;
+    }
+    
+    
     
     
 

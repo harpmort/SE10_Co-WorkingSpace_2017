@@ -45,9 +45,10 @@
                 </div>
 
                 <div class="collapse navbar-collapse" id="mynavbar">
+                    <%int type = (int) session.getAttribute("type");%>
                     <% if (check == 1) {%>
-                    <%model.Member member = (model.Member) session.getAttribute("member");
-                        int type = (int) session.getAttribute("type");%>
+                    <%if (type != 3) {%>
+                    <%model.Member member = (model.Member) session.getAttribute("member");%>
                     <div class="collapse navbar-collapse" id="mynavbar">
                         <ul class="nav navbar-nav navbar-right">
                             <% if (type == 1) {%>
@@ -75,6 +76,23 @@
                         </ul>
 
                     </div>
+                    <%} else if (type == 3) {%>
+                    <%model.Admin admin = (model.Admin) session.getAttribute("admin");%>
+                    <div class="collapse navbar-collapse" id="mynavbar">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="menu-bar"><a href="landing.jsp">Home</a></li>
+                            <li class="menu-bar"><a href="ViewapproveServlet">Approve Lessor</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle menu-bar" data-toggle="dropdown"><%= admin.getUsername()%><strong class="caret"></strong></a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="LogoutServlet">Logout</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <%}%>
                     <%} else if (check != 1) {%>
                     <ul class="nav navbar-nav navbar-right">
                         <button type="button" class="btn btn-default navbar-btn"  data-toggle="modal" data-target="#registerModal">Sign up</button>
@@ -141,7 +159,7 @@
                                     <img src="img/actions.png" style="width: 32px">
                                 </div>
                                 <div class="col-md-10">
-                                    <p style="font-size:initial;"><%= space.getAmount_people()%></p>
+                                    <p style="font-size:initial;"><%= space.getTotal_desk()%></p>
                                 </div>
                             </div><br>
                             <div class="row">
@@ -187,12 +205,16 @@
                             <div class="book-bg margin-top book-margin">
                                 <div class="book-title">
                                     <center>
+<<<<<<< HEAD
                                         <div class="price"><p id="totalPrice">Price : <%= space.getPrice()%></p></div>
+=======
+                                        <div class="price"><p>Price : <%= space.getPrice()%></p><p>จำนวนคนที่รองรับได้ : <%= space.getAmount_desk()%></p></div>
+>>>>>>> dad0eb20525d4a9e702f6617f5ea37daf008aef4
                                     </center>
                                 </div>
                                 <div class="row text-pos">
                                     <div class="col-md-6 ">
-                                        <div class="col-md-3 magin-book">
+                                        <div class="col-md-4 magin-book">
                                             <div class="text-edit"><p>วันที่ : </p></div>
                                             <div class="text-edit"><p>เวลาเริ่ม : </p></div>
                                         </div>
@@ -202,6 +224,8 @@
                                             <input type="text" class="form-control form-control-edit" readonly="true" id="datetimepicker2" name="time_start">
                                         </div>
                                     </div>
+                                    <% String type_room = space.getType_room();
+                                        if (type_room.equals("Share Room")) {%>
                                     <div class="col-md-6">
                                         <div class="col-md-4">
                                             <div class="text-edit">จำนวนคน : </div>
@@ -224,12 +248,33 @@
                                             <input type="text" data-toggle="endtimetooltip" title="กดเวลาเริ่มก่อนสิ!" class="form-control" value=""  readonly="true" id="datetimepicker3" name="time_end">
                                         </div>
                                     </div>
+                                    <%} else {%>
+                                    <div class="col-md-6">
+                                        <div class="col-md-4">
+                                            <div class="text-edit">จำนวนคน : </div>
+                                            <div class="text-edit">เวลาสิ้นสุด : </div>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <div class="text-edit"> จองเหมาทั้งห้อง </div>
+                                            <input type="text" data-toggle="endtimetooltip" title="กดเวลาเริ่มก่อนสิ!" class="form-control" value=""  readonly="true" id="datetimepicker3" name="time_end">
+                                        </div>
+                                    </div>
+                                    <%}%>
                                 </div>
-
+                                <%if (check == 1 && type == 2) {%>
                                 <div class="book-btn">
                                     <center><button class="btn btn-default btn-margin">Book</button></center>
 
                                 </div>
+                                <%} else if (type == 1 || type == 3) {%>
+                                <div class="book-btn">
+                                    <center><h3>ไม่สามารถทำรายการจองได้เนื่องจากไม่ใช่ผู้เช่า</h3></center>
+                                </div>
+                                <%} else {%>
+                                <div class="book-btn">
+                                    <center><h3>กรุณาเข้าสู่ระบบก่อนทำการจองพื้นที่</h3></center>
+                                </div>
+                                <%}%>
                             </div>
                         </div>
 
@@ -247,6 +292,7 @@
                 <div class="col-md-2"></div>
 
             </div>
+
         </form>
         <!-- Login Modal -->
         <div id="loginModal" class="modal fade" role="dialog">
@@ -620,33 +666,35 @@
                 weekStart: 1,
                 todayBtn: 1,
                 autoclose: 1,
-                todayHighlight: 1,
+                todayHighlight: 0,
                 startView: 1,
                 minView: 0,
-                maxView: 1,
-                forceParse: 0
+                maxView: 0,
+                forceParse: 0,
+                formatViewType: 'time'
             });
-
 
             $(document).ready(function () {
                 var dtp = $('#datetimepicker2');
                 var stat = false;
                 $('#datetimepicker2').click(function () {
                     var takedslot_li = takedslot.split(",");
-                    console.log("takedslot_li" + takedslot_li);
                     var datepull = $('#datetimepicker').val().toString();
                     var datepull_temp = datepull.split("-");
                     var datepull_ok = datepull_temp.join("/");
                     var slot_per_day = [];
+                    var opentime = new String("<%= space.getOpen_time()%>");
+                    var closetime = new String("<%= space.getClose_time()%>");
+                    slot_per_day.push("00:00-" + opentime);
                     for (var i = 0; i < takedslot_li.length; i++) {
                         var temp = takedslot_li[i].toString().split("-")[0];
                         if (temp === datepull_ok) {
                             var temp2 = takedslot_li[i].toString().split("-")[1].toString() + "-";
                             var temp3 = takedslot_li[i].toString().split("-")[2].toString();
-                            console.log("test" + temp2 + temp3);
                             slot_per_day.push(temp2 + temp3);
                         }
                     }
+                    slot_per_day.push(closetime + "-23:59");
                     $('#datetimepicker2').datetimepicker("setTimeDisabledInterval", slot_per_day);
                     $('#datetimepicker3').datetimepicker("setTimeDisabledInterval", slot_per_day);
                     $('[data-toggle="endtimetooltip"]').tooltip('disable');
@@ -671,11 +719,12 @@
                 weekStart: 1,
                 todayBtn: 1,
                 autoclose: 1,
-                todayHighlight: 1,
+                todayHighlight: 0,
                 startView: 1,
                 minView: 0,
-                maxView: 1,
-                forceParse: 0
+                maxView: 0,
+                forceParse: 0,
+                formatViewType: 'time'
             });
             $('#datetimepicker3').datetimepicker("setStartEndType", "end");
             $('#datetimepicker3').datetimepicker("hide");

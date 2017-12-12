@@ -108,17 +108,20 @@
                                 }
                             %>
                             <div class="show-pro">ประเภทผู้ใช้งาน : <%= type_mem%></div>
-
-                            <%String idcard = member.getIdcard();
-                                String verified;
-                                if (idcard.equals("Not verified")) {
-                                    verified = "ยังไม่ได้ยืนยันตัวตน";
-                                } else {
-                                    verified = "ยืนยันตัวตนแล้ว";
+                            <%if(type == 1){%>
+                            <%String status = member.getStatus_approve();
+                              String idcard = member.getIdcard();
+                                String approve;
+                                if (status.equals("No Approve") && idcard.equals("Not verified")) {
+                                    approve = "ยังไม่ได้ยืนยันตัวตน";
+                                } else if(status.equals("No Approve") && !idcard.equals("Not verified")){
+                                    approve = "รอการยืนยันตัวตน";
+                                }else {
+                                    approve = "ยืนยันตัวตนแล้ว";
                                 }
                             %>
-                            <div class="show-pro">สถานะยืนยันตัวตน : <%= verified%></div>
-
+                            <div class="show-pro">สถานะยืนยันตัวตน : <%= approve%></div>
+                            <%}%>
                         </div>
                         <div class="col-md-2">
                         </div>

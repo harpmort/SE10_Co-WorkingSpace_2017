@@ -23,7 +23,7 @@
             if (session.getAttribute("check") != null) {
                 check = (int) session.getAttribute("check");
             }%>
-            
+
         <% int pos = 0;
             if (session.getAttribute("pos") != null) {
                 pos = (int) session.getAttribute("pos");
@@ -47,37 +47,55 @@
                 </div>
 
                 <div class="collapse navbar-collapse" id="mynavbar">
+                    <%int type = (int) session.getAttribute("type");%>
                     <% if (check == 1) {%>
-                    <%model.Member member = (model.Member) session.getAttribute("member");
-                        int type = (int) session.getAttribute("type");%>
+
+                    <%if (type != 3) {%>
+                    <%model.Member member = (model.Member) session.getAttribute("member");%>
                     <div class="collapse navbar-collapse" id="mynavbar">
-                        <div class="collapse navbar-collapse" id="mynavbar">
-                            <ul class="nav navbar-nav navbar-right">
-                                <% if (type == 1) {%>
-                                <li class="menu-bar"><a href="index.jsp">HOME</a></li>
-                                <li class="menu-bar"><a href="insertcws.jsp">Add Space</a></li>
-                                <li class="menu-bar"><a href="editspace.jsp">Edit Space</a></li>
-                                <li class="menu-bar"><a href="BookingServlet">List Booking</a></li>
-                                <li class="menu-bar"><a href="HistoryServlet">History</a></li>
-                                    <%} else if (type == 2) {%>
-                                <li class="menu-bar"><a href="index.jsp">HOME</a></li>
-                                <li class="menu-bar"><a href="BookingServlet">List Booking</a></li>
-                                <li class="menu-bar"><a href="HistoryServlet">History</a></li>
-                                    <%}%>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle menu-bar" data-toggle="dropdown"><%= member.getUsername()%><strong class="caret"></strong></a>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a href="Profile.jsp">View Profile</a>
-                                        </li>
-                                        <li>
-                                            <a href="LogoutServlet">Logout</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
+                        <ul class="nav navbar-nav navbar-right">
+                            <% if (type == 1) {%>
+                            <li class="menu-bar"><a href="landing.jsp">Home</a></li>
+                            <li class="menu-bar"><a href="insertcws.jsp">Add Space</a></li>
+                            <li class="menu-bar"><a href="editspace.jsp">Edit Space</a></li>
+                            <li class="menu-bar"><a href="BookingServlet">List Booking</a></li>
+                            <li class="menu-bar"><a href="HistoryServlet">History</a></li>
+                                <%} else if (type == 2) {%>
+                            <li class="menu-bar"><a href="landing.jsp">Home</a></li>
+                            <li class="menu-bar"><a href="BookingServlet">List Booking</a></li>
+                            <li class="menu-bar"><a href="HistoryServlet">History</a></li>
+                                <%}%>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle menu-bar" data-toggle="dropdown"><%= member.getUsername()%><strong class="caret"></strong></a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="Profile.jsp">View Profile</a>
+                                    </li>
+                                    <li>
+                                        <a href="LogoutServlet">Logout</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+
                     </div>
+                    <%} else if (type == 3) {%>
+                    <%model.Admin admin = (model.Admin) session.getAttribute("admin");%>
+                    <div class="collapse navbar-collapse" id="mynavbar">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="menu-bar"><a href="landing.jsp">Home</a></li>
+                            <li class="menu-bar"><a href="ViewapproveServlet">Approve Lessor</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle menu-bar" data-toggle="dropdown"><%= admin.getUsername()%><strong class="caret"></strong></a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="LogoutServlet">Logout</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <%}%>
                     <%} else if (check != 1) {%>
                     <ul class="nav navbar-nav navbar-right">
                         <button type="button" class="btn btn-default navbar-btn"  data-toggle="modal" data-target="#registerModal">Sign up</button>
@@ -105,72 +123,74 @@
                 </center>
             </div>
         </div>
-        
-            <div class="col-md-1"></div>
+
+        <div class="col-md-1"></div>
+
+        <div class="col-md-10">
+
+            <% int count = 0; %>
+            <% int check_search = (int) session.getAttribute("check_search");%>
             
-            <div class="col-md-10">
-                
-                <% int count = 0; %>
-                
-                    <c:forEach var="row" items="${sessionScope.space.detail_space}">
-                        <% if (count >= i && count <= pos) { %>
-                        <div class="col-md-4">
-                            <form action="ViewdetailspaceServlet" method="POST">
-                            <div class="w3-card-4 card-margin">
-                                <div class="panel-thumbnail ">
-                                    <img src="${row.img[0]}" class="img-crop">
-                                </div>
-                                <div class="panel-body">
-                                    <p class="lead" >${row.name} by ${row.username}</p>
-                                    <p>${row.location}</p>
-                                </div>
-                                <div class="panel-footer">
-                                    <button class="btn btn-sm  center-block btn-info" type="submit" name="name" value="${row.name}">
-                                        View Detail Space
-                                    </button>
-                                </div>
+            <c:forEach var="row" items="${sessionScope.space.detail_space}">
+                <% if (count >= i && count <= pos) { %>
+                <div class="col-md-4">
+                    <form action="ViewdetailspaceServlet" method="POST">
+                        <div class="w3-card-4 card-margin">
+                            <div class="panel-thumbnail ">
+                                <img src="${row.img[0]}" class="img-crop">
                             </div>
-                        </form>
+                            <div class="panel-body">
+                                <p class="lead" >${row.name} by ${row.username}</p>
+                                <p>${row.location}</p>
+                            </div>
+                            <div class="panel-footer">
+                                <button class="btn btn-sm  center-block btn-info" type="submit" name="name" value="${row.name}">
+                                    View Detail Space
+                                </button>
+                            </div>
                         </div>
-                        
-                        <% } %>
-                        <% if (count <= pos) {
-                           count++; }%>
-                        
-                    </c:forEach>
-                
-            </div>
-
-            <div class="col-md-1"></div>
-            
-
-                <div class="col-md-5"></div>
-                <div class="col-md-1">
-                    <% if(count >= i && i >= 11) { %>
-                        <form action="SearchServlet" method="POST">
-                    <div class="row input-group search-bar">
-                        <input name="search" type="text" class="opacity" style="width: 0%"/>
-                        <button class="btn btn-default btn-search" type="submit">Back</button>
-                    </div>
                     </form>
-                    <% } %>
                 </div>
-                <div class="col-md-1">
-                    <% if(count > pos) { %>
-                    <form action="search.jsp" method="POST">
-                    <% session.setAttribute("i", count); %>
-                    <% session.setAttribute("pos", count+11); %>
-                    <% session.setAttribute("space", session.getAttribute("space")); %>
-                    <% String text = (String) session.getAttribute("text"); %>
-                    <button class="btn btn-default btn-search" type="submit" value="<%=text%>">
-                        Next
-                    </button>
-                    </form>
-                    <% } %>
-                </div>
-                <div class="col-md-5"></div>   
 
-        
+                <% } %>
+                <% if (count <= pos) {
+                        count++;
+                    }%>
+
+            </c:forEach>
+
+        </div>
+
+        <div class="col-md-1"></div>
+
+
+        <div class="col-md-5"></div>
+        <div class="col-md-1">
+            <% if (count >= i && i >= 11) { %>
+            <form action="SearchServlet" method="POST">
+                <div class="row input-group search-bar">
+                    <input name="search" type="text" class="opacity" style="width: 0%"/>
+                    <button class="btn btn-default btn-search" type="submit">Back</button>
+                </div>
+            </form>
+            <% } %>
+        </div>
+        <div class="col-md-1">
+            <% if (count > pos) { %>
+            <form action="search.jsp" method="POST">
+                <% session.setAttribute("i", count); %>
+                <% session.setAttribute("pos", count + 11); %>
+                <% session.setAttribute("space", session.getAttribute("space")); %>
+                <% String text = (String) session.getAttribute("text");%>
+                <button class="btn btn-default btn-search" type="submit" value="<%=text%>">
+                    Next
+                </button>
+            </form>
+            <% } %>
+        </div>
+        <div class="col-md-5"></div>   
+
+
         <!-- Login Modal -->
         <div id="loginModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
@@ -297,6 +317,30 @@
 
             </div>
         </div>
+        <!-- Search Modal -->
+        <div id="searchModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Search Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <center><h3>ไม่พบรายการที่ทำการค้นหา</h3></center>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <% if (check_search == 0) { %>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#searchModal').modal('show');
+            });
+        </script>
+        <%}%>
 
         <% if (check == 2 || check == 3) { %>
         <script type="text/javascript">

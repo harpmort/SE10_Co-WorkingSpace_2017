@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.Admin;
 import model.Lessor;
 import model.Rental;
 
@@ -51,9 +52,13 @@ public class LoginServlet extends HttpServlet {
             Connection conn = (Connection) ctx.getAttribute("connection");
             HttpSession session = request.getSession();
             try {
-                Statement stmt = conn.createStatement();
-                String sql = "SELECT * from member where username='" + username + "'";
-                ResultSet rs = stmt.executeQuery(sql);
+                Statement stmt_mem = conn.createStatement();
+                Statement stmt_admin = conn.createStatement();
+                String sql_mem = "SELECT * from member where username='" + username + "';";
+                String sql_admin = "SELECT * from admin where username='" + username + "';";
+                ResultSet rs = stmt_mem.executeQuery(sql_mem);
+                ResultSet rs_admin = stmt_admin.executeQuery(sql_admin);
+                int type = 0;
                 if (rs.next()) {
                     if (password.equals(rs.getString("password"))) {
                         if (rs.getInt("idtype_member") == 2) {
@@ -65,7 +70,8 @@ public class LoginServlet extends HttpServlet {
                             lessor.importData(username, password);
                             session.setAttribute("member", lessor);
                         }
-                        int type = rs.getInt("idtype_member");
+                        type = rs.getInt("idtype_member");
+                        System.out.println("idtype : "+rs.getInt("idtype_member"));
                         session.setAttribute("type", type);
                         check = 1;
                         session.setAttribute("check", check);
@@ -73,13 +79,33 @@ public class LoginServlet extends HttpServlet {
                         pg.forward(request, response);
                     } else {
                         check = 2;
+                        session.setAttribute("type", type);
                         request.setAttribute("check", check);
                         RequestDispatcher pg = request.getRequestDispatcher("index.jsp");
                         pg.forward(request, response);
                     }
 
+                } else if (rs_admin.next()) {
+                    if (password.equals(rs_admin.getString("password"))) {
+                        Admin admin = new Admin(conn);
+                        admin.importData(username, password);
+                        session.setAttribute("admin", admin);
+                        type = 3;
+                        session.setAttribute("type", type);
+                        check = 1;
+                        session.setAttribute("check", check);
+                        RequestDispatcher pg = request.getRequestDispatcher("landing.jsp");
+                        pg.forward(request, response);
+                    } else {
+                        check = 2;
+                        session.setAttribute("type", type);
+                        request.setAttribute("check", check);
+                        RequestDispatcher pg = request.getRequestDispatcher("index.jsp");
+                        pg.forward(request, response);
+                    }
                 } else {
                     check = 3;
+                    session.setAttribute("type", type);
                     request.setAttribute("check", check);
                     RequestDispatcher pg = request.getRequestDispatcher("index.jsp");
                     pg.forward(request, response);

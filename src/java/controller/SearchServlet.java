@@ -46,6 +46,13 @@ public class SearchServlet extends HttpServlet {
             HttpSession session = request.getSession();
             Space space = new Space(conn);
             space.search(text);
+            int type = 0;
+            if (session.getAttribute("type") != null) {
+                type = (int) session.getAttribute("type");
+            }
+            
+            session.setAttribute("check_search", space.getCheck_search());
+            session.setAttribute("type", type);
             session.setAttribute("space", space);
             session.setAttribute("pos", 11);
             session.setAttribute("i", 0);

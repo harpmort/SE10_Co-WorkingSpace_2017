@@ -29,8 +29,7 @@ public class Member {
     private String checkemail;
     private String img_user;
     private String idcard;
-    
-    
+    private String status_approve;
 
     Connection conn;
 
@@ -57,6 +56,7 @@ public class Member {
                     type = rs.getInt("idtype_member");
                     img_user = rs.getString("img_profile");
                     idcard = rs.getString("idcard");
+                    status_approve = rs.getString("approve_status");
                 }
             }
         } catch (SQLException ex) {
@@ -87,16 +87,32 @@ public class Member {
                 idcard = "Not verified";
             }
             if (!checkemail.equals("isEmailExisted")) {
-                String sql = "INSERT INTO `db_coworkingspace`.`member` (`firstname`, `lastname`, `username`, `password`, `email`, `phone`, `idtype_member`, `img_profile`, `idcard`) "
-                        + "VALUES ('" + firstname + "', '" + lastname + "', '" + username + "', '" + password + "', '" + email + "', '" + phone + "', '" + type + "', '" + img + "', '" + idcard + "');";
-                stmt.executeUpdate(sql);
+                if (type == 2) {
+                    String status_approve = "Approved";
+                    String sql = "INSERT INTO `db_coworkingspace`.`member` (`firstname`, `lastname`, `username`, `password`, `email`, `phone`, `idtype_member`, `img_profile`, `idcard`, approve_status) "
+                            + "VALUES ('" + firstname + "', '" + lastname + "', '" + username + "', '" + password + "', '" + email + "', '" + phone + "', '" + type + "', '" + img + "', '" + idcard + "', '" + status_approve + "');";
+                    stmt.executeUpdate(sql);
+                } else {
+                    String sql = "INSERT INTO `db_coworkingspace`.`member` (`firstname`, `lastname`, `username`, `password`, `email`, `phone`, `idtype_member`, `img_profile`, `idcard`) "
+                            + "VALUES ('" + firstname + "', '" + lastname + "', '" + username + "', '" + password + "', '" + email + "', '" + phone + "', '" + type + "', '" + img + "', '" + idcard + "');";
+                    stmt.executeUpdate(sql);
+                    Statement stmt_approve = conn.createStatement();
+                    String sql_approve = "select idmember from member where username = '" + username + "'";
+                    ResultSet rs_approve = check_email.executeQuery(sql_approve);
+                    if (rs_approve.next()) {
+                        String idmember = rs_approve.getString("idmember");
+                        sql = "INSERT INTO `db_coworkingspace`.`approve` (fk_id_member) "
+                                + "VALUES ('" + idmember + "');";
+                        stmt_approve.executeUpdate(sql);
+                    }
+                }
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
-    
-    public void editProfile(String firstname, String lastname, String email, String phone, String path_img, String path_card,String username) {
+
+    public void editProfile(String firstname, String lastname, String email, String phone, String path_img, String path_card, String username) {
         try {
             Statement stmt = conn.createStatement();
             String sql_id = "select idmember from member where username = '" + username + "';";
@@ -145,7 +161,7 @@ public class Member {
                 stmt.executeUpdate(sql);
                 this.img_user = path_img;
             }
-            
+
             if (!path_card.equals("-") && !path_card.equals("")) {
                 String sql = "UPDATE member\n"
                         + "SET idcard = '" + path_card + "'\n"
@@ -153,8 +169,6 @@ public class Member {
                 stmt.executeUpdate(sql);
                 this.idcard = path_card;
             }
-            
-            
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -248,8 +262,14 @@ public class Member {
     public void setIdcard(String idcard) {
         this.idcard = idcard;
     }
-    
-    
+
+    public String getStatus_approve() {
+        return status_approve;
+    }
+
+    public void setStatus_approve(String status_approve) {
+        this.status_approve = status_approve;
+    }
     
     
 
