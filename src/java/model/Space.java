@@ -66,44 +66,202 @@ public class Space {
         return takedamount;
     }
 
-    public void search(String text) {
+    public void search(String text, String typeroom, String typedesk, String price) {
         try {
             Statement stmt = conn.createStatement();
-            String sql = "select name,c.location,r.type_room,d.type_desk,c.total_desk,c.amount_desk,c.description\n"
-                    + ",c.size_room,c.open_time,c.close_time,c.amount_people,c.price,m.username,c.img\n"
-                    + "from co_working_space c\n"
-                    + "join member m \n"
-                    + "on c.fk_idmember = m.idmember\n"
-                    + "join type_desk d\n"
-                    + "on c.idtype_desk = d.idtype_desk\n"
-                    + "join type_room r\n"
-                    + "on c.idtype_room = r.idtype_room\n"
-                    + "where name like \"%" + text + "%\"\n"
-                    + "or c.location like \"" + text + "%\";";
-            ResultSet rs = stmt.executeQuery(sql);
+            String sql = "";
+            String[] list_price = price.split(",");
             check_search = 0;
-            while (rs.next()) {
-                Space space = new Space();
-                space.setName(rs.getString("name"));
-                space.setLocation(rs.getString("c.location"));
-                space.setType_room(rs.getString("r.type_room"));
-                space.setType_desk(rs.getString("d.type_desk"));
-                space.setTotal_desk(rs.getString("c.total_desk"));
-                space.setAmount_desk(rs.getString("c.amount_desk"));
-                space.setDescription(rs.getString("c.description"));
-                space.setSize_room(rs.getString("c.size_room"));
-                space.setOpen_time(rs.getString("c.open_time"));
-                space.setClose_time(rs.getString("c.close_time"));
-                space.setAmount_people(rs.getString("c.amount_people"));
-                space.setPrice(rs.getString("c.price"));
-                space.setUsername(rs.getString("m.username"));
-                space.setImg(rs.getString("img").split(","));
-                int count = space.getImg().length;
-                for (int i = 0; i < count; i++) {
-                    System.out.println("img :" + space.getImg()[0]);
+            if (text.equals("")) {
+                System.out.println("00");
+                sql = "select name,c.location,r.type_room,d.type_desk,c.total_desk,c.amount_desk,c.description\n"
+                        + ",c.size_room,c.open_time,c.close_time,c.amount_people,c.price,m.username,c.img\n"
+                        + "from co_working_space c\n"
+                        + "join member m \n"
+                        + "on c.fk_idmember = m.idmember\n"
+                        + "join type_desk d\n"
+                        + "on c.idtype_desk = d.idtype_desk\n"
+                        + "join type_room r\n"
+                        + "on c.idtype_room = r.idtype_room\n"
+                        + "where r.idtype_room = '" + typeroom + "' or d.idtype_desk = '" + typedesk + "' and (price between " + Integer.parseInt(list_price[0]) + " and " + Integer.parseInt(list_price[1]) + ");";
+                ResultSet rs = stmt.executeQuery(sql);
+                rs = stmt.executeQuery(sql);
+                while (rs.next()) {
+                    System.out.println("99");
+                    Space space = new Space();
+                    space.setName(rs.getString("name"));
+                    space.setLocation(rs.getString("c.location"));
+                    space.setType_room(rs.getString("r.type_room"));
+                    space.setType_desk(rs.getString("d.type_desk"));
+                    space.setTotal_desk(rs.getString("c.total_desk"));
+                    space.setAmount_desk(rs.getString("c.amount_desk"));
+                    space.setDescription(rs.getString("c.description"));
+                    space.setSize_room(rs.getString("c.size_room"));
+                    space.setOpen_time(rs.getString("c.open_time"));
+                    space.setClose_time(rs.getString("c.close_time"));
+                    space.setAmount_people(rs.getString("c.amount_people"));
+                    space.setPrice(rs.getString("c.price"));
+                    space.setUsername(rs.getString("m.username"));
+                    space.setImg(rs.getString("img").split(","));
+                    int count = space.getImg().length;
+                    for (int i = 0; i < count; i++) {
+                        System.out.println("img :" + space.getImg()[0]);
+                    }
+                    detail_space.add(space);
+                    check_search = 1;
                 }
-                detail_space.add(space);
-                check_search = 1;
+            } else if (typeroom.equals("0") && !typedesk.equals("0")) {
+                System.out.println("01");
+                sql = "select name,c.location,r.type_room,d.type_desk,c.total_desk,c.amount_desk,c.description\n"
+                        + ",c.size_room,c.open_time,c.close_time,c.amount_people,c.price,m.username,c.img\n"
+                        + "from co_working_space c\n"
+                        + "join member m \n"
+                        + "on c.fk_idmember = m.idmember\n"
+                        + "join type_desk d\n"
+                        + "on c.idtype_desk = d.idtype_desk\n"
+                        + "join type_room r\n"
+                        + "on c.idtype_room = r.idtype_room\n"
+                        + "where (name like \"%" + text + "%\" or location like \"%" + text + "%\") and  d.idtype_desk = '" + typedesk + "' and (price between " + Integer.parseInt(list_price[0]) + " and " + Integer.parseInt(list_price[1]) + ");";
+                ResultSet rs = stmt.executeQuery(sql);
+                rs = stmt.executeQuery(sql);
+                while (rs.next()) {
+                    System.out.println("99");
+                    Space space = new Space();
+                    space.setName(rs.getString("name"));
+                    space.setLocation(rs.getString("c.location"));
+                    space.setType_room(rs.getString("r.type_room"));
+                    space.setType_desk(rs.getString("d.type_desk"));
+                    space.setTotal_desk(rs.getString("c.total_desk"));
+                    space.setAmount_desk(rs.getString("c.amount_desk"));
+                    space.setDescription(rs.getString("c.description"));
+                    space.setSize_room(rs.getString("c.size_room"));
+                    space.setOpen_time(rs.getString("c.open_time"));
+                    space.setClose_time(rs.getString("c.close_time"));
+                    space.setAmount_people(rs.getString("c.amount_people"));
+                    space.setPrice(rs.getString("c.price"));
+                    space.setUsername(rs.getString("m.username"));
+                    space.setImg(rs.getString("img").split(","));
+                    int count = space.getImg().length;
+                    for (int i = 0; i < count; i++) {
+                        System.out.println("img :" + space.getImg()[0]);
+                    }
+                    detail_space.add(space);
+                    check_search = 1;
+                }
+            } else if (!typeroom.equals("0") && typedesk.equals("0")) {
+                System.out.println("10");
+                sql = "select name,c.location,r.type_room,d.type_desk,c.total_desk,c.amount_desk,c.description\n"
+                        + ",c.size_room,c.open_time,c.close_time,c.amount_people,c.price,m.username,c.img\n"
+                        + "from co_working_space c\n"
+                        + "join member m \n"
+                        + "on c.fk_idmember = m.idmember\n"
+                        + "join type_desk d\n"
+                        + "on c.idtype_desk = d.idtype_desk\n"
+                        + "join type_room r\n"
+                        + "on c.idtype_room = r.idtype_room\n"
+                        + "where (name like \"%" + text + "%\" or location like \"%" + text + "%\") and r.idtype_room = '" + typeroom + "' and (price between " + Integer.parseInt(list_price[0]) + " and " + Integer.parseInt(list_price[1]) + ");";
+                ResultSet rs = stmt.executeQuery(sql);
+                rs = stmt.executeQuery(sql);
+                while (rs.next()) {
+                    System.out.println("99");
+                    Space space = new Space();
+                    space.setName(rs.getString("name"));
+                    space.setLocation(rs.getString("c.location"));
+                    space.setType_room(rs.getString("r.type_room"));
+                    space.setType_desk(rs.getString("d.type_desk"));
+                    space.setTotal_desk(rs.getString("c.total_desk"));
+                    space.setAmount_desk(rs.getString("c.amount_desk"));
+                    space.setDescription(rs.getString("c.description"));
+                    space.setSize_room(rs.getString("c.size_room"));
+                    space.setOpen_time(rs.getString("c.open_time"));
+                    space.setClose_time(rs.getString("c.close_time"));
+                    space.setAmount_people(rs.getString("c.amount_people"));
+                    space.setPrice(rs.getString("c.price"));
+                    space.setUsername(rs.getString("m.username"));
+                    space.setImg(rs.getString("img").split(","));
+                    int count = space.getImg().length;
+                    for (int i = 0; i < count; i++) {
+                        System.out.println("img :" + space.getImg()[0]);
+                    }
+                    detail_space.add(space);
+                    check_search = 1;
+                }
+            } else if (!typeroom.equals("0") && !typedesk.equals("0")) {
+                System.out.println("11");
+                sql = "select name,c.location,r.type_room,d.type_desk,c.total_desk,c.amount_desk,c.description\n"
+                        + ",c.size_room,c.open_time,c.close_time,c.amount_people,c.price,m.username,c.img\n"
+                        + "from co_working_space c\n"
+                        + "join member m \n"
+                        + "on c.fk_idmember = m.idmember\n"
+                        + "join type_desk d\n"
+                        + "on c.idtype_desk = d.idtype_desk\n"
+                        + "join type_room r\n"
+                        + "on c.idtype_room = r.idtype_room\n"
+                        + "where (name like \"%" + text + "%\" or location like \"%" + text + "%\") and r.idtype_room = '" + typeroom + "' and d.idtype_desk = '" + typedesk + "' and (price between " + Integer.parseInt(list_price[0]) + " and " + Integer.parseInt(list_price[1]) + ");";
+                ResultSet rs = stmt.executeQuery(sql);
+                rs = stmt.executeQuery(sql);
+                while (rs.next()) {
+                    System.out.println("99");
+                    Space space = new Space();
+                    space.setName(rs.getString("name"));
+                    space.setLocation(rs.getString("c.location"));
+                    space.setType_room(rs.getString("r.type_room"));
+                    space.setType_desk(rs.getString("d.type_desk"));
+                    space.setTotal_desk(rs.getString("c.total_desk"));
+                    space.setAmount_desk(rs.getString("c.amount_desk"));
+                    space.setDescription(rs.getString("c.description"));
+                    space.setSize_room(rs.getString("c.size_room"));
+                    space.setOpen_time(rs.getString("c.open_time"));
+                    space.setClose_time(rs.getString("c.close_time"));
+                    space.setAmount_people(rs.getString("c.amount_people"));
+                    space.setPrice(rs.getString("c.price"));
+                    space.setUsername(rs.getString("m.username"));
+                    space.setImg(rs.getString("img").split(","));
+                    int count = space.getImg().length;
+                    for (int i = 0; i < count; i++) {
+                        System.out.println("img :" + space.getImg()[0]);
+                    }
+                    detail_space.add(space);
+                    check_search = 1;
+                }
+            } else if (typeroom.equals("0") && typedesk.equals("0")) {
+                System.out.println("11");
+                sql = "select name,c.location,r.type_room,d.type_desk,c.total_desk,c.amount_desk,c.description\n"
+                        + ",c.size_room,c.open_time,c.close_time,c.amount_people,c.price,m.username,c.img\n"
+                        + "from co_working_space c\n"
+                        + "join member m \n"
+                        + "on c.fk_idmember = m.idmember\n"
+                        + "join type_desk d\n"
+                        + "on c.idtype_desk = d.idtype_desk\n"
+                        + "join type_room r\n"
+                        + "on c.idtype_room = r.idtype_room\n"
+                        + "where (name like \"%" + text + "%\" or location like \"%" + text + "%\") and (price between " + Integer.parseInt(list_price[0]) + " and " + Integer.parseInt(list_price[1]) + ");";
+                ResultSet rs = stmt.executeQuery(sql);
+                rs = stmt.executeQuery(sql);
+                while (rs.next()) {
+                    System.out.println("99");
+                    Space space = new Space();
+                    space.setName(rs.getString("name"));
+                    space.setLocation(rs.getString("c.location"));
+                    space.setType_room(rs.getString("r.type_room"));
+                    space.setType_desk(rs.getString("d.type_desk"));
+                    space.setTotal_desk(rs.getString("c.total_desk"));
+                    space.setAmount_desk(rs.getString("c.amount_desk"));
+                    space.setDescription(rs.getString("c.description"));
+                    space.setSize_room(rs.getString("c.size_room"));
+                    space.setOpen_time(rs.getString("c.open_time"));
+                    space.setClose_time(rs.getString("c.close_time"));
+                    space.setAmount_people(rs.getString("c.amount_people"));
+                    space.setPrice(rs.getString("c.price"));
+                    space.setUsername(rs.getString("m.username"));
+                    space.setImg(rs.getString("img").split(","));
+                    int count = space.getImg().length;
+                    for (int i = 0; i < count; i++) {
+                        System.out.println("img :" + space.getImg()[0]);
+                    }
+                    detail_space.add(space);
+                    check_search = 1;
+                }
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -226,13 +384,13 @@ public class Space {
                     + "from booking b\n"
                     + "join co_working_space c\n"
                     + "on b.fk_idspace = c.idspace\n"
-                    + "where c.name = '"+ name +"';";
+                    + "where c.name = '" + name + "';";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 String[] date_split = rs.getString("date").split("-");
                 String date = date_split[2] + "/" + date_split[1] + "/" + date_split[0];
                 takedslot.add(date + "-" + rs.getString("begin_time") + "-" + rs.getString("end_time"));
-                takedamount.add(date + "-" + rs.getString("begin_time") + "-" + rs.getString("end_time")+ "-" + rs.getString("c.amount_desk"));
+                takedamount.add(date + "-" + rs.getString("begin_time") + "-" + rs.getString("end_time") + "-" + rs.getString("c.amount_desk"));
             }
             System.out.println("takedslot is : " + takedslot);
             if (takedslot == null) {

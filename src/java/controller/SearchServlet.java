@@ -53,11 +53,19 @@ public class SearchServlet extends HttpServlet {
             System.out.println("tr : "+typeroom);
             System.out.println("td : "+typedesk);
             System.out.println("p : "+price);
-            System.out.println("a : "+all);
+            if(typeroom == null){
+                typeroom = "0";
+            }
+            if(typedesk == null){
+                typedesk = "0";
+            }
+            if(price == null){
+                price = "0,1000";
+            }
             if(all != null){
                 space.searchAll();
             }else{
-                space.search(text);
+                space.search(text,typeroom,typedesk,price);
             }
             int type = 0;
             if (session.getAttribute("type") != null) {

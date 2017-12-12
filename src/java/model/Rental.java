@@ -118,7 +118,7 @@ public class Rental extends Member {
             DateFormat df_time = new SimpleDateFormat("HH:mm");
             Date dt = new Date();
             Message message = new Message();
-            Member sentmessage = new Member();
+            Member sentmessage = new Member(conn);
             while (rs.next()) {
                 date = rs.getString("date");
                 String[] date_list = date.split("-");
@@ -129,7 +129,7 @@ public class Rental extends Member {
                 message.setTime(df_time.format(dt));
                 message.setSender("Admin");
                 message.setReceiver(getUsername());
-                message.setMessage("กรุณาให้ Rating แก่พื้นที่ที่ท่านเคยใช้บริการ: ท่านทำการใช้บริการพื้นที่ทำงาน "+rs.getString("name")+" อย่าลืมให้คะแนนความพึงพอใจนะคะ");
+                message.setMessage("กรุณาให้ Rating แก่พื้นที่ที่ท่านเคยใช้บริการ: ท่านทำการใช้บริการพื้นที่ทำงาน " + rs.getString("name") + " อย่าลืมให้คะแนนความพึงพอใจนะคะ");
                 if (Integer.parseInt(date_list[0]) <= Integer.parseInt(list_date[2])) {
                     if (Integer.parseInt(date_list[1]) <= Integer.parseInt(list_date[1])) {
                         if (Integer.parseInt(date_list[2]) < Integer.parseInt(list_date[0])) {
@@ -174,15 +174,16 @@ public class Rental extends Member {
     public void reserSpace(String date, String time_start, String time_end, String amount, String s_name, String username) {
         try {
             Statement stmt = conn.createStatement();
-            String sql = "SELECT idspace,m.username\n"
+            String sql = "SELECT idspace,m.username,c.amount_desk\n"
                     + "FROM co_working_space c\n"
                     + "join member m\n"
                     + "on c.fk_idmember = m.idmember\n"
-                    + "where name = '" + s_name + "';";
+                    + "where name = '"+ s_name +"';";
             ResultSet rs = stmt.executeQuery(sql);
             rs.next();
             String idspace = rs.getString("idspace");
             String username_lessor = rs.getString("m.username");
+            int amount_desk = Integer.parseInt(rs.getString("c.amount_desk"));
 
             Statement stmt_user = conn.createStatement();
             String sql_user = "SELECT idmember\n"
@@ -199,11 +200,18 @@ public class Rental extends Member {
                 date_reverse += date_split[count_split - 1];
                 date_reverse += "-";
             }
+            amount_desk -= Integer.parseInt(amount);
+            sql = "UPDATE co_working_space\n"
+                    + "SET amount_desk = '" + amount_desk + "'\n"
+                    + "WHERE idspace = '" + idspace + "';";
+            stmt.executeUpdate(sql);
 
             Statement stmt_reser = conn.createStatement();
             String sql_reser = "INSERT INTO db_coworkingspace.booking(date, begin_time, end_time, desk_booking, fk_idmember, fk_idspace) \n"
                     + "	VALUES ('" + date_reverse + "', '" + time_start + "', '" + time_end + "', '" + amount + "', '" + idmember + "', '" + idspace + "');";
             stmt_reser.executeUpdate(sql_reser);
+            
+            
 
             DateFormat dateFormat_date = new SimpleDateFormat("dd/MM/yyyy");
             DateFormat dateFormat_time = new SimpleDateFormat("HH:mm");
@@ -214,7 +222,7 @@ public class Rental extends Member {
             message.setSender(username);
             message.setReceiver(username_lessor);
             message.setMessage("รายการทำการจองพื้นที่: " + username + " ได้ทำการจองพื้นที่ " + s_name + "ในวันที่ " + date_reverse + " เวลา " + time_start + "-" + time_end + " จำนวน " + amount + "คน");
-            Member sentmessage = new Member();
+            Member sentmessage = new Member(conn);
             sentmessage.sentMessage(message);
 
         } catch (SQLException ex) {

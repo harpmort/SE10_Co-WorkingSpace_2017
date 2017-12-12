@@ -215,7 +215,7 @@
             <% if (count >= i && i >= 11) { %>
             <form action="SearchServlet" method="POST">
                 <div class="row input-group search-bar">
-                    <input name="search" type="text" class="opacity" style="width: 0%"/>
+                    <input name="all"  value="all" type="text" class="opacity" style="width: 0%"/>
                     <button class="btn btn-default btn-search" type="submit">Back</button>
                 </div>
             </form>
@@ -660,6 +660,7 @@
             document.getElementById("viewAll").onclick = function () {
                 document.getElementById("formViewAll").submit();
             };
+        </script>
         <script script type="text/javascript">
             $(document).ready(function () {
                 $('#messagediv').click(function () {
