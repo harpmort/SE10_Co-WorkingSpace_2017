@@ -125,11 +125,13 @@
                             </table>
                         </div>
                         <div class="col-md-2">
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
         <!-- Cancel success Modal -->
         <div id="cancelSuccessModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
@@ -140,9 +142,7 @@
                         <h4 class="modal-title">Cancel Success!</h4>
                     </div>
                     <div class="modal-body">
-                        <div id="messagebody">
-                            <p>Your booking has been canceled.</p>
-                        </div>
+                        <p>Your booking has been canceled.</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -160,9 +160,7 @@
                         <h4 class="modal-title">Something went wrong!</h4>
                     </div>
                     <div class="modal-body">
-                        <div id="messagebody">
-                            <p>Your request unavailable. You can cancel before appointment 3 days or more.</p>
-                        </div>
+                        <p>Your request unavailable. You can cancel before appointment 3 days or more.</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -189,7 +187,27 @@
                 </div>
 
             </div>
-        </div>               
+
+        </div>
+        <%if (session.getAttribute("cancel") != null) {
+                model.Rental cancel = (model.Rental) session.getAttribute("cancel");%>
+        <%if (cancel.getCancelStatus() == 1) {%>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#unsuccessModal').modal('show');
+                <%session.setAttribute("cancel", null);%>
+            });
+        </script>
+        <%} else if (cancel.getCancelStatus() == 2) {%>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#cancelSuccessModal').modal('show');
+                <%session.setAttribute("cancel", null);%>
+            });
+        </script>
+        <%}%>
+        <%}%>
+
         <script type="text/javascript">
             $(document).ready(function () {
                 $('#messagediv').click(function () {

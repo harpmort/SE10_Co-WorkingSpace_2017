@@ -107,37 +107,42 @@
         </nav>
 
         <div class="head-bg-cover" >
-
             <div class="align-center">
                 <center><p class="head-name">CO-WORKING SPACE</p>
                     <div class="row">
-                        <div class="col-md-12">
-                            <form action="SearchServlet" method="POST">
-                                <div class="row input-group search-bar">
+                        <form action="SearchServlet" method="POST">
+                            <div class="col-md-12">
+                                <div class=" input-group search-bar">
                                     <input name="search" type="text" class="form-control" placeholder="Location or Lessor or Type Room or Type Desk.." />
                                     <span class="input-group-btn">
-                                        <button class="btn btn-default btn-search" type="submit"> <span class="glyphicon glyphicon-search"></span> </button>
-                                    </span></div>
-                            </form>
-                        </div>
-                        <a id="advanceSearch">Advance Search</a>
-                        <div id="searchPad" style="display:none" class="search-filter">
-                            Type Room :
-                            <input type="radio" name="typeRoom" value="1" /> Share Room
-                            <input type="radio" name="typeRoom" value="2" /> Private Room<br>
-                            <input type="radio" name="typeRoom" value="3" /> Meeting Room<br>
-                            Type Desk : 
-                            <input type="radio" name="typeDesk" value="2" /> Share Desk
-                            <input type="radio" name="typeDesk" value="1" /> Fix Desk<br>
-                            Price : 
-                            <b class="margin-slider-right">$ 0</b>
-                            <input id="ex2" type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="10" data-slider-value="[0,1000]"/>
-                            <b class="margin-slider-left">$ 1000</b><br>
-                            <form id="formViewAll" action="SearchServlet" method="POST">
-                                <a id="viewAll" type="submit">View all place.</a>
-                            </form>
-                        </div>
+                                        <button class="btn btn-default btn-search" type="submit"> 
+                                            <span class="glyphicon glyphicon-search"></span> 
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                            <a id="advanceSearch">Advance Search</a>
+                            <div id="searchPad" style="display:none" class="search-filter">
+                                Type Room :
+                                <input type="radio" name="typeRoom" value="1" /> Share Room
+                                <input type="radio" name="typeRoom" value="2" /> Private Room<br>
+                                <input type="radio" name="typeRoom" value="3" /> Meeting Room<br>
+                                Type Desk : 
+                                <input type="radio" name="typeDesk" value="2" /> Share Desk
+                                <input type="radio" name="typeDesk" value="1" /> Fix Desk<br>
+                                Price : 
+                                <b class="margin-slider-right">$ 0</b>
+                                <input id="ex2" type="text" class="span2" name="price" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="10" data-slider-value="[0,1000]"/>
+                                <b class="margin-slider-left">$ 1000</b><br>
+                                </form>
+                                <form id="formViewAll" action="SearchServlet" method="POST">
+                                    <input name="all" type="text" class="form-control" placeholder="Location or Lessor or Type Room or Type Desk.."  style="display: none" value="all"/>
+                                    <a id="viewAll" type="submit">View all place.</a>
+                                </form>
+                            </div>
+
                     </div>
+
                 </center>
             </div>
         </div>
@@ -198,7 +203,7 @@
             });
         </script>
         <script type="text/javascript">
-            document.getElementById("viewAll").onclick = function() {
+            document.getElementById("viewAll").onclick = function () {
                 document.getElementById("formViewAll").submit();
             };
         </script>

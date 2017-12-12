@@ -53,6 +53,7 @@ public class SearchServlet extends HttpServlet {
             System.out.println("tr : "+typeroom);
             System.out.println("td : "+typedesk);
             System.out.println("p : "+price);
+            System.out.println("a :"+all);
             if(typeroom == null){
                 typeroom = "0";
             }
