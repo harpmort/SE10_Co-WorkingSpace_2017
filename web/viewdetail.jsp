@@ -187,7 +187,7 @@
                             <div class="book-bg margin-top book-margin">
                                 <div class="book-title">
                                     <center>
-                                        <div class="price"><p>Price : <%= space.getPrice()%></p></div>
+                                        <div class="price"><p id="totalPrice">Price : <%= space.getPrice()%></p></div>
                                     </center>
                                 </div>
                                 <div class="row text-pos">
@@ -686,8 +686,31 @@
                 fieldName = $(this).attr('data-field');
                 var input = $("input[name='" + fieldName + "']");
                 var currentVal = parseInt(input.val());
+                
+                var startTime = $('#datetimepicker2').val();
+                var endTime = $('#datetimepicker3').val();
+                
+                var start = startTime.split(':');
+                var end = endTime.split(':');
+                
+                var total = parseInt(start[0]) - parseInt(end[0]);
+                total = Math.abs(total);
+                
+               
+               (parseInt(start[0]) * 60) + parseInt(start[1])
+               (parseInt(end[0]) * 60) + parseInt(end[1])
+               
+                var min = parseInt(start[1]) - parseInt(end[1]);
+                min = Math.abs(min);
+                
+                if (min >= 30) {
+                    total++;
+                }
+                
                 if (currentVal > input.attr('min')) {
                     input.val(currentVal - 1).change();
+                    currentVal = parseInt(input.val());
+                    $('#totalPrice').text('Price : ' + (<%= space.getPrice()%> * currentVal) * total);
                 }
             });
 
@@ -695,8 +718,26 @@
                 fieldName = $(this).attr('data-field');
                 var input = $("input[name='" + fieldName + "']");
                 var currentVal = parseInt(input.val());
+                
+                var startTime = $('#datetimepicker2').val();
+                var endTime = $('#datetimepicker3').val();
+                
+                var start = startTime.split(':');
+                var end = endTime.split(':');
+                
+                var total = parseInt(start[0]) - parseInt(end[0]);
+                total = Math.abs(total);
+               
+                var min = parseInt(start[1]) - parseInt(end[1]);
+                
+                if (min >= 30) {
+                    total++;
+                }
+                
                 if (currentVal < input.attr('max')) {
                     input.val(currentVal + 1).change();
+                    currentVal = parseInt(input.val());
+                    $('#totalPrice').text('Price : ' + (<%= space.getPrice()%> * currentVal) * total);
                 }
             });
         </script>
