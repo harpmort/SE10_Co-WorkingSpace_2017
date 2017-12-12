@@ -45,8 +45,8 @@
                 </div>
 
                 <div class="collapse navbar-collapse" id="mynavbar">
-                    <% if (check == 1) {%>
                     <%int type = (int) session.getAttribute("type");%>
+                    <% if (check == 1) {%>
                     <%if (type != 3) {%>
                     <%model.Member member = (model.Member) session.getAttribute("member");%>
                     <div class="collapse navbar-collapse" id="mynavbar">
@@ -81,7 +81,7 @@
                     <div class="collapse navbar-collapse" id="mynavbar">
                         <ul class="nav navbar-nav navbar-right">
                             <li class="menu-bar"><a href="landing.jsp">Home</a></li>
-                            <li class="menu-bar"><a href="#">Approve</a></li>
+                            <li class="menu-bar"><a href="ViewapproveServlet">Approve Lessor</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle menu-bar" data-toggle="dropdown"><%= admin.getUsername()%><strong class="caret"></strong></a>
                                 <ul class="dropdown-menu">
@@ -159,7 +159,7 @@
                                     <img src="img/actions.png" style="width: 32px">
                                 </div>
                                 <div class="col-md-10">
-                                    <p style="font-size:initial;"><%= space.getAmount_people()%></p>
+                                    <p style="font-size:initial;"><%= space.getTotal_desk()%></p>
                                 </div>
                             </div><br>
                             <div class="row">
@@ -205,12 +205,12 @@
                             <div class="book-bg margin-top book-margin">
                                 <div class="book-title">
                                     <center>
-                                        <div class="price"><p>Price : <%= space.getPrice()%></p></div>
+                                        <div class="price"><p>Price : <%= space.getPrice()%></p><p>จำนวนคนที่รองรับได้ : <%= space.getAmount_desk()%></p></div>
                                     </center>
                                 </div>
                                 <div class="row text-pos">
                                     <div class="col-md-6 ">
-                                        <div class="col-md-3 magin-book">
+                                        <div class="col-md-4 magin-book">
                                             <div class="text-edit"><p>วันที่ : </p></div>
                                             <div class="text-edit"><p>เวลาเริ่ม : </p></div>
                                         </div>
@@ -220,6 +220,8 @@
                                             <input type="text" class="form-control form-control-edit" readonly="true" id="datetimepicker2" name="time_start">
                                         </div>
                                     </div>
+                                    <% String type_room = space.getType_room();
+                                        if (type_room.equals("Share Room")) {%>
                                     <div class="col-md-6">
                                         <div class="col-md-4">
                                             <div class="text-edit">จำนวนคน : </div>
@@ -242,12 +244,33 @@
                                             <input type="text" data-toggle="endtimetooltip" title="กดเวลาเริ่มก่อนสิ!" class="form-control" value=""  readonly="true" id="datetimepicker3" name="time_end">
                                         </div>
                                     </div>
+                                    <%} else {%>
+                                    <div class="col-md-6">
+                                        <div class="col-md-4">
+                                            <div class="text-edit">จำนวนคน : </div>
+                                            <div class="text-edit">เวลาสิ้นสุด : </div>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <div class="text-edit"> จองเหมาทั้งห้อง </div>
+                                            <input type="text" data-toggle="endtimetooltip" title="กดเวลาเริ่มก่อนสิ!" class="form-control" value=""  readonly="true" id="datetimepicker3" name="time_end">
+                                        </div>
+                                    </div>
+                                    <%}%>
                                 </div>
-
+                                <%if (check == 1 && type == 2) {%>
                                 <div class="book-btn">
                                     <center><button class="btn btn-default btn-margin">Book</button></center>
 
                                 </div>
+                                <%} else if (type == 1 || type == 3) {%>
+                                <div class="book-btn">
+                                    <center><h3>ไม่สามารถทำรายการจองได้เนื่องจากไม่ใช่ผู้เช่า</h3></center>
+                                </div>
+                                <%} else {%>
+                                <div class="book-btn">
+                                    <center><h3>กรุณาเข้าสู่ระบบก่อนทำการจองพื้นที่</h3></center>
+                                </div>
+                                <%}%>
                             </div>
                         </div>
 
@@ -265,7 +288,7 @@
                 <div class="col-md-2"></div>
 
             </div>
-                            
+
         </form>
         <!-- Login Modal -->
         <div id="loginModal" class="modal fade" role="dialog">
@@ -656,8 +679,8 @@
                     var datepull_temp = datepull.split("-");
                     var datepull_ok = datepull_temp.join("/");
                     var slot_per_day = [];
-                    var opentime = new String("<%= space.getOpen_time() %>");
-                    var closetime = new String("<%= space.getClose_time() %>");
+                    var opentime = new String("<%= space.getOpen_time()%>");
+                    var closetime = new String("<%= space.getClose_time()%>");
                     slot_per_day.push("00:00-" + opentime);
                     for (var i = 0; i < takedslot_li.length; i++) {
                         var temp = takedslot_li[i].toString().split("-")[0];

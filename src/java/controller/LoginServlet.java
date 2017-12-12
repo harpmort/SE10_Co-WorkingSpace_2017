@@ -58,6 +58,7 @@ public class LoginServlet extends HttpServlet {
                 String sql_admin = "SELECT * from admin where username='" + username + "';";
                 ResultSet rs = stmt_mem.executeQuery(sql_mem);
                 ResultSet rs_admin = stmt_admin.executeQuery(sql_admin);
+                int type = 0;
                 if (rs.next()) {
                     if (password.equals(rs.getString("password"))) {
                         if (rs.getInt("idtype_member") == 2) {
@@ -69,7 +70,7 @@ public class LoginServlet extends HttpServlet {
                             lessor.importData(username, password);
                             session.setAttribute("member", lessor);
                         }
-                        int type = rs.getInt("idtype_member");
+                        type = rs.getInt("idtype_member");
                         System.out.println("idtype : "+rs.getInt("idtype_member"));
                         session.setAttribute("type", type);
                         check = 1;
@@ -78,6 +79,7 @@ public class LoginServlet extends HttpServlet {
                         pg.forward(request, response);
                     } else {
                         check = 2;
+                        session.setAttribute("type", type);
                         request.setAttribute("check", check);
                         RequestDispatcher pg = request.getRequestDispatcher("index.jsp");
                         pg.forward(request, response);
@@ -88,7 +90,7 @@ public class LoginServlet extends HttpServlet {
                         Admin admin = new Admin(conn);
                         admin.importData(username, password);
                         session.setAttribute("admin", admin);
-                        int type = 3;
+                        type = 3;
                         session.setAttribute("type", type);
                         check = 1;
                         session.setAttribute("check", check);
@@ -96,12 +98,14 @@ public class LoginServlet extends HttpServlet {
                         pg.forward(request, response);
                     } else {
                         check = 2;
+                        session.setAttribute("type", type);
                         request.setAttribute("check", check);
                         RequestDispatcher pg = request.getRequestDispatcher("index.jsp");
                         pg.forward(request, response);
                     }
                 } else {
                     check = 3;
+                    session.setAttribute("type", type);
                     request.setAttribute("check", check);
                     RequestDispatcher pg = request.getRequestDispatcher("index.jsp");
                     pg.forward(request, response);
