@@ -30,6 +30,7 @@ public class Rental extends Member {
     private String desk_booking;
     private int state_review;
     private int check_rate = 0;
+    private int cancelStatus = 0;
 
     List<Member> lhistory;
     private String idhistory;
@@ -90,11 +91,35 @@ public class Rental extends Member {
                     + "FROM booking b\n"
                     + "where idbooking = '" + id_booking + "';";
             ResultSet rs = stmt.executeQuery(sql);
-            rs.next();
-            String id_b = rs.getString("idbooking");
-            Statement stmt_id_b = conn.createStatement();
-            String sql_id_b = "DELETE FROM db_coworkingspace.booking WHERE idbooking = '" + id_b + "';";
-            stmt_id_b.executeUpdate(sql_id_b);
+//            rs.next();
+//            String id_b = rs.getString("idbooking");
+//            Statement stmt_id_b = conn.createStatement();
+//            String sql_id_b = "DELETE FROM db_coworkingspace.booking WHERE idbooking = '" + id_b + "';";
+//            stmt_id_b.executeUpdate(sql_id_b);
+            
+            DateFormat dateFormat_date = new SimpleDateFormat("dd/MM/yyyy");
+            DateFormat dateFormat_time = new SimpleDateFormat("HH:mm");
+            Date date_td = new Date();
+            String date_today = dateFormat_date.format(date_td);
+            String[] list_date = date_today.split("/");
+            while(rs.next()) {
+                date = rs.getString("date");
+                String[] date_list = date.split("-");
+                if(Integer.parseInt(date_list[0]) <= Integer.parseInt(list_date[2])) {
+                    if(Integer.parseInt(date_list[1]) <= Integer.parseInt(list_date[1])) {
+                        if(Integer.parseInt(date_list[2]) - Integer.parseInt(list_date[0]) <= -3) {
+                            String id_b = rs.getString("idbooking");
+                            Statement stmt_id_b = conn.createStatement();
+                            String sql_id_b = "DELETE FROM db_coworkingspace.booking WHERE idbooking = '" + id_b + "';";
+                            stmt_id_b.executeUpdate(sql_id_b);
+                            
+                            cancelStatus = 1;
+                        } else {
+                            cancelStatus = 0;
+                        }
+                    } 
+                }
+            }
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -366,5 +391,15 @@ public class Rental extends Member {
     public void setState_review(int state_review) {
         this.state_review = state_review;
     }
+
+    public int getCancelStatus() {
+        return cancelStatus;
+    }
+
+    public void setCancelStatus(int cancelStatus) {
+        this.cancelStatus = cancelStatus;
+    }
+    
+    
 
 }

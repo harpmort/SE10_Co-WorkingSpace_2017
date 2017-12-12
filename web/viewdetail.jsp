@@ -3,6 +3,7 @@
     Created on : Nov 15, 2017, 9:23:08 AM
     Author     : Asus
 --%>
+<%@page import="util.ReFormDisabledTime"%>
 <%@page import="java.util.List"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -106,7 +107,7 @@
                                 </div></li>
                                 <% } else { %>
                             <li class="menu-bar"><div class="message-main">
-                                    <div data-toggle="nomessagetooltip" data-placement="bottom" title="คุณไม่มีข้อความ"><img class="message-img" src="img/message.png"></div>
+                                    <div data-toggle="nomessagetooltip" data-placement="bottom" title="คุณไม่มีข้อความใหม่"><img class="message-img" src="img/message.png"></div>
                                 </div></li>
 
                             <% } %>
@@ -124,6 +125,9 @@
         <%model.Space space = (model.Space) session.getAttribute("space");
             List<String> takedslot = space.getTakedslot();
             String takedslot_st = "";
+            if(space.getType_room().equals("Share Room")){
+                takedslot = new ReFormDisabledTime().toSharedRoomDisabled(space.getTakedamount());
+            }
             for (int i = 0; i < takedslot.size(); i++) {
                 takedslot_st += takedslot.get(i);
                 if (i < takedslot.size() - 1) {
@@ -848,7 +852,7 @@
                 }
             });
         </script>
-        <script script type="text/javascript">
+        <script type="text/javascript">
             $(document).ready(function(){
                 $('#messagediv').click(function(){
                     $('#messageModal').modal('show');
@@ -872,6 +876,10 @@
                         $('#messagebody').load('message.jsp?delete=yes&id='+id);
                     }
                 </script>
+                <script type="text/javascript">
+
+                </script>
+                
 
 
     </body>
