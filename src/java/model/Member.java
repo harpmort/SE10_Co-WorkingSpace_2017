@@ -234,6 +234,17 @@ public class Member {
         }
 
     }
+    
+    public void deleteMessage (int id){
+        try {
+            Statement del_statement = conn.createStatement();
+            String del_sql = "DELETE FROM db_coworkingspace.message WHERE idmessage = '" + id + "';";
+            del_statement.executeUpdate(del_sql);
+        } catch (SQLException ex) {
+            Logger.getLogger(Member.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
 
     public int getIdmember() {
         return idmember;
@@ -339,5 +350,12 @@ public class Member {
     public void setMessages(List<Message> messages) {
         this.messages = messages;
     }
+    
+    public List<Message> getMessagesByPass(){
+        return messages;
+    }
+    
+    
+    
 
 }

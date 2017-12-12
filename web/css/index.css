@@ -317,6 +317,12 @@ body {
     margin-bottom: 30px;
 }
 
+
+.search-filter{
+    height: 120px;
+    background-color: #e0e0e0;
+    width: 400px;
+}
 /*MESSAGE DECORATION*/
 .message-main{
 	padding-right: 20px;
@@ -340,4 +346,16 @@ body {
 	padding: 3px 0;
 	left: 20px;
 	top: -15px;
+}
+.message-text-inside{
+	color: #111111 !important;
+}
+.message-delete{
+	position: absolute;
+	right: 16px;
+	width: 30px;
+	height: 30px;
+}
+.message-header{
+	margin-top: -1px;
 }
