@@ -65,21 +65,43 @@
                                     </li>
                                 </ul>
                             </li>
-                            <% if(true){ %>
-                        <li class="menu-bar"><div class="message-main">
-                                <div data-toggle="messagetooltip" data-placement="bottom" title="คุณมีข้อความแจ้งเตือน!"><img class="message-img" src="img/message.png"><div class="message-count">10</div></div>
-                            </div></li>
-                        <% }else{ %>
-                        <li class="menu-bar"><div class="message-main">
-                                <div data-toggle="nomessagetooltip" data-placement="bottom" title="คุณไม่มีข้อความ"><img class="message-img" src="img/message.png"></div>
-                            </div></li>
-                        
-                        <% } %>
+                            <% if (member.getUnReadMessage() != 0) {%>
+                            <li class="menu-bar"><div class="message-main">
+                                    <div id="messagediv" data-toggle="messagetooltip" data-placement="bottom" title="คุณมีข้อความแจ้งเตือน!"><img class="message-img" src="img/message.png"><div class="message-count"><%= member.getUnReadMessage()%></div></div>
+                                </div></li>
+                                <% } else { %>
+                            <li class="menu-bar"><div class="message-main">
+                                    <div id="messagediv2" data-toggle="nomessagetooltip" data-placement="bottom" title="คุณไม่มีข้อความใหม่"><img class="message-img" src="img/message.png"></div>
+                                </div></li>
+
+                            <% }%>
                         </ul>
                     </div>
                 </div>
             </div>
         </nav>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 class="text-center head-pro">
+                        Profile
+                    </h3>
+                    <div class="row">
+                        <div class="col-md-2">
+                        </div>
+                        <div class="col-md-2">
+                            <div class="img-pro"><img src="<%= member.getImg_user()%>" width="100%" /></div>
+                            <div class="name-pro" style="text-align: center"><h3>
+                                    <%= member.getUsername()%>
+                                </h3></div>
+                            <form action="editprofile.jsp" method="POST">
+                                <div class="btn-edit-pro">
+                                    <button type="submit" class="btn btn-default" >
+                                        edit profile
+                                    </button>
+                                </div>
+                            </form>
 
             <div class="">
                 <div class="col-md-12 bg-block">
@@ -88,8 +110,34 @@
                         <div class="image-cropper" >
                             <img src="<%= member.getImg_user()%>" class="rounded"/>
                         </div>
-                        <div class="name-pro" id="image" style="text-align: center">
-                            <%= member.getUsername()%>
+                        <div class="col-md-6">
+                            <div class="show-pro">ชื่อ : <%= member.getFirstname()%></div>
+                            <div class="show-pro">นามสกุล : <%= member.getLastname()%></div>
+                            <div class="show-pro">Email : <%= member.getEmail()%></div>
+                            <div class="show-pro">เบอร์โทรศัพท์ : <%= member.getPhone()%></div>
+                            <%int type = member.getType();
+                                String type_mem;
+                                if (type == 1) {
+                                    type_mem = "Lessor(ผู้ให้เช่า)";
+                                } else {
+                                    type_mem = "Rental(ผู้เช่า)";
+                                }
+                            %>
+                            <div class="show-pro">ประเภทผู้ใช้งาน : <%= type_mem%></div>
+                            <%if (type == 1) {%>
+                            <%String status = member.getStatus_approve();
+                                String idcard = member.getIdcard();
+                                String approve;
+                                if (status.equals("No Approve") && idcard.equals("Not verified")) {
+                                    approve = "ยังไม่ได้ยืนยันตัวตน";
+                                } else if (status.equals("No Approve") && !idcard.equals("Not verified")) {
+                                    approve = "รอการยืนยันตัวตน";
+                                } else {
+                                    approve = "ยืนยันตัวตนแล้ว";
+                                }
+                            %>
+                            <div class="show-pro">สถานะยืนยันตัวตน : <%= approve%></div>
+                            <%}%>
                         </div>
 
                     </div>   
@@ -140,5 +188,50 @@
                 </form>
 
             </div>
+        </div>
+        <!-- Modal Message -->
+        <div class="modal fade" id="messageModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Message Notification</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="messagebody"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>    
+        <script script type="text/javascript">
+            $(document).ready(function () {
+                $('#messagediv').click(function () {
+                    $('#messageModal').modal('show');
+                });
+                $('#messagediv2').click(function () {
+                    $('#messageModal').modal('show');
+                });
+            });
+        </script> 
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('[data-toggle="nomessagetooltip"]').tooltip();
+                $('[data-toggle="messagetooltip"]').tooltip();
+            });
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#messagebody').load('message.jsp');
+            });
+            function delMessage(id) {
+                $('#messagebody').load('message.jsp?delete=yes&id=' + id);
+            }
+        </script>
     </body>
 </html>

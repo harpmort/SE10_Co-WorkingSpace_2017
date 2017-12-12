@@ -22,6 +22,7 @@ public class Space {
 
     List<Space> detail_space;
     ArrayList takedslot;
+    ArrayList takedamount;
     private String name;
     private String location;
     private String type_room;
@@ -50,6 +51,7 @@ public class Space {
         conn = connection;
         detail_space = new LinkedList<Space>();
         takedslot = new ArrayList();
+        takedamount = new ArrayList();
     }
 
     public List<Space> getDetail_space() {
@@ -58,6 +60,10 @@ public class Space {
 
     public ArrayList getTakedslot() {
         return takedslot;
+    }
+
+    public ArrayList getTakedamount() {
+        return takedamount;
     }
 
     public void search(String text) {
@@ -74,6 +80,48 @@ public class Space {
                     + "on c.idtype_room = r.idtype_room\n"
                     + "where name like \"%" + text + "%\"\n"
                     + "or c.location like \"" + text + "%\";";
+            ResultSet rs = stmt.executeQuery(sql);
+            check_search = 0;
+            while (rs.next()) {
+                Space space = new Space();
+                space.setName(rs.getString("name"));
+                space.setLocation(rs.getString("c.location"));
+                space.setType_room(rs.getString("r.type_room"));
+                space.setType_desk(rs.getString("d.type_desk"));
+                space.setTotal_desk(rs.getString("c.total_desk"));
+                space.setAmount_desk(rs.getString("c.amount_desk"));
+                space.setDescription(rs.getString("c.description"));
+                space.setSize_room(rs.getString("c.size_room"));
+                space.setOpen_time(rs.getString("c.open_time"));
+                space.setClose_time(rs.getString("c.close_time"));
+                space.setAmount_people(rs.getString("c.amount_people"));
+                space.setPrice(rs.getString("c.price"));
+                space.setUsername(rs.getString("m.username"));
+                space.setImg(rs.getString("img").split(","));
+                int count = space.getImg().length;
+                for (int i = 0; i < count; i++) {
+                    System.out.println("img :" + space.getImg()[0]);
+                }
+                detail_space.add(space);
+                check_search = 1;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void searchAll() {
+        try {
+            Statement stmt = conn.createStatement();
+            String sql = "select name,c.location,r.type_room,d.type_desk,c.total_desk,c.amount_desk,c.description\n"
+                    + ",c.size_room,c.open_time,c.close_time,c.amount_people,c.price,m.username,c.img\n"
+                    + "from co_working_space c\n"
+                    + "join member m \n"
+                    + "on c.fk_idmember = m.idmember\n"
+                    + "join type_desk d\n"
+                    + "on c.idtype_desk = d.idtype_desk\n"
+                    + "join type_room r\n"
+                    + "on c.idtype_room = r.idtype_room;";
             ResultSet rs = stmt.executeQuery(sql);
             check_search = 0;
             while (rs.next()) {
@@ -147,7 +195,7 @@ public class Space {
                     + "on c.idtype_desk = d.idtype_desk\n"
                     + "join type_room r\n"
                     + "on c.idtype_room = r.idtype_room\n"
-                    + "where name = '"+ name +"';";
+                    + "where name = '" + name + "';";
             ResultSet rs = stmt.executeQuery(sql);
             if (rs.next()) {
                 setName(rs.getString("name"));
@@ -174,16 +222,17 @@ public class Space {
 
         try {
             Statement stmt = conn.createStatement();
-            String sql = "select date,begin_time,end_time\n"
+            String sql = "select date,begin_time,end_time,c.amount_desk\n"
                     + "from booking b\n"
                     + "join co_working_space c\n"
                     + "on b.fk_idspace = c.idspace\n"
-                    + "where c.name = '" + name + "';";
+                    + "where c.name = '"+ name +"';";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 String[] date_split = rs.getString("date").split("-");
                 String date = date_split[2] + "/" + date_split[1] + "/" + date_split[0];
                 takedslot.add(date + "-" + rs.getString("begin_time") + "-" + rs.getString("end_time"));
+                takedamount.add(date + "-" + rs.getString("begin_time") + "-" + rs.getString("end_time")+ "-" + rs.getString("c.amount_desk"));
             }
             System.out.println("takedslot is : " + takedslot);
             if (takedslot == null) {
@@ -191,8 +240,8 @@ public class Space {
             }
             Order order = new Order();
             setTakedslot((ArrayList) order.orderMePlease(takedslot));
-            System.out.println("takedslot real :" + getTakedslot());
-            System.out.println("return order :" + order.orderMePlease(takedslot));
+            setTakedamount((ArrayList) order.orderMePlease(takedamount));
+            System.out.println("return order :" + order.orderMePlease(takedamount));
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -464,6 +513,9 @@ public class Space {
     public void setApprove_status(String approve_status) {
         this.approve_status = approve_status;
     }
-    
+
+    public void setTakedamount(ArrayList takedamount) {
+        this.takedamount = takedamount;
+    }
 
 }
