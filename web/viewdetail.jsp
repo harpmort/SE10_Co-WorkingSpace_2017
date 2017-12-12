@@ -45,8 +45,8 @@
                 </div>
 
                 <div class="collapse navbar-collapse" id="mynavbar">
-                    <% if (check == 1) {%>
                     <%int type = (int) session.getAttribute("type");%>
+                    <% if (check == 1) {%>
                     <%if (type != 3) {%>
                     <%model.Member member = (model.Member) session.getAttribute("member");%>
                     <div class="collapse navbar-collapse" id="mynavbar">
@@ -73,6 +73,16 @@
                                     </li>
                                 </ul>
                             </li>
+                            <% if (true) { %>
+                            <li class="menu-bar"><div class="message-main">
+                                    <div id="messagediv" data-toggle="messagetooltip" data-placement="bottom" title="คุณมีข้อความแจ้งเตือน!"><img class="message-img" src="img/message.png"><div class="message-count">10</div></div>
+                                </div></li>
+                                <% } else { %>
+                            <li class="menu-bar"><div class="message-main">
+                                    <div data-toggle="nomessagetooltip" data-placement="bottom" title="คุณไม่มีข้อความ"><img class="message-img" src="img/message.png"></div>
+                                </div></li>
+
+                            <% } %>
                         </ul>
 
                     </div>
@@ -81,7 +91,7 @@
                     <div class="collapse navbar-collapse" id="mynavbar">
                         <ul class="nav navbar-nav navbar-right">
                             <li class="menu-bar"><a href="landing.jsp">Home</a></li>
-                            <li class="menu-bar"><a href="#">Approve</a></li>
+                            <li class="menu-bar"><a href="ViewapproveServlet">Approve Lessor</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle menu-bar" data-toggle="dropdown"><%= admin.getUsername()%><strong class="caret"></strong></a>
                                 <ul class="dropdown-menu">
@@ -90,6 +100,16 @@
                                     </li>
                                 </ul>
                             </li>
+                            <% if (true) { %>
+                            <li class="menu-bar"><div class="message-main">
+                                    <div data-toggle="messagetooltip" data-placement="bottom" title="คุณมีข้อความแจ้งเตือน!"><img class="message-img" src="img/message.png"><div class="message-count">10</div></div>
+                                </div></li>
+                                <% } else { %>
+                            <li class="menu-bar"><div class="message-main">
+                                    <div data-toggle="nomessagetooltip" data-placement="bottom" title="คุณไม่มีข้อความ"><img class="message-img" src="img/message.png"></div>
+                                </div></li>
+
+                            <% } %>
                         </ul>
                     </div>
                     <%}%>
@@ -112,7 +132,29 @@
             }
         %>
         <form action="ReserServlet" method="POST">
-            <h1 class="margin-left type-room-name"><%= space.getName()%></h1>
+            <div class="margin-left type-room-name">
+                <h1><%= space.getName()%></h1>
+                <h3>by <%= space.getUsername()%></h3>
+                <%String approve_status = space.getApprove_status();
+                if (approve_status.equals("Approved")) {%>
+                <%int rating = space.getRating();
+                if( rating == 0){%>
+                    <img class="" src="img/0.png" style="height: 20px;"/> จากผู้ให้เช่า <%= space.getNum_review()%> คน
+                <%}else if(rating == 1){%>
+                    <img class="" src="img/1.png" style="height: 20px;"/> จากผู้ให้เช่า <%= space.getNum_review()%> คน
+                <%}else if(rating == 2){%>
+                    <img class="" src="img/2.png" style="height: 20px;"/> จากผู้ให้เช่า <%= space.getNum_review()%> คน
+                <%}else if(rating == 3){%>
+                    <img class="" src="img/3.png" style="height: 20px;"/> จากผู้ให้เช่า <%= space.getNum_review()%> คน
+                <%}else if(rating == 4){%>
+                    <img class="" src="img/4.png" style="height: 20px;"/> จากผู้ให้เช่า <%= space.getNum_review()%> คน
+                <%}else if(rating == 5){%>
+                    <img class="" src="img/5.png" style="height: 20px;"/> จากผู้ให้เช่า <%= space.getNum_review()%> คน
+                <%}}else{%>
+                <h6>ผู้ให้เช่าคนนี้ยังไม่ได้ทำการยืนยันตัวตน</h6>
+                <%}%>
+            </div>
+
 
             <div class="container zero-gap" style="width: 80%">
                 <div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -160,7 +202,7 @@
                                     <img src="img/actions.png" style="width: 32px">
                                 </div>
                                 <div class="col-md-10">
-                                    <p style="font-size:initial;"><%= space.getAmount_people()%></p>
+                                    <p style="font-size:initial;"><%= space.getTotal_desk()%></p>
                                 </div>
                             </div><br>
                             <div class="row">
@@ -206,12 +248,12 @@
                             <div class="book-bg margin-top book-margin">
                                 <div class="book-title">
                                     <center>
-                                        <div class="price"><p>Price : <%= space.getPrice()%></p></div>
+                                        <div class="price"><p id="totalPrice">Price : <%= space.getPrice()%></p></div>
                                     </center>
                                 </div>
                                 <div class="row text-pos">
                                     <div class="col-md-6 ">
-                                        <div class="col-md-3 magin-book">
+                                        <div class="col-md-4 magin-book">
                                             <div class="text-edit"><p>วันที่ : </p></div>
                                             <div class="text-edit"><p>เวลาเริ่ม : </p></div>
                                         </div>
@@ -221,6 +263,8 @@
                                             <input type="text" class="form-control form-control-edit" readonly="true" id="datetimepicker2" name="time_start">
                                         </div>
                                     </div>
+                                    <% String type_room = space.getType_room();
+                                        if (type_room.equals("Share Room")) {%>
                                     <div class="col-md-6">
                                         <div class="col-md-4">
                                             <div class="text-edit">จำนวนคน : </div>
@@ -243,12 +287,33 @@
                                             <input type="text" data-toggle="endtimetooltip" title="กดเวลาเริ่มก่อนสิ!" class="form-control" value=""  readonly="true" id="datetimepicker3" name="time_end">
                                         </div>
                                     </div>
+                                    <%} else {%>
+                                    <div class="col-md-6">
+                                        <div class="col-md-4">
+                                            <div class="text-edit">จำนวนคน : </div>
+                                            <div class="text-edit">เวลาสิ้นสุด : </div>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <div class="text-edit"> จองเหมาทั้งห้อง </div>
+                                            <input type="text" data-toggle="endtimetooltip" title="กดเวลาเริ่มก่อนสิ!" class="form-control" value=""  readonly="true" id="datetimepicker3" name="time_end">
+                                        </div>
+                                    </div>
+                                    <%}%>
                                 </div>
-
+                                <%if (check == 1 && type == 2) {%>
                                 <div class="book-btn">
                                     <center><button class="btn btn-default btn-margin">Book</button></center>
 
                                 </div>
+                                <%} else if (type == 1 || type == 3) {%>
+                                <div class="book-btn">
+                                    <center><h3>ไม่สามารถทำรายการจองได้เนื่องจากไม่ใช่ผู้เช่า</h3></center>
+                                </div>
+                                <%} else {%>
+                                <div class="book-btn">
+                                    <center><h3>กรุณาเข้าสู่ระบบก่อนทำการจองพื้นที่</h3></center>
+                                </div>
+                                <%}%>
                             </div>
                         </div>
 
@@ -266,7 +331,7 @@
                 <div class="col-md-2"></div>
 
             </div>
-                            
+
         </form>
         <!-- Login Modal -->
         <div id="loginModal" class="modal fade" role="dialog">
@@ -394,6 +459,31 @@
 
             </div>
         </div>
+        <!-- Modal Message -->
+        <div class="modal fade" id="messageModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Message Notification</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h2>All message</h2>
+                        <ul class="list-group">
+                            <a href="#" class="message-text-inside list-group-item"><img class="message-delete" src="img/error.png"><h3 class="message-header">ยืนยันการจองห้อง: </h3><p>จาก: Admin 11/12/2017 13:30</p> ขอแสดงความยินดี การจองห้องของคุณสำเร็จแล้ว</a>
+                            <a href="#" class="message-text-inside list-group-item"><img class="message-delete" src="img/error.png"><h3 class="message-header">ยืนยันการจองห้อง: </h3><p>จาก: Admin 11/12/2017 13:30</p> ขอแสดงความยินดี การจองห้องของคุณสำเร็จแล้ว</a>
+                            
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>                
 
         <% if (check == 2 || check == 3) { %>
         <script type="text/javascript">
@@ -657,8 +747,8 @@
                     var datepull_temp = datepull.split("-");
                     var datepull_ok = datepull_temp.join("/");
                     var slot_per_day = [];
-                    var opentime = new String("<%= space.getOpen_time() %>");
-                    var closetime = new String("<%= space.getClose_time() %>");
+                    var opentime = new String("<%= space.getOpen_time()%>");
+                    var closetime = new String("<%= space.getClose_time()%>");
                     slot_per_day.push("00:00-" + opentime);
                     for (var i = 0; i < takedslot_li.length; i++) {
                         var temp = takedslot_li[i].toString().split("-")[0];
@@ -709,8 +799,29 @@
                 fieldName = $(this).attr('data-field');
                 var input = $("input[name='" + fieldName + "']");
                 var currentVal = parseInt(input.val());
+
+                var startTime = $('#datetimepicker2').val();
+                var endTime = $('#datetimepicker3').val();
+
+                var start = startTime.split(':');
+                var end = endTime.split(':');
+
+                var total = parseInt(start[0]) - parseInt(end[0]);
+                total = Math.abs(total);
+
+
+
+                var min = (parseInt(start[1]) + 30) - 60;
+                min = Math.abs(min);
+
+                if (min <= parseInt(end[1])) {
+                    total++;
+                }
+
                 if (currentVal > input.attr('min')) {
                     input.val(currentVal - 1).change();
+                    currentVal = parseInt(input.val());
+                    $('#totalPrice').text('Price : ' + (<%= space.getPrice()%> * currentVal) * total);
                 }
             });
 
@@ -718,11 +829,43 @@
                 fieldName = $(this).attr('data-field');
                 var input = $("input[name='" + fieldName + "']");
                 var currentVal = parseInt(input.val());
+
+                var startTime = $('#datetimepicker2').val();
+                var endTime = $('#datetimepicker3').val();
+
+                var start = startTime.split(':');
+                var end = endTime.split(':');
+
+                var total = parseInt(start[0]) - parseInt(end[0]);
+                total = Math.abs(total);
+
+                var min = (parseInt(start[1]) + 30) - 60;
+                min = Math.abs(min);
+
+                if (min <= parseInt(end[1])) {
+                    total++;
+                }
+
                 if (currentVal < input.attr('max')) {
                     input.val(currentVal + 1).change();
+                    currentVal = parseInt(input.val());
+                    $('#totalPrice').text('Price : ' + (<%= space.getPrice()%> * currentVal) * total);
                 }
             });
         </script>
+        <script script type="text/javascript">
+            $(document).ready(function(){
+                $('#messagediv').click(function(){
+                    $('#messageModal').modal('show');
+                });
+            });
+        </script> 
+        <script type="text/javascript">
+                    $(document).ready(function(){
+    $('[data-toggle="nomessagetooltip"]').tooltip();
+    $('[data-toggle="messagetooltip"]').tooltip();
+});
+                </script>
 
 
     </body>

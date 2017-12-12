@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.Admin;
 import model.Lessor;
 import model.Rental;
 
@@ -24,8 +23,8 @@ import model.Rental;
  *
  * @author Asus
  */
-@WebServlet(name = "ViewapproveServlet", urlPatterns = {"/ViewapproveServlet"})
-public class ViewapproveServlet extends HttpServlet {
+@WebServlet(name = "RatingServlet", urlPatterns = {"/RatingServlet"})
+public class RatingServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,14 +41,18 @@ public class ViewapproveServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            String rate = request.getParameter("rate");
+            String idhistory = request.getParameter("idhistory");
             ServletContext ctx = getServletContext();
             Connection conn = (Connection) ctx.getAttribute("connection");
             HttpSession session = request.getSession();
-            Admin viewapporve = new Admin(conn);
-            viewapporve.apporveLessor();
-            session.setAttribute("viewapporve", viewapporve);
-
-            RequestDispatcher pg = request.getRequestDispatcher("Approvelessor.jsp");
+            
+            Rental rating = new Rental(conn);
+            rating.rating(rate, idhistory);
+            int check_rate = rating.getCheck_rate();
+            session.setAttribute("check_rate", check_rate);
+            
+            RequestDispatcher pg = request.getRequestDispatcher("HistoryServlet");
             pg.forward(request, response);
 
         }

@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -30,6 +32,7 @@ public class Member {
     private String img_user;
     private String idcard;
     private String status_approve;
+    private List<Message> messages;
 
     Connection conn;
 
@@ -175,6 +178,74 @@ public class Member {
         }
     }
 
+    public void markAsRead(int id) {
+        try {
+            Statement mr_statement = conn.createStatement();
+            String mr_sql = "UPDATE message SET status = 1 WHERE idmessage = '"+ id +"';";
+            mr_statement.executeUpdate(mr_sql);
+        } catch (SQLException ex) {
+            Logger.getLogger(Member.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public int getUnReadMessage() {
+        pullMessage();
+        int unread = 0;
+        for (int i = 0; i < getMessages().size(); i++) {
+            if (getMessages().get(i).getStatus() == 0) {
+                unread++;
+            }
+        }
+        return unread;
+    }
+
+    public void pullMessage() {
+        Message temp = new Message();
+        if (messages.size() != 0) {
+            messages.clear();
+        }
+        try {
+            Statement message_statement = conn.createStatement();
+            String message_sql = "select * from message where username = '"+ username +"';";
+            ResultSet mrs = message_statement.executeQuery(message_sql);
+            while (mrs.next()) {
+                temp.setId(mrs.getInt("idmessage"));
+                temp.setSender(mrs.getString("sender"));
+                temp.setReceiver(mrs.getString("receiver"));
+                temp.setDate(mrs.getString("date"));
+                temp.setTime(mrs.getString("time"));
+                temp.setMessage(mrs.getString("content"));
+                temp.setStatus(mrs.getInt("status"));
+                messages.add(temp);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Member.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void sentMessage(Message message) {
+        try {
+            Statement sm_statement = conn.createStatement();
+            String sm_sql = "INSERT INTO `db_coworkingspace`.`message` (`date`, `time`, `sender`, `receiver`, `content`) "
+                            + "VALUES ('"+ message.getDate() +"', '"+ message.getTime()+"', '"+ message.getSender()+"', '"+ message.getReceiver()+"', '"+ message.getMessage()+"');";
+            sm_statement.executeUpdate(sm_sql);
+        } catch (SQLException ex) {
+            Logger.getLogger(Member.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    
+    public void deleteMessage (int id){
+        try {
+            Statement del_statement = conn.createStatement();
+            String del_sql = "DELETE FROM db_coworkingspace.message WHERE idmessage = '" + id + "';";
+            del_statement.executeUpdate(del_sql);
+        } catch (SQLException ex) {
+            Logger.getLogger(Member.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+
     public int getIdmember() {
         return idmember;
     }
@@ -270,6 +341,20 @@ public class Member {
     public void setStatus_approve(String status_approve) {
         this.status_approve = status_approve;
     }
+
+    public List<Message> getMessages() {
+        pullMessage();
+        return messages;
+    }
+
+    public void setMessages(List<Message> messages) {
+        this.messages = messages;
+    }
+    
+    public List<Message> getMessagesByPass(){
+        return messages;
+    }
+    
     
     
 

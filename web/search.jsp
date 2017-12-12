@@ -12,18 +12,20 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-slider.css">
         <link rel="stylesheet" type="text/css" href="css/index.css">
         <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Prompt:300">
         <title>Co-Working-Space</title>
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
+        <script src="js/bootstrap-slider.js"></script>
     </head>
     <body>
         <% int check = 0;
             if (session.getAttribute("check") != null) {
                 check = (int) session.getAttribute("check");
             }%>
-            
+
         <% int pos = 0;
             if (session.getAttribute("pos") != null) {
                 pos = (int) session.getAttribute("pos");
@@ -47,8 +49,9 @@
                 </div>
 
                 <div class="collapse navbar-collapse" id="mynavbar">
-                    <% if (check == 1) {%>
                     <%int type = (int) session.getAttribute("type");%>
+                    <% if (check == 1) {%>
+
                     <%if (type != 3) {%>
                     <%model.Member member = (model.Member) session.getAttribute("member");%>
                     <div class="collapse navbar-collapse" id="mynavbar">
@@ -75,6 +78,16 @@
                                     </li>
                                 </ul>
                             </li>
+                            <% if (true) { %>
+                            <li class="menu-bar"><div class="message-main">
+                                    <div data-toggle="messagetooltip" data-placement="bottom" title="คุณมีข้อความแจ้งเตือน!"><img class="message-img" src="img/message.png"><div class="message-count">10</div></div>
+                                </div></li>
+                                <% } else { %>
+                            <li class="menu-bar"><div class="message-main">
+                                    <div data-toggle="nomessagetooltip" data-placement="bottom" title="คุณไม่มีข้อความ"><img class="message-img" src="img/message.png"></div>
+                                </div></li>
+
+                            <% } %>
                         </ul>
 
                     </div>
@@ -83,7 +96,7 @@
                     <div class="collapse navbar-collapse" id="mynavbar">
                         <ul class="nav navbar-nav navbar-right">
                             <li class="menu-bar"><a href="landing.jsp">Home</a></li>
-                            <li class="menu-bar"><a href="#">Approve</a></li>
+                            <li class="menu-bar"><a href="ViewapproveServlet">Approve Lessor</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle menu-bar" data-toggle="dropdown"><%= admin.getUsername()%><strong class="caret"></strong></a>
                                 <ul class="dropdown-menu">
@@ -92,6 +105,16 @@
                                     </li>
                                 </ul>
                             </li>
+                            <% if (true) { %>
+                            <li class="menu-bar"><div class="message-main">
+                                    <div data-toggle="messagetooltip" data-placement="bottom" title="คุณมีข้อความแจ้งเตือน!"><img class="message-img" src="img/message.png"><div class="message-count">10</div></div>
+                                </div></li>
+                                <% } else { %>
+                            <li class="menu-bar"><div class="message-main">
+                                    <div data-toggle="nomessagetooltip" data-placement="bottom" title="คุณไม่มีข้อความ"><img class="message-img" src="img/message.png"></div>
+                                </div></li>
+
+                            <% } %>
                         </ul>
                     </div>
                     <%}%>
@@ -118,76 +141,92 @@
                                     </span></div>
                             </form>
                         </div>
+                        <a id="advanceSearch">Advance Search</a>
+                        <div id="searchPad" style="display:none" class="search-filter">
+                            Type Room :
+                            <input type="radio" name="typeRoom" value="1" /> Share Room
+                            <input type="radio" name="typeRoom" value="2" /> Private Room<br>
+                            <input type="radio" name="typeRoom" value="3" /> Meeting Room<br>
+                            Type Desk : 
+                            <input type="radio" name="typeDesk" value="2" /> Share Desk
+                            <input type="radio" name="typeDesk" value="1" /> Fix Desk<br>
+                            Price : 
+                            <b class="margin-slider-right">$ 0</b>
+                            <input id="ex2" type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="10" data-slider-value="[0,1000]"/>
+                            <b class="margin-slider-left">$ 1000</b>
+                        </div>
                     </div>
                 </center>
             </div>
         </div>
-        
-            <div class="col-md-1"></div>
-            
-            <div class="col-md-10">
-                
-                <% int count = 0; %>
-                
-                    <c:forEach var="row" items="${sessionScope.space.detail_space}">
-                        <% if (count >= i && count <= pos) { %>
-                        <div class="col-md-4">
-                            <form action="ViewdetailspaceServlet" method="POST">
-                            <div class="w3-card-4 card-margin">
-                                <div class="panel-thumbnail ">
-                                    <img src="${row.img[0]}" class="img-crop">
-                                </div>
-                                <div class="panel-body">
-                                    <p class="lead" >${row.name} by ${row.username}</p>
-                                    <p>${row.location}</p>
-                                </div>
-                                <div class="panel-footer">
-                                    <button class="btn btn-sm  center-block btn-info" type="submit" name="name" value="${row.name}">
-                                        View Detail Space
-                                    </button>
-                                </div>
+
+        <div class="col-md-1"></div>
+
+        <div class="col-md-10">
+
+            <% int count = 0; %>
+            <% int check_search = (int) session.getAttribute("check_search");%>
+
+            <c:forEach var="row" items="${sessionScope.space.detail_space}">
+                <% if (count >= i && count <= pos) { %>
+                <div class="col-md-4">
+                    <form action="ViewdetailspaceServlet" method="POST">
+                        <div class="w3-card-4 card-margin">
+                            <div class="panel-thumbnail ">
+                                <img src="${row.img[0]}" class="img-crop">
                             </div>
-                        </form>
+                            <div class="panel-body">
+                                <p class="lead" >${row.name} by ${row.username}</p>
+                                <p>${row.location}</p>
+                            </div>
+                            <div class="panel-footer">
+                                <button class="btn btn-sm  center-block btn-info" type="submit" name="name" value="${row.name}">
+                                    View Detail Space
+                                </button>
+                            </div>
                         </div>
-                        
-                        <% } %>
-                        <% if (count <= pos) {
-                           count++; }%>
-                        
-                    </c:forEach>
-                
-            </div>
-
-            <div class="col-md-1"></div>
-            
-
-                <div class="col-md-5"></div>
-                <div class="col-md-1">
-                    <% if(count >= i && i >= 11) { %>
-                        <form action="SearchServlet" method="POST">
-                    <div class="row input-group search-bar">
-                        <input name="search" type="text" class="opacity" style="width: 0%"/>
-                        <button class="btn btn-default btn-search" type="submit">Back</button>
-                    </div>
                     </form>
-                    <% } %>
                 </div>
-                <div class="col-md-1">
-                    <% if(count > pos) { %>
-                    <form action="search.jsp" method="POST">
-                    <% session.setAttribute("i", count); %>
-                    <% session.setAttribute("pos", count+11); %>
-                    <% session.setAttribute("space", session.getAttribute("space")); %>
-                    <% String text = (String) session.getAttribute("text"); %>
-                    <button class="btn btn-default btn-search" type="submit" value="<%=text%>">
-                        Next
-                    </button>
-                    </form>
-                    <% } %>
-                </div>
-                <div class="col-md-5"></div>   
 
-        
+                <% } %>
+                <% if (count <= pos) {
+                        count++;
+                    }%>
+
+            </c:forEach>
+
+        </div>
+
+        <div class="col-md-1"></div>
+
+
+        <div class="col-md-5"></div>
+        <div class="col-md-1 margin-bott-nextbtn">
+            <% if (count >= i && i >= 11) { %>
+            <form action="SearchServlet" method="POST">
+                <div class="row input-group search-bar">
+                    <input name="search" type="text" class="opacity" style="width: 0%"/>
+                    <button class="btn btn-default btn-search" type="submit">Back</button>
+                </div>
+            </form>
+            <% } %>
+        </div>
+        <div class="col-md-1 margin-bott-nextbtn">
+            <% if (count > pos) { %>
+            <form action="search.jsp" method="POST">
+                <% session.setAttribute("i", count); %>
+                <% session.setAttribute("pos", count + 11); %>
+                <% session.setAttribute("space", session.getAttribute("space")); %>
+                <% String text = (String) session.getAttribute("text");%>
+                <button class="btn btn-default btn-search" type="submit" value="<%=text%>">
+                    Next
+                </button>
+            </form>
+            <% } %>
+        </div>
+        <div class="col-md-5"></div>   
+
+
         <!-- Login Modal -->
         <div id="loginModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
@@ -314,6 +353,30 @@
 
             </div>
         </div>
+        <!-- Search Modal -->
+        <div id="searchModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Search Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <center><h3>ไม่พบรายการที่ทำการค้นหา</h3></center>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <% if (check_search == 0) { %>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#searchModal').modal('show');
+            });
+        </script>
+        <%}%>
 
         <% if (check == 2 || check == 3) { %>
         <script type="text/javascript">
@@ -549,6 +612,18 @@
                     $(".register-modal-step1").delay(1000).show(0);
                     $(".register-modal-step2").delay(1000).hide(0);
                 });
+            });
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#advanceSearch").click(function () {
+                    $('#searchPad').fadeToggle();
+                });
+            });
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#ex2").slider({});
             });
         </script>
     </body>

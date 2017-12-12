@@ -8,9 +8,9 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Member;
+import model.Message;
 
 /**
  *
@@ -113,6 +114,18 @@ public class RegisterServlet extends HttpServlet {
             if (verify) {
                 Member member = new Member(conn);
                 member.register(firstname, lastname, username, password, email, phone, type, path_img, path_card);
+                if (type == 1 && idcard != null && !idcard.equals("")) {
+                    DateFormat dateFormat_date = new SimpleDateFormat("dd/MM/yyyy");
+                    DateFormat dateFormat_time = new SimpleDateFormat("HH:mm");
+                    Date date = new Date();
+                    Message message = new Message();
+                    message.setDate(dateFormat_date.format(date));
+                    message.setTime(dateFormat_time.format(date));
+                    message.setSender(username);
+                    message.setReceiver("admin");
+                    message.setMessage("รอการยืนยันจาก Admin: " +username + " ได้ทำการสมัครสมาชิกและส่ง Id card แล้ว");
+                    member.sentMessage(message);
+                }
                 if (member.getCheckemail().equals("isEmailUnused")) {
                     check = 4;
 
@@ -122,6 +135,7 @@ public class RegisterServlet extends HttpServlet {
             } else {
                 check = 16;
             }
+
             request.setAttribute("check", check);
             RequestDispatcher pg = request.getRequestDispatcher("index.jsp");
             pg.forward(request, response);

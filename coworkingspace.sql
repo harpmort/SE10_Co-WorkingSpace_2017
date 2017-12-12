@@ -123,10 +123,10 @@ CREATE TABLE `co_working_space` (
   `close_time` varchar(45) DEFAULT NULL,
   `amount_people` varchar(45) DEFAULT NULL,
   `price` int(11) DEFAULT NULL,
-  `rating` int(11) GENERATED ALWAYS AS (0) VIRTUAL,
-  `num_of_review` int(11) GENERATED ALWAYS AS (0) VIRTUAL,
   `fk_idmember` int(4) unsigned DEFAULT NULL,
   `img` varchar(1000) DEFAULT 'NO IMAGE',
+  `rating` int(100) DEFAULT '0',
+  `num_of_review` int(100) DEFAULT '0',
   PRIMARY KEY (`idspace`),
   UNIQUE KEY `idspace_UNIQUE` (`idspace`),
   KEY `idtype_room_idx` (`idtype_room`),
@@ -144,7 +144,7 @@ CREATE TABLE `co_working_space` (
 
 LOCK TABLES `co_working_space` WRITE;
 /*!40000 ALTER TABLE `co_working_space` DISABLE KEYS */;
-INSERT INTO `co_working_space` (`idspace`, `name`, `location`, `idtype_room`, `idtype_desk`, `total_desk`, `amount_desk`, `description`, `size_room`, `open_time`, `close_time`, `amount_people`, `price`, `fk_idmember`, `img`) VALUES (0001,'Muayland','LKB 32, Bangkok',1,2,'10',10,'wifi, parking, air conditioner','40','09:00','18:00','1',200,1,'https://coworkingspacebucket.s3.amazonaws.com/space/Muayland_2.jpg,https://coworkingspacebucket.s3.amazonaws.com/space/Muayland_1.jpg'),(0002,'Boyland','Suan Siam, Bangkok',2,2,'1',1,'wifi, parking, air conditioner, board','12','09:00','18:00','2',500,11,'https://coworkingspacebucket.s3.amazonaws.com/space/Boyland_1.jpg,https://coworkingspacebucket.s3.amazonaws.com/space/Boyland_2.jpg'),(0003,'ITLAND','IT KMITL, Bangkok',2,1,'2',2,'wifi, parking, air conditioner, board,แม่บ้าน','20','09:00','20:00','8',200,1,'https://coworkingspacebucket.s3.amazonaws.com/space/ITLAND_2.jpg,https://coworkingspacebucket.s3.amazonaws.com/space/ITLAND_1.jpg'),(0013,'Miineland','Asoke, Bangkok',1,2,'18',18,'wifi, parking, air conditioner','35','10:00','19:00','1',200,1,'https://coworkingspacebucket.s3.amazonaws.com/space/Miineland_2.jpg,https://coworkingspacebucket.s3.amazonaws.com/space/Miineland_1.jpg'),(0014,'Monkey D Lufy','Sathorn, Bangkok',1,1,'15',15,'wifi, parking, air conditioner','40','09:00','18:00','1',250,1,'https://coworkingspacebucket.s3.amazonaws.com/space/Monkey D Lufy_2.jpg,https://coworkingspacebucket.s3.amazonaws.com/space/Monkey D Lufy_1.jpg'),(0015,'Conan Room','Asoke, Bangkok',1,1,'10',10,'wifi, parking, air conditioner','20','09:00','18:00','1',250,1,'https://coworkingspacebucket.s3.amazonaws.com/space/Conan Room_2.jpg,https://coworkingspacebucket.s3.amazonaws.com/space/Conan Room_1.jpg'),(0016,'Mori Room','Asoke, Bangkok',3,2,'10',10,'wifi, parking, air conditioner, board,แม่บ้าน','35','09:00','20:00','10',400,1,'https://coworkingspacebucket.s3.amazonaws.com/space/Mori Room_1.jpg,https://coworkingspacebucket.s3.amazonaws.com/space/Mori Room_2.jpg'),(0017,'Inn Land','Asoke, Bangkok',3,1,'8',8,'wifi, parking, air conditioner, board,แม่บ้าน','35','09:00','18:00','8',400,11,'https://coworkingspacebucket.s3.amazonaws.com/space/Inn Land_1.jpg,https://coworkingspacebucket.s3.amazonaws.com/space/Inn Land_2.jpg'),(0018,'Lovely Room','Klong Sansab, Bangkok',1,2,'40',40,'wifi, parking, air conditioner','60','08:00','21:00','1',200,11,'https://coworkingspacebucket.s3.amazonaws.com/space/Lovely Room_1.jpg,https://coworkingspacebucket.s3.amazonaws.com/space/Lovely Room_2.jpg'),(0019,'Pretty Room','Klong Sansab, Bangkok',3,2,'1',1,'wifi, parking, air conditioner, board,แม่บ้าน','30','08:00','21:00','15',500,11,'https://coworkingspacebucket.s3.amazonaws.com/space/Pretty Room_1.jpg,https://coworkingspacebucket.s3.amazonaws.com/space/Pretty Room_2.jpg'),(0020,'Ugly Room','Klong Sansab, Bangkok',2,1,'3',3,'wifi, parking, air conditioner, board,แม่บ้าน','20','08:00','21:00','3',350,11,'https://coworkingspacebucket.s3.amazonaws.com/space/Ugly Room_1.jpg,https://coworkingspacebucket.s3.amazonaws.com/space/Ugly Room_2.jpg'),(0021,'Wow Room','Klong Sansab, Bangkok',1,2,'50',50,'wifi, parking, air conditioner','60','08:00','21:00','1',200,11,'https://coworkingspacebucket.s3.amazonaws.com/space/Wow Room_1.jpg,https://coworkingspacebucket.s3.amazonaws.com/space/Wow Room_2.jpg'),(0022,'Jubu Land','Prawet, Bangkok',3,2,'1',1,'wifi, parking, air conditioner, board','60','09:00','20:00','14',400,11,'https://coworkingspacebucket.s3.amazonaws.com/space/Jubu Land_1.jpg,https://coworkingspacebucket.s3.amazonaws.com/space/Jubu Land_2.jpg'),(0023,'Jibi Land','Prawet, Bangkok',2,1,'4',4,'wifi, parking, air conditioner, board','40','09:00','20:00','4',400,11,'https://coworkingspacebucket.s3.amazonaws.com/space/Jibi Land_1.jpg,https://coworkingspacebucket.s3.amazonaws.com/space/Jibi Land_2.jpg'),(0024,'Maple Land','Nongkham, Bangkok',1,1,'20',20,'wifi, parking, air conditioner, แม่บ้าน','60','08:00','21:00','1',200,1,'https://coworkingspacebucket.s3.amazonaws.com/space/Maple Land_1.jpg,https://coworkingspacebucket.s3.amazonaws.com/space/Maple Land_2.jpg'),(0025,'Tissue Room','Nongjok, Bangkok',1,2,'20',20,'wifi, parking, air conditioner, แม่บ้าน','50','08:00','20:00','1',200,1,'https://coworkingspacebucket.s3.amazonaws.com/space/Tissue Room_1.jpg,https://coworkingspacebucket.s3.amazonaws.com/space/Tissue Room_2.jpg'),(0026,'Skyline','Suvanabhumi Airport, Samut Prakan',1,1,'5',5,'wifi, parking, air conditioner, แม่บ้าน','50','08:00','21:00','1',500,11,'https://coworkingspacebucket.s3.amazonaws.com/space/Skyline_1.jpg,https://coworkingspacebucket.s3.amazonaws.com/space/Skyline_2.jpg'),(0027,'ทดสอบแลนด์','สวนสยาม',1,1,'5',5,'WIFI AIR ','30','09:00','20:00','10',5634,1,'https://coworkingspacebucket.s3.amazonaws.com/space/ทดสอบแลนด์_1.jpg,https://coworkingspacebucket.s3.amazonaws.com/space/ทดสอบแลนด์_2.jpg');
+INSERT INTO `co_working_space` VALUES (0001,'Muayland','LKB 32, Bangkok',1,2,'10',10,'wifi, parking, air conditioner','40','09:00','18:00','1',70,1,'https://coworkingspacebucket.s3.amazonaws.com/space/Muayland_2.jpg,https://coworkingspacebucket.s3.amazonaws.com/space/Muayland_1.jpg',0,0),(0002,'Boyland','Suan Siam, Bangkok',2,2,'2',2,'wifi, parking, air conditioner, board','12','09:00','18:00','2',500,11,'https://coworkingspacebucket.s3.amazonaws.com/space/Boyland_1.jpg,https://coworkingspacebucket.s3.amazonaws.com/space/Boyland_2.jpg',4,2),(0003,'ITLAND','IT KMITL, Bangkok',2,1,'2',2,'wifi, parking, air conditioner, board,แม่บ้าน','20','09:00','20:00','8',200,1,'https://coworkingspacebucket.s3.amazonaws.com/space/ITLAND_2.jpg,https://coworkingspacebucket.s3.amazonaws.com/space/ITLAND_1.jpg',0,0),(0013,'Miineland','Asoke, Bangkok',1,2,'18',18,'wifi, parking, air conditioner','35','10:00','19:00','1',100,1,'https://coworkingspacebucket.s3.amazonaws.com/space/Miineland_2.jpg,https://coworkingspacebucket.s3.amazonaws.com/space/Miineland_1.jpg',5,1),(0014,'Monkey D Lufy','Sathorn, Bangkok',1,1,'15',15,'wifi, parking, air conditioner','40','09:00','18:00','1',80,1,'https://coworkingspacebucket.s3.amazonaws.com/space/Monkey D Lufy_2.jpg,https://coworkingspacebucket.s3.amazonaws.com/space/Monkey D Lufy_1.jpg',0,0),(0015,'Conan Room','Asoke, Bangkok',1,1,'10',10,'wifi, parking, air conditioner','20','09:00','18:00','1',100,1,'https://coworkingspacebucket.s3.amazonaws.com/space/Conan Room_2.jpg,https://coworkingspacebucket.s3.amazonaws.com/space/Conan Room_1.jpg',0,0),(0016,'Mori Room','Asoke, Bangkok',3,2,'10',10,'wifi, parking, air conditioner, board,แม่บ้าน','35','09:00','20:00','10',400,1,'https://coworkingspacebucket.s3.amazonaws.com/space/Mori Room_1.jpg,https://coworkingspacebucket.s3.amazonaws.com/space/Mori Room_2.jpg',0,0),(0017,'Inn Land','Asoke, Bangkok',3,1,'8',8,'wifi, parking, air conditioner, board,แม่บ้าน','35','09:00','18:00','8',400,11,'https://coworkingspacebucket.s3.amazonaws.com/space/Inn Land_1.jpg,https://coworkingspacebucket.s3.amazonaws.com/space/Inn Land_2.jpg',0,0),(0018,'Lovely Room','Klong Sansab, Bangkok',1,2,'40',40,'wifi, parking, air conditioner','60','08:00','21:00','1',50,11,'https://coworkingspacebucket.s3.amazonaws.com/space/Lovely Room_1.jpg,https://coworkingspacebucket.s3.amazonaws.com/space/Lovely Room_2.jpg',0,0),(0019,'Pretty Room','Klong Sansab, Bangkok',3,2,'1',1,'wifi, parking, air conditioner, board,แม่บ้าน','30','08:00','21:00','15',500,11,'https://coworkingspacebucket.s3.amazonaws.com/space/Pretty Room_1.jpg,https://coworkingspacebucket.s3.amazonaws.com/space/Pretty Room_2.jpg',0,0),(0020,'Ugly Room','Klong Sansab, Bangkok',2,1,'3',3,'wifi, parking, air conditioner, board,แม่บ้าน','20','08:00','21:00','3',350,11,'https://coworkingspacebucket.s3.amazonaws.com/space/Ugly Room_1.jpg,https://coworkingspacebucket.s3.amazonaws.com/space/Ugly Room_2.jpg',0,0),(0021,'Wow Room','Klong Sansab, Bangkok',1,2,'50',50,'wifi, parking, air conditioner','60','08:00','21:00','1',50,11,'https://coworkingspacebucket.s3.amazonaws.com/space/Wow Room_1.jpg,https://coworkingspacebucket.s3.amazonaws.com/space/Wow Room_2.jpg',0,0),(0022,'Jubu Land','Prawet, Bangkok',3,2,'1',1,'wifi, parking, air conditioner, board','60','09:00','20:00','14',400,11,'https://coworkingspacebucket.s3.amazonaws.com/space/Jubu Land_1.jpg,https://coworkingspacebucket.s3.amazonaws.com/space/Jubu Land_2.jpg',0,0),(0023,'Jibi Land','Prawet, Bangkok',2,1,'4',4,'wifi, parking, air conditioner, board','40','09:00','20:00','4',400,11,'https://coworkingspacebucket.s3.amazonaws.com/space/Jibi Land_1.jpg,https://coworkingspacebucket.s3.amazonaws.com/space/Jibi Land_2.jpg',0,0),(0024,'Maple Land','Nongkham, Bangkok',1,1,'20',20,'wifi, parking, air conditioner, แม่บ้าน','60','08:00','21:00','1',60,1,'https://coworkingspacebucket.s3.amazonaws.com/space/Maple Land_1.jpg,https://coworkingspacebucket.s3.amazonaws.com/space/Maple Land_2.jpg',0,0),(0025,'Tissue Room','Nongjok, Bangkok',1,2,'20',20,'wifi, parking, air conditioner, แม่บ้าน','50','08:00','20:00','1',50,1,'https://coworkingspacebucket.s3.amazonaws.com/space/Tissue Room_1.jpg,https://coworkingspacebucket.s3.amazonaws.com/space/Tissue Room_2.jpg',0,0),(0026,'Skyline','Suvanabhumi Airport, Samut Prakan',1,1,'5',5,'wifi, parking, air conditioner, แม่บ้าน','50','08:00','21:00','1',100,11,'https://coworkingspacebucket.s3.amazonaws.com/space/Skyline_1.jpg,https://coworkingspacebucket.s3.amazonaws.com/space/Skyline_2.jpg',0,0),(0027,'ทดสอบแลนด์','สวนสยาม',1,1,'5',5,'WIFI AIR ','30','09:00','20:00','10',100,1,'https://coworkingspacebucket.s3.amazonaws.com/space/ทดสอบแลนด์_1.jpg,https://coworkingspacebucket.s3.amazonaws.com/space/ทดสอบแลนด์_2.jpg',0,0);
 /*!40000 ALTER TABLE `co_working_space` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -163,7 +163,7 @@ CREATE TABLE `history` (
   `desk_booking` int(11) DEFAULT NULL,
   `fk_idmember` int(4) unsigned zerofill DEFAULT NULL,
   `fk_idspace` int(4) unsigned zerofill DEFAULT NULL,
-  `state_review` int(4) GENERATED ALWAYS AS (1) STORED,
+  `state_review` int(10) DEFAULT '1',
   PRIMARY KEY (`idhistory`),
   UNIQUE KEY `idhistory_UNIQUE` (`idhistory`),
   KEY `history_ibfk_1` (`fk_idspace`),
@@ -179,7 +179,7 @@ CREATE TABLE `history` (
 
 LOCK TABLES `history` WRITE;
 /*!40000 ALTER TABLE `history` DISABLE KEYS */;
-INSERT INTO `history` (`idhistory`, `date`, `begin_time`, `end_time`, `desk_booking`, `fk_idmember`, `fk_idspace`) VALUES (0000001,'2017-11-01','18.00','20.00',4,0002,0002),(0000002,'2017-10-29','10.00','20.00',4,0002,0002),(0000003,'2017-12-04','10.00','13.00',4,0009,0013);
+INSERT INTO `history` VALUES (0000001,'2017-11-01','18.00','20.00',4,0002,0002,0),(0000002,'2017-10-29','10.00','20.00',4,0002,0002,0),(0000003,'2017-12-04','10.00','13.00',4,0009,0013,0);
 /*!40000 ALTER TABLE `history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -228,11 +228,15 @@ DROP TABLE IF EXISTS `message`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `message` (
   `idmessage` int(4) unsigned zerofill NOT NULL AUTO_INCREMENT,
-  `title` varchar(45) DEFAULT NULL,
-  `content` varchar(300) DEFAULT NULL,
+  `date` varchar(45) DEFAULT NULL,
+  `time` varchar(45) DEFAULT NULL,
+  `sender` varchar(45) DEFAULT NULL,
+  `receiver` varchar(45) DEFAULT NULL,
+  `content` varchar(2000) DEFAULT NULL,
+  `status` int(10) DEFAULT '0',
   PRIMARY KEY (`idmessage`),
   UNIQUE KEY `idmessage_UNIQUE` (`idmessage`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -241,7 +245,7 @@ CREATE TABLE `message` (
 
 LOCK TABLES `message` WRITE;
 /*!40000 ALTER TABLE `message` DISABLE KEYS */;
-INSERT INTO `message` VALUES (0001,'booking','คุณได้ทำการจอง Co-Working Space  กับทางเว็บไซต์แล้ว ขอบคุณค่ะ'),(0002,'cancel_booking','คุณได้ทำการยกเลิกการจอง Co-Working Space แล้ว'),(0003,'cancel_userbooking','การจอง Co-Working Space ของคุณโดนยกเลิกโดยผู้ประกอบการ ต้องขออภัยมา ณ ที่นี้ด้วยค่ะ');
+INSERT INTO `message` VALUES (0004,'12/12/2017','20:14','PoloYaH','memiine','Test: tester',0);
 /*!40000 ALTER TABLE `message` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -329,4 +333,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-12-11 23:21:07
+-- Dump completed on 2017-12-12 21:23:19

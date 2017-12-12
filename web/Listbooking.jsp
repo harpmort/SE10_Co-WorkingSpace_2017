@@ -57,6 +57,16 @@
                                 </li>
                             </ul>
                         </li>
+                        <% if(true){ %>
+                        <li class="menu-bar"><div class="message-main">
+                                <div data-toggle="messagetooltip" data-placement="bottom" title="คุณมีข้อความแจ้งเตือน!"><img class="message-img" src="img/message.png"><div class="message-count">10</div></div>
+                            </div></li>
+                        <% }else{ %>
+                        <li class="menu-bar"><div class="message-main">
+                                <div data-toggle="nomessagetooltip" data-placement="bottom" title="คุณไม่มีข้อความ"><img class="message-img" src="img/message.png"></div>
+                            </div></li>
+                        
+                        <% } %>
                     </ul>
                 </div>
             </div>
@@ -88,7 +98,7 @@
                                         <th id="booking-center">วันที่จอง</th>
                                         <th id="booking-center">เวลาเริ่ม</th>
                                         <th id="booking-center">เวลาจบ</th>
-                                        <th id="booking-center">จำนวนโต๊ะที่จอง</th>
+                                        <th id="booking-center">จำนวนคนที่จอง</th>
                                         <th id="booking-center">ยกเลิกการจอง</th>
                                     </tr>
                                 </thead>

@@ -9,6 +9,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -25,6 +28,8 @@ public class Rental extends Member {
     private String begin_time;
     private String end_time;
     private String desk_booking;
+    private int state_review;
+    private int check_rate = 0;
 
     List<Member> lhistory;
     private String idhistory;
@@ -96,15 +101,66 @@ public class Rental extends Member {
         }
     }
 
+    public void autodeleteBooking() {
+        try {
+            Statement stmt = conn.createStatement();
+            String sql = "select * from booking;";
+            ResultSet rs = stmt.executeQuery(sql);
+            DateFormat dateFormat_date = new SimpleDateFormat("dd/MM/yyyy");
+            DateFormat dateFormat_time = new SimpleDateFormat("HH:mm");
+            Date date_td = new Date();
+            String date_today = dateFormat_date.format(date_td);
+            String[] list_date = date_today.split("/");
+            String time_today = dateFormat_time.format(date_td);
+            String[] list_time = time_today.split(":");
+            Statement stmt_d = conn.createStatement();
+            while (rs.next()) {
+                date = rs.getString("date");
+                String[] date_list = date.split("-");
+                end_time = rs.getString("end_time");
+                String[] time_list = end_time.split(":");
+                String sql_d;
+                if (Integer.parseInt(date_list[0]) <= Integer.parseInt(list_date[2])) {
+                    if (Integer.parseInt(date_list[1]) <= Integer.parseInt(list_date[1])) {
+                        if (Integer.parseInt(date_list[2]) < Integer.parseInt(list_date[0])) {
+                            sql_d = "DELETE FROM db_coworkingspace.booking WHERE idbooking = '" + rs.getString("idbooking") + "';";
+                            stmt_d.executeUpdate(sql_d);
+                        } else if (Integer.parseInt(date_list[2]) == Integer.parseInt(list_date[0])) {
+                            if (Integer.parseInt(time_list[0]) < Integer.parseInt(list_time[0])) {
+                                sql_d = "DELETE FROM db_coworkingspace.booking WHERE idbooking = '" + rs.getString("idbooking") + "';";
+                                stmt_d.executeUpdate(sql_d);
+                            } else if (Integer.parseInt(time_list[0]) == Integer.parseInt(list_time[0])) {
+                                if (Integer.parseInt(time_list[1]) <= Integer.parseInt(list_time[1])) {
+                                    sql_d = "DELETE FROM db_coworkingspace.booking WHERE idbooking = '" + rs.getString("idbooking") + "';";
+                                    stmt_d.executeUpdate(sql_d);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            String id_b = rs.getString("idbooking");
+            Statement stmt_id_b = conn.createStatement();
+            String sql_id_b = "DELETE FROM db_coworkingspace.booking WHERE idbooking = '" + id_b + "';";
+            stmt_id_b.executeUpdate(sql_id_b);
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
     public void reserSpace(String date, String time_start, String time_end, String amount, String s_name, String username) {
         try {
             Statement stmt = conn.createStatement();
-            String sql = "SELECT idspace\n"
+            String sql = "SELECT idspace,m.username\n"
                     + "FROM co_working_space c\n"
+                    + "join member m\n"
+                    + "on c.fk_idmember = m.idmember\n"
                     + "where name = '" + s_name + "';";
             ResultSet rs = stmt.executeQuery(sql);
             rs.next();
             String idspace = rs.getString("idspace");
+            String username_lessor = rs.getString("m.username");
 
             Statement stmt_user = conn.createStatement();
             String sql_user = "SELECT idmember\n"
@@ -117,17 +173,27 @@ public class Rental extends Member {
             String[] date_split = date.split("-");
             int count_split = date_split.length;
             String date_reverse = "";
-            for(int i =0;count_split-1>=i;count_split--){
-                date_reverse += date_split[count_split-1];
+            for (int i = 0; count_split - 1 >= i; count_split--) {
+                date_reverse += date_split[count_split - 1];
                 date_reverse += "-";
             }
-            
+
             Statement stmt_reser = conn.createStatement();
             String sql_reser = "INSERT INTO db_coworkingspace.booking(date, begin_time, end_time, desk_booking, fk_idmember, fk_idspace) \n"
                     + "	VALUES ('" + date_reverse + "', '" + time_start + "', '" + time_end + "', '" + amount + "', '" + idmember + "', '" + idspace + "');";
             stmt_reser.executeUpdate(sql_reser);
 
-            
+            DateFormat dateFormat_date = new SimpleDateFormat("dd/MM/yyyy");
+            DateFormat dateFormat_time = new SimpleDateFormat("HH:mm");
+            Date date_today = new Date();
+            Message message = new Message();
+            message.setDate(dateFormat_date.format(date_today));
+            message.setTime(dateFormat_time.format(date_today));
+            message.setSender(username);
+            message.setReceiver(username_lessor);
+            message.setMessage("รายการทำการจองพื้นที่: " + username + " ได้ทำการจองพื้นที่ " + s_name + "ในวันที่ " + date_reverse + " เวลา " + time_start + "-" + time_end + " จำนวน " + amount + "คน");
+            Member sentmessage = new Member();
+            sentmessage.sentMessage(message);
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -137,7 +203,7 @@ public class Rental extends Member {
     public void viewListhistory(String username) {
         try {
             Statement stmt = conn.createStatement();
-            String sql = "SELECT h.idhistory,c.name,h.date,h.begin_time,h.end_time,h.desk_booking,ml.username\n"
+            String sql = "SELECT h.idhistory,c.name,h.date,h.begin_time,h.end_time,h.desk_booking,ml.username,h.state_review\n"
                     + "FROM history h\n"
                     + "join member m \n"
                     + "on h.fk_idmember = m.idmember\n"
@@ -156,8 +222,43 @@ public class Rental extends Member {
                 lh.setBegin_time(rs.getString("h.begin_time"));
                 lh.setEnd_time(rs.getString("h.end_time"));
                 lh.setDesk_booking(rs.getString("h.desk_booking"));
+                lh.setState_review(Integer.parseInt(rs.getString("h.state_review")));
                 lhistory.add(lh);
             }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void rating(String rate, String idhistory) {
+        try {
+            Statement stmt = conn.createStatement();
+            String sql = "select idspace,rating,num_of_review,state_review from co_working_space join history on fk_idspace = idspace where idhistory = '" + idhistory + "';";
+            ResultSet rs = stmt.executeQuery(sql);
+            rs.next();
+            String idspace = rs.getString("idspace");
+            int rating = Integer.parseInt(rs.getString("rating"));
+            int num_of_review = Integer.parseInt(rs.getString("num_of_review"));
+            num_of_review += 1;
+            rating = (rating + Integer.parseInt(rate)) / num_of_review;
+
+            sql = "UPDATE co_working_space\n"
+                    + "SET rating = '" + rating + "'\n"
+                    + "WHERE idspace = '" + idspace + "';";
+            stmt.executeUpdate(sql);
+
+            sql = "UPDATE co_working_space\n"
+                    + "SET num_of_review = '" + num_of_review + "'\n"
+                    + "WHERE idspace = '" + idspace + "';";
+            stmt.executeUpdate(sql);
+
+            sql = "UPDATE history\n"
+                    + "SET state_review = 0\n"
+                    + "WHERE idhistory = '" + idhistory + "';";
+            stmt.executeUpdate(sql);
+
+            check_rate = 1;
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -218,6 +319,22 @@ public class Rental extends Member {
 
     public void setIdhistory(String idhistory) {
         this.idhistory = idhistory;
+    }
+
+    public int getCheck_rate() {
+        return check_rate;
+    }
+
+    public void setCheck_rate(int check_rate) {
+        this.check_rate = check_rate;
+    }
+
+    public int getState_review() {
+        return state_review;
+    }
+
+    public void setState_review(int state_review) {
+        this.state_review = state_review;
     }
 
 }
