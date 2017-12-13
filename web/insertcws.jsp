@@ -157,7 +157,7 @@
                                     img name
                                 </p>
                             </div>
-                            <button type="submit" class="btn btn-default center-block btn-confirm" value="<%=member.getUsername()%>">
+                            <button type="submit" class="btn btn-default center-block btn-confirm"  name="username" value="<%=member.getUsername()%>">
                                 Confirm
                             </button>
                         </form>

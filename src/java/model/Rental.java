@@ -102,15 +102,20 @@ public class Rental extends Member {
             String date_today = dateFormat_date.format(date_td);
             String[] list_date = date_today.split("/");
             while (rs.next()) {
-                System.out.println("while");
                 date = rs.getString("date");
                 String[] date_list = date.split("-");
                 if (Integer.parseInt(date_list[0]) <= Integer.parseInt(list_date[2])) {
-                    System.out.println("kaw if na ja1 year");
-                    System.out.println(date_list[1] + "  "+ list_date[1]);
-                    System.out.println(date_list[2] + "  "+ list_date[0]);
                     if (Integer.parseInt(date_list[1]) < Integer.parseInt(list_date[1])) {
-                        System.out.println("kaw if na ja day");
+                        DateFormat dateFormat_time = new SimpleDateFormat("HH:mm");
+                        Date dt = new Date();
+                        Message message = new Message();
+                        message.setDate(dateFormat_date.format(dt));
+                        message.setTime(dateFormat_time.format(dt));
+                        message.setSender(getUsername());
+                        message.setReceiver(rs.getString("m.username"));
+                        message.setMessage("ยกเลิกรายการจองพื้นที่: " + getUsername() + " ได้ทำการยกเลิกการจองพื้นที่ " + rs.getString("name") + "ในวันที่ " + rs.getString("date") + " เวลา " + rs.getString("begin_time") + "-" + rs.getString("end_time") + " จำนวน " + rs.getString("desk_booking") + "คน");
+                        Member sentmessage = new Member(conn);
+                        sentmessage.sentMessage(message);
                         String id_b = rs.getString("idbooking");
                         Statement stmt_id_b = conn.createStatement();
                         String sql_id_b = "DELETE FROM db_coworkingspace.booking WHERE idbooking = '" + id_b + "';";
@@ -125,21 +130,18 @@ public class Rental extends Member {
                                 + "WHERE idspace = '" + rs.getString("c.idspace") + "';";
                         stmt.executeUpdate(sql);
 
-                        DateFormat dateFormat_time = new SimpleDateFormat("HH:mm");
-                        Date dt = new Date();
-                        Message message = new Message();
-                        message.setDate(dateFormat_date.format(dt));
-                        message.setTime(dateFormat_time.format(dt));
-                        message.setSender(getUsername());
-                        message.setReceiver(rs.getString("m.username"));
-                        message.setMessage("ยกเลิกรายการจองพื้นที่: " + getUsername() + " ได้ทำการยกเลิกการจองพื้นที่ " + rs.getString("name") + "ในวันที่ " + rs.getString("date") + " เวลา " + rs.getString("begin_time") + "-" + rs.getString("end_time") + " จำนวน " + rs.getString("desk_booking") + "คน");
-                        Member sentmessage = new Member(conn);
-                        sentmessage.sentMessage(message);
-
                     } else if (Integer.parseInt(date_list[1]) == Integer.parseInt(list_date[1])) {
-                        System.out.println("kpaseg;ijse/i.");
                         if (Integer.parseInt(date_list[2]) - Integer.parseInt(list_date[0]) >= 3) {
-                            System.out.println("kaw if na ja day");
+                            DateFormat dateFormat_time = new SimpleDateFormat("HH:mm");
+                            Date dt = new Date();
+                            Message message = new Message();
+                            message.setDate(dateFormat_date.format(dt));
+                            message.setTime(dateFormat_time.format(dt));
+                            message.setSender(getUsername());
+                            message.setReceiver(rs.getString("m.username"));
+                            message.setMessage("ยกเลิกรายการจองพื้นที่: " + getUsername() + " ได้ทำการยกเลิกการจองพื้นที่ " + rs.getString("name") + "ในวันที่ " + rs.getString("date") + " เวลา " + rs.getString("begin_time") + "-" + rs.getString("end_time") + " จำนวน " + rs.getString("desk_booking") + "คน");
+                            Member sentmessage = new Member(conn);
+                            sentmessage.sentMessage(message);
                             String id_b = rs.getString("idbooking");
                             Statement stmt_id_b = conn.createStatement();
                             String sql_id_b = "DELETE FROM db_coworkingspace.booking WHERE idbooking = '" + id_b + "';";
@@ -154,27 +156,13 @@ public class Rental extends Member {
                                     + "WHERE idspace = '" + rs.getString("c.idspace") + "';";
                             stmt.executeUpdate(sql);
 
-                            DateFormat dateFormat_time = new SimpleDateFormat("HH:mm");
-                            Date dt = new Date();
-                            Message message = new Message();
-                            message.setDate(dateFormat_date.format(dt));
-                            message.setTime(dateFormat_time.format(dt));
-                            message.setSender(getUsername());
-                            message.setReceiver(rs.getString("m.username"));
-                            message.setMessage("ยกเลิกรายการจองพื้นที่: " + getUsername() + " ได้ทำการยกเลิกการจองพื้นที่ " + rs.getString("name") + "ในวันที่ " + rs.getString("date") + " เวลา " + rs.getString("begin_time") + "-" + rs.getString("end_time") + " จำนวน " + rs.getString("desk_booking") + "คน");
-                            Member sentmessage = new Member(conn);
-                            sentmessage.sentMessage(message);
-
                         } else {
-                            System.out.println("cancel 10");
                             setCancelStatus(1);
                         }
                     } else {
-                        System.out.println("cancel 11");
                         setCancelStatus(1);
                     }
                 } else {
-                    System.out.println("cancel 12");
                     setCancelStatus(1);
                 }
             }
@@ -278,6 +266,9 @@ public class Rental extends Member {
             for (int i = 0; count_split - 1 >= i; count_split--) {
                 date_reverse += date_split[count_split - 1];
                 date_reverse += "-";
+            }
+            if(amount == null){
+                amount = String.valueOf(amount_desk);
             }
             amount_desk -= Integer.parseInt(amount);
             sql = "UPDATE co_working_space\n"

@@ -55,32 +55,39 @@ public class AddspaceServlet extends HttpServlet {
             String description = request.getParameter("description");
             String price = request.getParameter("price");
             String img[] = request.getParameterValues("img");
-            int count = img.length;
             PictureManager save_img = new PictureManager();
-            String path_img = "";
-            for(int i=0;i<count;i++){
-                if(i>0){
-                    path_img += ",";
-                }
-                String[] path = img[i].split("");
-                int count_path = path.length;
-                String filetype_revert ="";
-                for(int j=0;count_path-1>=j;count_path--){
-                    if(!path[count_path-1].equals(".")){
-                        filetype_revert += path[count_path-1];
-                    }else if(path[count_path-1].equals(".")){
-                        break;
+                String path_img = "";
+            if (!img[0].equals("")) {
+                int count = img.length;
+                for (int i = 0; i < count; i++) {
+                    System.out.println("count loop : "+ count);
+                    System.out.println("path_img be if: "+path_img);
+                    
+                    String[] path = img[i].split("");
+                    int count_path = path.length;
+                    String filetype_revert = "";
+                    for (int j = 0; count_path - 1 >= j; count_path--) {
+                        if (!path[count_path - 1].equals(".")) {
+                            filetype_revert += path[count_path - 1];
+                        } else if (path[count_path - 1].equals(".")) {
+                            break;
+                        }
+                    }
+                    int count_revert = filetype_revert.length();
+                    String file_type = "";
+                    for (int k = 0; count_revert - 1 >= k; count_revert--) {
+                        file_type += filetype_revert.charAt(count_revert - 1);
+                    }
+
+                    save_img.savePicture("space", name+"_" + (i), file_type, img[i]);
+                    path_img += save_img.getUrlImage("space", name+"_" + (i), file_type);
+                    System.out.println("path_img af if af path: " + path_img);
+                    if (i >= 0 && i != count-1) {
+                        path_img += ",";
+                        System.out.println("path_img in if: "+path_img);
+                        
                     }
                 }
-                int count_revert = filetype_revert.length();
-                String file_type = "";
-                for(int k=0;count_revert-1>=k;count_revert--){
-                    file_type += filetype_revert.charAt(count_revert-1);
-                }
-                
-            
-                save_img.savePicture("space", name+"_"+location+"_"+i, file_type, img[i]);
-                path_img += save_img.getUrlImage("space", name+"_"+location+"_"+i, file_type);
             }
             System.out.println("pi:"+path_img);
             

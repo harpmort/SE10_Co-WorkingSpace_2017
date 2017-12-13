@@ -313,7 +313,7 @@ public class Space {
     public void addSpace(String name, String location, String typeroom, String typedesk, String totaldesk, String amountdesk, String description, String roomsize, String open, String close, String people, String price, String path_img, String username) {
         try {
             Statement stmt_id = conn.createStatement();
-            String sql_id = "select idmember, from co_working_space where username = '" + username + "';";
+            String sql_id = "select idmember from member where username = '" + username + "';";
             ResultSet rs = stmt_id.executeQuery(sql_id);
             String idmember = "";
             if (rs.next()) {

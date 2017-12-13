@@ -122,7 +122,7 @@ public class RegisterServlet extends HttpServlet {
                     message.setDate(dateFormat_date.format(date));
                     message.setTime(dateFormat_time.format(date));
                     message.setSender(username);
-                    message.setReceiver("admin");
+                    message.setReceiver("admin001");
                     message.setMessage("รอการยืนยันจาก Admin: " +username + " ได้ทำการสมัครสมาชิกและส่ง Id card แล้ว");
                     member.sentMessage(message);
                 }

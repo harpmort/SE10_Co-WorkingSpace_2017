@@ -82,7 +82,7 @@
                                         <th>Username</th>
                                         <th>ชื่อผู้ประกอบการ</th>
                                         <th>Link Id Card</th>
-                                        <th>ยันยืนผู้ประกอบการ</th>
+                                        <th>ยืนยันผู้ประกอบการ</th>
                                     </tr>
                                 </thead>
                                 <tbody>
